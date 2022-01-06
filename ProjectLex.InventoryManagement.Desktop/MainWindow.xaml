@@ -1,0 +1,50 @@
+﻿<Window x:Class="ProjectLex.InventoryManagement.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop"
+        xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
+        xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Icon="/Assets/logo.png">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type view_models:CategoryListViewModel}">
+                <views:CategoryListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateCategoryViewModel}">
+                <views:CreateCategoryView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateSupplierViewModel}">
+                <views:CreateSupplierView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:SupplierListViewModel}">
+                <views:SupplierListView />
+            </DataTemplate>
+            <!--<DataTemplate DataType="{x:Type view_models:ProductListViewModel}">
+                <views:ProductListView />
+            </DataTemplate>-->
+
+            <DataTemplate DataType="{x:Type view_models:CreateProductViewModel}">
+                <views:CreateProductView />
+            </DataTemplate>
+
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <Button Grid.Row="0" Content="Category List" Command="{Binding ToCategoryListViewModelCommand}"/>
+        <Button Grid.Row="1" Content="Supplier List" Command="{Binding ToSupplierListViewModelCommand}"/>
+
+        <ContentControl Grid.Row="2" Content="{Binding CurrentViewModel}" />
+    </Grid>
+</Window>

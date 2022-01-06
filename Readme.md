@@ -1,0 +1,1 @@
+"# ProjectLex-InventoryManagement" 
