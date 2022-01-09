@@ -25,11 +25,20 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
         {
             return new BrandDTO()
             {
-                BrandID = new Guid(),
+                BrandID = new Guid(brand.BrandID),
                 BrandName = brand.BrandName,
                 BrandStatus = brand.BrandStatus
             };
+        }
 
+        public static RoleDTO RoleToRoleDTO(Role role)
+        {
+            return new RoleDTO()
+            {
+                RoleID = new Guid(role.RoleID),
+                RoleName = role.RoleName,
+                RoleStatus = role.RoleStatus
+            };
         }
 
 

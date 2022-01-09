@@ -23,16 +23,20 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public CreateCategoryViewModel(IDataCollection<Category> categoryCollection)
         {
-            SubmitCommand = new CreateDataCommand<Category>(categoryCollection, CanCreateCategory);
+            SubmitCommand = new CreateDataCommand<Category>(categoryCollection, CreateCategory, CanCreateCategory);
             _dataCollection = categoryCollection;
         }
-
-        private string _categoryId;
+        public Category CreateCategory(object obj)
+        {
+            return new Category((CreateCategoryViewModel)obj);
+        }
 
         public static CreateCategoryViewModel LoadViewModel(IDataCollection<Category> collection)
         {
             return new CreateCategoryViewModel(collection);
         }
+        
+        private string _categoryId;
 
         public string CategoryId
         {

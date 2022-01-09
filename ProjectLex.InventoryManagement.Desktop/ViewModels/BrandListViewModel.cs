@@ -35,9 +35,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _brandCollection.BrandRemoved += OnBrandRemoved;
             _brands = new ObservableCollection<BrandViewModel>();
             LoadBrandsCommand = new LoadDataCommand<Brand>(_brandCollection, OnBrandLoaded);
-            RemoveBrandCommand = new RemoveDataCommand<Brand>(_brandCollection, CanRemoveBrand);
+            RemoveBrandCommand = new RemoveDataCommand<Brand>(_brandCollection, CreateBrand, CanRemoveBrand);
             NavigateToModifyBrandCommand = new ModifyDataNavigateCommand(NavigateToModifyBrand);
 
+        }
+
+        public Brand CreateBrand(object obj)
+        {
+            return new Brand((BrandViewModel)obj);
         }
 
         public void NavigateToModifyBrand(object obj)
@@ -88,6 +93,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
+                    _brandCollection.BrandRemoved -= OnBrandRemoved;
                 }
 
             }

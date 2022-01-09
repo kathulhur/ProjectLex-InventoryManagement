@@ -9,8 +9,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
     public interface IDataCollection <TModel>
     {
         public Task<IEnumerable<TModel>> GetAll();
-        public Task Create(object viewModel);
-        public Task Remove(object viewModel);
-        public Task Modify(object viewModel);
+        public Task Create(TModel viewModel);
+        public Task Remove(TModel viewModel);
+        public Task Modify(TModel viewModel);
     }
 }

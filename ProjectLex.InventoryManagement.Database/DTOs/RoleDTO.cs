@@ -13,5 +13,7 @@ namespace ProjectLex.InventoryManagement.Database.DTOs
         public Guid RoleID { get; set; }
         public string RoleName { get; set; }
         public string RoleStatus { get; set; }
+
+        public ICollection<UserDTO> Users { get; set; }
     }
 }

@@ -64,7 +64,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _brandName = brandViewModel.BrandName;
             _brandStatus = brandViewModel.BrandStatus;
             _brandCollection = brandCollection;
-            SubmitCommand = new ModifyDataCommand<Brand>(brandCollection, CanModifyBrand);
+            SubmitCommand = new ModifyDataCommand<Brand>(brandCollection, CreateBrand, CanModifyBrand);
+        }
+
+        private Brand CreateBrand(object obj)
+        {
+            return new Brand((ModifyBrandViewModel)obj);
         }
 
         public static ModifyBrandViewModel LoadViewModel(IDataCollection<Brand> brandCollection, BrandViewModel brandViewModel)

@@ -17,16 +17,18 @@ namespace ProjectLex.InventoryManagement.Desktop.Commands
     public class CreateDataCommand<TModel> : AsyncCommandBase
     {
         private readonly IDataCollection<TModel> _collection;
-
+        private readonly Func<object, TModel> _createModel;
         private readonly Predicate<object> _canExecute;
 
         public CreateDataCommand
             (
                 IDataCollection<TModel> collection,
+                Func<object, TModel> createModel,
                 Predicate<object> canExecute
             )
         {
             _collection = collection;
+            _createModel = createModel;
             _canExecute = canExecute;
         }
 
@@ -40,7 +42,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Commands
         {
             try
             {
-                await _collection.Create(parameter);
+                TModel newModel = _createModel(parameter);
+                await _collection.Create(newModel);
                 MessageBox.Show("Success!");
             }
             catch

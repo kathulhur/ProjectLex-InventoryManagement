@@ -76,26 +76,23 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
             return await _controller.Provider.GetAll();
         }
 
-        public async Task Create(object obj)
+        public async Task Create(Category newCategory)
         {
-            Category newCategory = new Category((CreateCategoryViewModel)obj);
             await _controller.Creator.Create(newCategory);
             _dataList.Add(newCategory);
             OnCategoryCreated(newCategory);
         }
 
-        public async Task Remove(object obj)
+        public async Task Remove(Category category)
         {
-            Category category = new Category((CategoryViewModel)obj);
             await _controller.Remover.Remove(category);
             Category removedCategory = _dataList.Where(c => c.CategoryID == category.CategoryID).First();
             _dataList.Remove(removedCategory);
             OnCategoryRemoved(removedCategory);
         }
 
-        public async Task Modify(object obj)
+        public async Task Modify(Category modifiedCategory)
         {
-            Category modifiedCategory = new Category((ModifyCategoryViewModel)obj);
             await _controller.Modifier.Modify(modifiedCategory);
             int index = _dataList.FindIndex(c => c.CategoryID == modifiedCategory.CategoryID);
             _dataList[index] = modifiedCategory;

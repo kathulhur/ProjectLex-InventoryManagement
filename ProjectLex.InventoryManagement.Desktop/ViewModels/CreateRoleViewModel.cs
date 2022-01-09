@@ -12,63 +12,63 @@ using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
-    public class CreateBrandViewModel : ViewModelBase
+    public class CreateRoleViewModel : ViewModelBase
     {
         private bool _isDisposed = false;
 
-        private string _brandID;
-        public string BrandID
+        private string _roleID;
+        public string RoleID
         {
-            get { return _brandID; }
+            get { return _roleID; }
             set
             {
-                _brandID = value;
-                OnPropertyChanged(nameof(BrandID));
+                _roleID = value;
+                OnPropertyChanged(nameof(RoleID));
             }
         }
 
-        private string _brandName;
-        public string BrandName
+        private string _roleName;
+        public string RoleName
         {
-            get { return _brandName; }
+            get { return _roleName; }
             set
             {
-                _brandName = value;
-                OnPropertyChanged(nameof(BrandName));
+                _roleName = value;
+                OnPropertyChanged(nameof(RoleName));
             }
         }
 
-        private string _brandStatus;
-        public string BrandStatus
+        private string _roleStatus;
+        public string RoleStatus
         {
-            get { return _brandStatus; }
+            get { return _roleStatus; }
             set
             {
-                _brandStatus = value;
-                OnPropertyChanged(nameof(BrandStatus));
+                _roleStatus = value;
+                OnPropertyChanged(nameof(RoleStatus));
             }
         }
        
 
-        private readonly IDataCollection<Brand> _brandCollection;
+        private readonly IDataCollection<Role> _roleCollection;
 
         public ICommand SubmitCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public CreateBrandViewModel(IDataCollection<Brand> brandCollection)
+        public CreateRoleViewModel(IDataCollection<Role> roleCollection)
         {
-            _brandCollection = brandCollection;
-            SubmitCommand = new CreateDataCommand<Brand>(brandCollection, CreateBrand, CanCreateBrand);
+            _roleCollection = roleCollection;
+            SubmitCommand = new CreateDataCommand<Role>(roleCollection, CreateRole, CanCreateRole);
         }
-        public Brand CreateBrand(object obj)
+        public Role CreateRole(object obj)
         {
-            return new Brand((CreateBrandViewModel)obj);
+            return new Role((CreateRoleViewModel)obj);
         }
 
 
-        public static CreateBrandViewModel LoadViewModel(IDataCollection<Brand> brandCollection)
+        public static CreateRoleViewModel LoadViewModel(IDataCollection<Role> roleCollection)
         {
-            return new CreateBrandViewModel(brandCollection);
+            return new CreateRoleViewModel(roleCollection);
         }
 
         protected override void Dispose(bool disposing)
@@ -86,7 +86,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             base.Dispose(disposing);
         }
 
-        public bool CanCreateBrand(object obj)
+        public bool CanCreateRole(object obj)
         {
             return true;
         }

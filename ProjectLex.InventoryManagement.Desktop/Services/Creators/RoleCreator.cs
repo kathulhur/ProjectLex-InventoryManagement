@@ -6,28 +6,41 @@ using ProjectLex.InventoryManagement.Desktop.Models;
 using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectLex.InventoryManagement.Desktop.Services.Providers
+namespace ProjectLex.InventoryManagement.Desktop.Services.Creators
 {
-    public class RoleProvider : IProvider<Role>
+    public class RoleCreator : ICreator<Role>
     {
+
         private readonly ContextFactory _dbContextFactory;
 
-        public RoleProvider(ContextFactory dbContextFactory)
+        public RoleCreator(ContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
-        public async Task<IEnumerable<Role>> GetAll()
+        public async Task Create(Role role)
         {
             using InventoryManagementContext context = _dbContextFactory.GetDbContext();
-            IEnumerable<RoleDTO> roleDTOs = await context.Roles.ToListAsync();
+            RoleDTO RoleDTO = ModelConverters.RoleToRoleDTO(role);
+            context.Roles.Add(RoleDTO);
+            try
+            {
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbE)
+            {
+                Debug.WriteLine(dbE.InnerException);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
 
-            return roleDTOs.Select(b => new Role(b));
+            }
         }
-
     }
 }

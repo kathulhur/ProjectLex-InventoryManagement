@@ -25,8 +25,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ModifyCategoryViewModel(IDataCollection<Category> categoryCollection)
         {
             _dataCollection = categoryCollection;
-            SubmitCommand = new ModifyDataCommand<Category>(_dataCollection, CanModifyCategory);
+            SubmitCommand = new ModifyDataCommand<Category>(_dataCollection, CreateCategory, CanModifyCategory);
             //CancelCommand = new NavigateCommand<ViewModelBase>(CanCreateCategory);
+        }
+
+
+
+        private Category CreateCategory(object obj)
+        {
+            return new Category((ModifyCategoryViewModel)obj);
         }
 
         private bool CanModifyCategory(object obj)

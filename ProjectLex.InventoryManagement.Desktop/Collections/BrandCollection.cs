@@ -60,26 +60,23 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
             return await _controller.Provider.GetAll();
         }
 
-        public async Task Create(object obj)
+        public async Task Create(Brand newBrand)
         {
-            Brand newBrand = new Brand((CreateBrandViewModel)obj);
             await _controller.Creator.Create(newBrand);
             _dataList.Add(newBrand);
             OnBrandCreated(newBrand);
         }
 
-        public async Task Remove(object obj)
+        public async Task Remove(Brand brand)
         {
-            Brand brand = new Brand((BrandViewModel)obj);
             await _controller.Remover.Remove(brand);
             Brand removedBrand = _dataList.Where(b => b.BrandID == brand.BrandID).First();
             _dataList.Remove(removedBrand);
             OnBrandRemoved(removedBrand);
         }
 
-        public async Task Modify(object obj)
+        public async Task Modify(Brand modifiedBrand)
         {
-            Brand modifiedBrand = new Brand((ModifyBrandViewModel)obj);
             await _controller.Modifier.Modify(modifiedBrand);
             int index = _dataList.FindIndex(b => b.BrandID == modifiedBrand.BrandID);
             _dataList[index] = modifiedBrand;

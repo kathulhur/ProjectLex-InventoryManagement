@@ -19,6 +19,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ICommand ToCreateCategoryViewModelCommand { get; }
         public ICommand ToBrandListViewModelCommand { get; }
         public ICommand ToCreateBrandViewModelCommand { get; }
+        public ICommand ToRoleListViewModelCommand { get; }
+        public ICommand ToCreateRoleViewModelCommand { get; }
 
         public MainViewModel(ViewModelService viewModelService)
         {
@@ -31,6 +33,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             ToBrandListViewModelCommand = viewModelService.ToBrandListViewModelCommand;
             ToCreateBrandViewModelCommand = viewModelService.ToCreateBrandViewModelCommand;
+
+            ToRoleListViewModelCommand = viewModelService.ToRoleListViewModelCommand;
+            ToCreateRoleViewModelCommand = viewModelService.ToCreateRoleViewModelCommand;
         }
 
         private void OnCurrentViewModelChanged()

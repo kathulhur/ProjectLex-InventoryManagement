@@ -33,7 +33,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _categoryCollection.CategoryRemoved += OnCategoryRemoved;
             _categories = new ObservableCollection<CategoryViewModel>();
             LoadCategoriesCommand = new LoadDataCommand<Category>(_categoryCollection, OnDataLoaded);
-            RemoveCategoryCommand = new RemoveDataCommand<Category>(_categoryCollection, CanDelete);
+            RemoveCategoryCommand = new RemoveDataCommand<Category>(_categoryCollection, CreateCategory, CanDelete);
+        }
+
+        public Category CreateCategory(object obj)
+        {
+            return new Category((CategoryViewModel)obj);
         }
 
         public static CategoryListViewModel LoadViewModel(CategoryCollection collection, NavigationStore navigationStore)
@@ -77,6 +82,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
+                    _categoryCollection.CategoryRemoved -= OnCategoryRemoved;
                 }
 
             }

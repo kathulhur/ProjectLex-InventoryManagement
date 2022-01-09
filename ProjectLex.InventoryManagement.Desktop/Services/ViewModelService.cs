@@ -26,12 +26,22 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         public ICommand ToCategoryListViewModelCommand => _toCategoryListViewModelCommand;
 
 
+
         private readonly ICommand _toCreateBrandViewModelCommand;
         public ICommand ToCreateBrandViewModelCommand => _toCreateBrandViewModelCommand;
 
 
         private readonly ICommand _toBrandListViewModelCommand;
         public ICommand ToBrandListViewModelCommand => _toBrandListViewModelCommand;
+
+
+
+        private readonly ICommand _toCreateRoleViewModelCommand;
+        public ICommand ToCreateRoleViewModelCommand => _toCreateRoleViewModelCommand;
+
+
+        private readonly ICommand _toRoleListViewModelCommand;
+        public ICommand ToRoleListViewModelCommand => _toRoleListViewModelCommand;
 
         public ViewModelService
             (
@@ -46,6 +56,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
             _toCategoryListViewModelCommand = new NavigateCommand<CategoryListViewModel>(new NavigationService<CategoryListViewModel>(navigationStore, MakeCategoryListViewModel));
             _toCreateBrandViewModelCommand = new NavigateCommand<CreateBrandViewModel>(new NavigationService<CreateBrandViewModel>(navigationStore, MakeCreateBrandListViewModel));
             _toBrandListViewModelCommand = new NavigateCommand<BrandListViewModel>(new NavigationService<BrandListViewModel>(navigationStore, MakeBrandListViewModel));
+            _toCreateRoleViewModelCommand = new NavigateCommand<CreateRoleViewModel>(new NavigationService<CreateRoleViewModel>(navigationStore, MakeCreateRoleListViewModel));
+            _toRoleListViewModelCommand = new NavigateCommand<RoleListViewModel>(new NavigationService<RoleListViewModel>(navigationStore, MakeRoleListViewModel));
         }
 
         public CreateCategoryViewModel MakeCreateCategoryViewModel()
@@ -66,6 +78,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         public BrandListViewModel MakeBrandListViewModel()
         {
             return BrandListViewModel.LoadViewModel(_collectionStore.BrandCollection, _navigationStore);
+        }
+
+        public CreateRoleViewModel MakeCreateRoleListViewModel()
+        {
+            return CreateRoleViewModel.LoadViewModel(_collectionStore.RoleCollection);
+        }
+
+        public RoleListViewModel MakeRoleListViewModel()
+        {
+            return RoleListViewModel.LoadViewModel(_collectionStore.RoleCollection, _navigationStore);
         }
 
         //public CreateProductViewModel MakeCreateProductViewModel()

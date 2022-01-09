@@ -11,14 +11,17 @@ namespace ProjectLex.InventoryManagement.Desktop.Commands
     public class ModifyDataCommand<TModel> : AsyncCommandBase
     {
         private readonly IDataCollection<TModel> _collection;
+        private readonly Func<object, TModel> _createModel;
         private readonly Predicate<object> _canExecute;
         public ModifyDataCommand
             (
                 IDataCollection<TModel> collection,
+                Func<object, TModel> createModel,
                 Predicate<object> canExecute
             )
         {
             _collection = collection;
+            _createModel = createModel;
             _canExecute = canExecute;
         }
 
@@ -32,7 +35,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Commands
         {
             try
             {
-                await _collection.Modify(parameter);
+                TModel modifiedModel = _createModel(parameter);
+                await _collection.Modify(modifiedModel);
                 MessageBox.Show("Success!");
             }
             catch

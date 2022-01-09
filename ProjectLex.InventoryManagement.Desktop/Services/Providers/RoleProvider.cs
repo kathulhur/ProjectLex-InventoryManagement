@@ -12,21 +12,21 @@ using System.Threading.Tasks;
 
 namespace ProjectLex.InventoryManagement.Desktop.Services.Providers
 {
-    public class RoleProvider : IProvider<Role>
+    public class BrandProvider : IProvider<Brand>
     {
         private readonly ContextFactory _dbContextFactory;
 
-        public RoleProvider(ContextFactory dbContextFactory)
+        public BrandProvider(ContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
         }
 
-        public async Task<IEnumerable<Role>> GetAll()
+        public async Task<IEnumerable<Brand>> GetAll()
         {
             using InventoryManagementContext context = _dbContextFactory.GetDbContext();
-            IEnumerable<RoleDTO> roleDTOs = await context.Roles.ToListAsync();
+            IEnumerable<BrandDTO> brandDTOs = await context.Brands.ToListAsync();
 
-            return roleDTOs.Select(b => new Role(b));
+            return brandDTOs.Select(b => new Brand(b));
         }
 
     }

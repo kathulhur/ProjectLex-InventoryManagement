@@ -40,6 +40,13 @@ namespace ProjectLex.InventoryManagement.Desktop
         private readonly IModifier<Brand> _brandModifier;
         private readonly BrandCollection _brandCollection;
 
+        private readonly IProvider<Role> _roleProvider;
+        private readonly ICreator<Role> _roleCreator;
+        private readonly IController<Role> _roleController;
+        private readonly IRemover<Role> _roleRemover;
+        private readonly IModifier<Role> _roleModifier;
+        private readonly RoleCollection _roleCollection;
+
         //private readonly IProvider<Product> _productProvider;
         //private readonly ICreator<Product> _productCreator;
         //private readonly IController<Product> _productController;
@@ -70,6 +77,13 @@ namespace ProjectLex.InventoryManagement.Desktop
             _brandController = new DataController<Brand>(_brandProvider, _brandCreator, _brandRemover, _brandModifier);
             _brandCollection = new BrandCollection(_brandController);
 
+            _roleProvider = new RoleProvider(_contextFactory);
+            _roleCreator = new RoleCreator(_contextFactory);
+            _roleRemover = new RoleRemover(_contextFactory);
+            _roleModifier = new RoleModifier(_contextFactory);
+            _roleController = new DataController<Role>(_roleProvider, _roleCreator, _roleRemover, _roleModifier);
+            _roleCollection = new RoleCollection(_roleController);
+
             //_productProvider = new ProductProvider(_contextFactory);
             //_productCreator = new ProductCreator(_contextFactory);
             //_productController = new ProductController(_productProvider, _productCreator);
@@ -78,7 +92,8 @@ namespace ProjectLex.InventoryManagement.Desktop
             _collectionStore = new CollectionStore
             (
                 _categoryCollection,
-                _brandCollection
+                _brandCollection,
+                _roleCollection
             );
 
             _viewModelService = new ViewModelService

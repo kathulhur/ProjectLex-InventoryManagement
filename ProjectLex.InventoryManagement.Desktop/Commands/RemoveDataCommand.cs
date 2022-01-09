@@ -13,14 +13,17 @@ namespace ProjectLex.InventoryManagement.Desktop.Commands
     public class RemoveDataCommand<TModel> : AsyncCommandBase
     {
         private readonly IDataCollection<TModel> _collection;
+        private readonly Func<object, TModel> _createModel;
         private readonly Predicate<object> _canExecute;
         public RemoveDataCommand
             (
                 IDataCollection<TModel> collection,
+                Func<object, TModel> createModel,
                 Predicate<object> canExecute
             )
         {
             _collection = collection;
+            _createModel = createModel;
             _canExecute = canExecute;
         }
 
@@ -29,12 +32,13 @@ namespace ProjectLex.InventoryManagement.Desktop.Commands
         {
             try
             {
-                await _collection.Remove(parameter);
+                TModel removedModel = _createModel(parameter);
+                await _collection.Remove(removedModel);
                 MessageBox.Show("Success!");
             }
             catch
             {
-                MessageBox.Show("Error creating category");
+                MessageBox.Show("Error Removing Role");
             }
         }
     }
