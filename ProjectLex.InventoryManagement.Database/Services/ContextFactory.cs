@@ -9,9 +9,10 @@ namespace ProjectLex.InventoryManagement.Database.Services
 {
     public class ContextFactory
     {
-        public InventoryContext GetDbContext()
+
+        public InventoryManagementContext GetDbContext()
         {
-            return new InventoryContext();
+            return new InventoryManagementContext();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ProjectLex.InventoryManagement.Database.Data;
-using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Database.Services;
 using System;
 using System.Collections.Generic;

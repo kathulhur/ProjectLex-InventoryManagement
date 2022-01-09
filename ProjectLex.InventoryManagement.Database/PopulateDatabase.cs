@@ -1,5 +1,4 @@
 ﻿using ProjectLex.InventoryManagement.Database.Data;
-using ProjectLex.InventoryManagement.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace ProjectLex.InventoryManagement.Database
     {
         public static void Populate()
         {
-            using InventoryContext context = new InventoryContext();
+            using InventoryManagementContext context = new InventoryManagementContext();
 
             CategoryDTO NewCategory1 = new CategoryDTO()
             {

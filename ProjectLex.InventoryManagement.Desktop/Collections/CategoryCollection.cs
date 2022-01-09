@@ -1,7 +1,9 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Controllers;
+﻿using ProjectLex.InventoryManagement.Desktop.Commands;
+using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
 using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
+using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,12 +13,95 @@ using System.Threading.Tasks;
 
 namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
-    public class CategoryCollection : DataCollectionBase<Category>
+    public class CategoryCollection : IDataCollection<Category>, ILoadable<Category>
     {
-        
-        public CategoryCollection(IController<Category> categoryController) : base(categoryController)
-        {
+        private readonly IController<Category> _controller;
 
+        private List<Category> _dataList;
+
+        private Lazy<Task> _initializeLazy;
+        public IEnumerable<Category> DataList => _dataList;
+
+        public event Action<Category> CategoryCreated;
+        public event Action<Category> CategoryRemoved;
+        public event Action<Category> CategoryModified;
+
+        private void OnCategoryCreated(Category category)
+        {
+            CategoryCreated?.Invoke(category);
         }
+
+        private void OnCategoryRemoved(Category category)
+        {
+            CategoryRemoved?.Invoke(category);
+        }
+
+        private void OnCategoryModified(Category modifiedCategory)
+        {
+            CategoryRemoved?.Invoke(modifiedCategory);
+        }
+
+        public CategoryCollection(IController<Category> controller)
+        {
+            _controller = controller;
+            _dataList = new List<Category>();
+            _initializeLazy = new Lazy<Task>(Initialize);
+        }
+
+        
+
+        private async Task Initialize()
+        {
+            IEnumerable<Category> data = await _controller.Provider.GetAll();
+            _dataList.Clear();
+            _dataList.AddRange(data);
+        }
+
+        public async Task Load()
+        {
+            try
+            {
+                await _initializeLazy.Value;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                _initializeLazy = new Lazy<Task>(Initialize);
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Category>> GetAll()
+        {
+            return await _controller.Provider.GetAll();
+        }
+
+        public async Task Create(object obj)
+        {
+            Category newCategory = new Category((CreateCategoryViewModel)obj);
+            await _controller.Creator.Create(newCategory);
+            _dataList.Add(newCategory);
+            OnCategoryCreated(newCategory);
+        }
+
+        public async Task Remove(object obj)
+        {
+            Category category = new Category((CategoryViewModel)obj);
+            await _controller.Remover.Remove(category);
+            Category removedCategory = _dataList.Where(c => c.CategoryID == category.CategoryID).First();
+            _dataList.Remove(removedCategory);
+            OnCategoryRemoved(removedCategory);
+        }
+
+        public async Task Modify(object obj)
+        {
+            Category modifiedCategory = new Category((ModifyCategoryViewModel)obj);
+            await _controller.Modifier.Modify(modifiedCategory);
+            int index = _dataList.FindIndex(c => c.CategoryID == modifiedCategory.CategoryID);
+            _dataList[index] = modifiedCategory;
+            OnCategoryModified(modifiedCategory);
+        }
+
+        
     }
 }

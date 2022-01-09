@@ -1,5 +1,4 @@
 ﻿using ProjectLex.InventoryManagement.Database.Data;
-using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Database.Services;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace ProjectLex.InventoryManagement.Database
 
         public static IEnumerable<OrderDetailDTO> Query()
         {
-            using InventoryContext context = new InventoryContext();
+            using InventoryManagementContext context = new InventoryManagementContext();
             IEnumerable<OrderDetailDTO> orderDetails = context.Orders
                 .Select(o => o.OrderDetails)
                 .First()

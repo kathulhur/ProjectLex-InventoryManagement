@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectLex.InventoryManagement.Database.Data;
-using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Database.DTOs;
 using ProjectLex.InventoryManagement.Database.Services;
 using ProjectLex.InventoryManagement.Desktop.Models;
 using ProjectLex.InventoryManagement.Desktop.Utilities;
@@ -23,10 +23,10 @@ namespace ProjectLex.InventoryManagement.Desktop.Services.Providers
 
         public async Task<IEnumerable<Category>> GetAll()
         {
-            using InventoryContext context = _dbContextFactory.GetDbContext();
+            using InventoryManagementContext context = _dbContextFactory.GetDbContext();
             IEnumerable<CategoryDTO> categoryDTOs = await context.Categories.ToListAsync();
 
-            return categoryDTOs.Select(ModelConverters.CategoryDTOToCategory);
+            return categoryDTOs.Select(c => new Category(c));
         }
 
     }

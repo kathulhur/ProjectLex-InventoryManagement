@@ -1,4 +1,7 @@
 ProjectLex.InventoryManagement.Desktop/bin/
 ProjectLex.InventoryManagement.Desktop/obj/
+
 ProjectLex.InventoryManagement.Database/bin/
 ProjectLex.InventoryManagement.Database/obj/
+ProjectLex.InventoryManagement.Database/PopulateDatabase.cs
+ProjectLex.InventoryManagement.Database/Program.cs

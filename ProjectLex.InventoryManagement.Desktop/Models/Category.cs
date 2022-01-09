@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjectLex.InventoryManagement.Database.DTOs;
+using ProjectLex.InventoryManagement.Desktop.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +10,36 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
 {
     public class Category
     {
-        public string CategoryId { get; }
+        public string CategoryID { get; }
         public string CategoryName { get; }
-        public string Description { get; }
+        public string CategoryStatus { get; }
 
-        public Category(string categoryId, string categoryName, string description)
+        public Category(CategoryDTO categoryDTO)
         {
-            CategoryId = categoryId;
-            CategoryName = categoryName;
-            Description = description;
+            CategoryID = categoryDTO.CategoryID.ToString();
+            CategoryName = categoryDTO.CategoryName;
+            CategoryStatus = categoryDTO.CategoryStatus;
+        }
+
+        public Category(CreateCategoryViewModel createCategoryViewModel)
+        {
+            CategoryID = Guid.NewGuid().ToString();
+            CategoryName = createCategoryViewModel.CategoryName;
+            CategoryStatus = createCategoryViewModel.CategoryStatus;
+        }
+
+        public Category(ModifyCategoryViewModel modifyCategoryViewModel)
+        {
+            CategoryID = modifyCategoryViewModel.CategoryId;
+            CategoryName = modifyCategoryViewModel.CategoryName;
+            CategoryStatus = modifyCategoryViewModel.CategoryStatus;
+        }
+
+        public Category(CategoryViewModel categoryViewModel)
+        {
+            CategoryID = categoryViewModel.CategoryID;
+            CategoryName = categoryViewModel.CategoryName;
+            CategoryStatus = categoryViewModel.CategoryStatus;
         }
 
 

@@ -4,13 +4,19 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <StartupObject></StartupObject>
+    <StartupObject>ProjectLex.InventoryManagement.Desktop.App</StartupObject>
     <ApplicationIcon />
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Collections\Warehouse.cs" />
     <Compile Remove="Commands\CreateCategoryCommand1.cs" />
+    <Compile Remove="Services\Creators\ProductCreator.cs" />
+    <Compile Remove="Services\Providers\ProductProvider.cs" />
     <Compile Remove="Stores\ProductStore.cs" />
+    <Compile Remove="ViewModels\CreateProductViewModel.cs" />
+    <Compile Remove="ViewModels\ProductListViewModel.cs" />
+    <Compile Remove="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,13 +37,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\CreateSupplierView.xaml.cs">
+    <Compile Update="Views\ModifyBrandView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CreateBrandView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Views\CreateSupplierView.xaml">
+    <Page Update="Views\ModifyBrandView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CreateBrandView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectLex.InventoryManagement.Database.Data;
-using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Database.DTOs;
 using ProjectLex.InventoryManagement.Database.Services;
 using ProjectLex.InventoryManagement.Desktop.Models;
 using ProjectLex.InventoryManagement.Desktop.Utilities;
@@ -25,7 +25,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Services.Creators
 
         public async Task Create(Category category)
         {
-            using InventoryContext context = _dbContextFactory.GetDbContext();
+            using InventoryManagementContext context = _dbContextFactory.GetDbContext();
             CategoryDTO categoryDTO = ModelConverters.CategoryToCategoryDTO(category);
             context.Categories.Add(categoryDTO);
             try

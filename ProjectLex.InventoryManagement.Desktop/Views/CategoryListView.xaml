@@ -7,7 +7,8 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:Background="White">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -27,9 +28,15 @@
 
             <Button
                 Grid.Column="1"
-                Command="{Binding CreateCategoryCommand}"
+                Command=
+                    "{
+                        Binding DataContext.ToCreateCategoryViewModelCommand,
+                        RelativeSource={RelativeSource AncestorType={x:Type Window}}
+                    }"
                 Padding="10 0 0 0 "
                 Content="Add Category"/>
+            
+
         </Grid>
 
         <ListView Grid.Row="1" Margin="0 25 0 0" ItemsSource="{Binding Categories}">
@@ -43,7 +50,7 @@
                     <GridViewColumn Header="Category ID">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding CategoryId}"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding CategoryID}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -59,8 +66,36 @@
                     <GridViewColumn Header="Description">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding Description}"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding CategoryStatus}"/>
                             </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="Action">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Content="Delete" 
+                                            Grid.Column="0"
+                                            Command="{
+                                                Binding DataContext.RemoveCategoryCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
+                                            CommandParameter="{Binding}"/>
+
+                                    <Button Content="Update" 
+                                            Grid.Column="1"
+                                            Command="{
+                                                Binding DataContext.ToModifyCategoryNavigateCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
+                                            CommandParameter="{Binding}"/>
+
+                                </Grid>
+                            </DataTemplate>
+                            
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 

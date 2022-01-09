@@ -11,6 +11,7 @@
         Icon="/Assets/logo.png">
     <Grid>
         <Grid.Resources>
+
             <DataTemplate DataType="{x:Type view_models:CategoryListViewModel}">
                 <views:CategoryListView />
             </DataTemplate>
@@ -18,21 +19,19 @@
             <DataTemplate DataType="{x:Type view_models:CreateCategoryViewModel}">
                 <views:CreateCategoryView />
             </DataTemplate>
-
-            <DataTemplate DataType="{x:Type view_models:CreateSupplierViewModel}">
-                <views:CreateSupplierView />
+            
+            <DataTemplate DataType="{x:Type view_models:BrandListViewModel}">
+                <views:BrandListView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:SupplierListViewModel}">
-                <views:SupplierListView />
+            <DataTemplate DataType="{x:Type view_models:CreateBrandViewModel}">
+                <views:CreateBrandView />
             </DataTemplate>
-            <!--<DataTemplate DataType="{x:Type view_models:ProductListViewModel}">
-                <views:ProductListView />
-            </DataTemplate>-->
 
-            <DataTemplate DataType="{x:Type view_models:CreateProductViewModel}">
-                <views:CreateProductView />
+            <DataTemplate DataType="{x:Type view_models:ModifyBrandViewModel}">
+                <views:ModifyBrandView />
             </DataTemplate>
+
 
         </Grid.Resources>
         
@@ -43,7 +42,7 @@
         </Grid.RowDefinitions>
         
         <Button Grid.Row="0" Content="Category List" Command="{Binding ToCategoryListViewModelCommand}"/>
-        <Button Grid.Row="1" Content="Supplier List" Command="{Binding ToSupplierListViewModelCommand}"/>
+        <Button Grid.Row="1" Content="Brand List" Command="{Binding ToBrandListViewModelCommand}"/>
 
         <ContentControl Grid.Row="2" Content="{Binding CurrentViewModel}" />
     </Grid>

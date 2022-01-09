@@ -1,5 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Database.Models;
-using ProjectLex.InventoryManagement.Desktop.Commands;
+﻿using ProjectLex.InventoryManagement.Desktop.Commands;
 using ProjectLex.InventoryManagement.Desktop.Collections;
 using ProjectLex.InventoryManagement.Desktop.Models;
 using ProjectLex.InventoryManagement.Desktop.Services;
@@ -14,7 +13,7 @@ using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
-    public class CategoryListViewModel : ViewModelBase, IUpdatable<Category>
+    public class CategoryListViewModel : ViewModelBase
     {
         private bool _isDisposed = false;
 
@@ -22,27 +21,51 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public IEnumerable<CategoryViewModel> Categories => _categories;
 
         private readonly CategoryCollection _categoryCollection;
-
-        public ICommand CreateCategoryCommand { get; }
-
+        private readonly NavigationStore _navigationStore;
         public ICommand LoadCategoriesCommand { get; }
+        public ICommand RemoveCategoryCommand { get; }
+        public ICommand ToModifyCategoryNavigateCommand { get; }
 
-        public CategoryListViewModel(CategoryCollection categoryCollection, NavigationService<CreateCategoryViewModel> navigationService)
+        public CategoryListViewModel(CategoryCollection categoryCollection, NavigationStore navigationStore)
         {
+            _navigationStore = navigationStore;
             _categoryCollection = categoryCollection;
+            _categoryCollection.CategoryRemoved += OnCategoryRemoved;
             _categories = new ObservableCollection<CategoryViewModel>();
-            CreateCategoryCommand = new NavigateCommand<CreateCategoryViewModel>(navigationService);
-            LoadCategoriesCommand = new LoadCategoriesCommand(this, _categoryCollection);
+            LoadCategoriesCommand = new LoadDataCommand<Category>(_categoryCollection, OnDataLoaded);
+            RemoveCategoryCommand = new RemoveDataCommand<Category>(_categoryCollection, CanDelete);
+        }
 
-            _categoryCollection.DataCreated += OnCategoryCreated;
+        public static CategoryListViewModel LoadViewModel(CategoryCollection collection, NavigationStore navigationStore)
+        {
+            CategoryListViewModel viewModel = new CategoryListViewModel(collection, navigationStore);
+            viewModel.LoadCategoriesCommand.Execute(null);
+
+            return viewModel;
+        }
+
+        private void OnDataLoaded()
+        {
+            _categories.Clear();
+
+            foreach (Category c in _categoryCollection.DataList)
+            {
+                CategoryViewModel newCategoryViewModel = new CategoryViewModel(c);
+                _categories.Add(newCategoryViewModel);
+            }
 
         }
 
-        private void OnCategoryCreated(Category category)
+        private void OnCategoryRemoved(Category category)
         {
-            CategoryViewModel newCategoryViewModel = new CategoryViewModel(category);
-            _categories.Add(newCategoryViewModel);
+            CategoryViewModel categoryViewModel = new CategoryViewModel(category);
+            categoryViewModel = _categories.Where(c => c.CategoryID == category.CategoryID).First();
+            _categories.Remove(categoryViewModel);
+        }
 
+        private bool CanDelete(object obj)
+        {
+            return true;
         }
 
         protected override void Dispose(bool disposing)
@@ -64,23 +87,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             base.Dispose(disposing);
         }
 
-        public static CategoryListViewModel LoadViewModel(CategoryCollection collection, NavigationService<CreateCategoryViewModel> navigationService)
-        {
-            CategoryListViewModel viewModel = new CategoryListViewModel(collection, navigationService);
-            viewModel.LoadCategoriesCommand.Execute(null);
+        
 
-            return viewModel;
-        }
-
-        public void Update(IEnumerable<Category> categories)
-        {
-            _categories.Clear();
-
-            foreach (Category c in categories)
-            {
-                CategoryViewModel newCategoryViewModel = new CategoryViewModel(c);
-                _categories.Add(newCategoryViewModel);
-            }
-        }
     }
 }

@@ -15,23 +15,23 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     public class CreateCategoryViewModel : ViewModelBase
     {
         private bool _isDisposed = false;
-        private string _categoryId;
 
-        private readonly DataCollectionBase<Category> _dataCollection;
+        private readonly IDataCollection<Category> _dataCollection;
 
         public ICommand SubmitCommand { get; set; }
         public ICommand CancelCommand { get; set; }
 
-        public CreateCategoryViewModel(CategoryCollection collection, NavigationService<CategoryListViewModel> navigationService)
+        public CreateCategoryViewModel(IDataCollection<Category> categoryCollection)
         {
-            SubmitCommand = new CreateCategoryCommand(this, collection, navigationService);
-            CancelCommand = new NavigateCommand<CategoryListViewModel>(navigationService);
-            _dataCollection = collection;
+            SubmitCommand = new CreateDataCommand<Category>(categoryCollection, CanCreateCategory);
+            _dataCollection = categoryCollection;
         }
 
-        public static CreateCategoryViewModel LoadViewModel(CategoryCollection collection, NavigationService<CategoryListViewModel> navigationService)
+        private string _categoryId;
+
+        public static CreateCategoryViewModel LoadViewModel(IDataCollection<Category> collection)
         {
-            return new CreateCategoryViewModel(collection, navigationService);
+            return new CreateCategoryViewModel(collection);
         }
 
         public string CategoryId
@@ -56,18 +56,22 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
-        private string _description;
+        private string _categoryStatus;
 
-        public string Description
+        public string CategoryStatus
         {
-            get { return _description; }
+            get { return _categoryStatus; }
             set
             {
-                _description = value;
-                OnPropertyChanged(nameof(Description));
+                _categoryStatus = value;
+                OnPropertyChanged(nameof(CategoryStatus));
             }
         }
 
+        private bool CanCreateCategory(object obj)
+        {
+            return true;
+        }
         
         protected override void Dispose(bool disposing)
         {
@@ -83,7 +87,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             base.Dispose(disposing);
         }
-
 
     }
 }

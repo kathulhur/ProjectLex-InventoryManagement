@@ -10,9 +10,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     public class CategoryViewModel : ViewModelBase
     {
         private readonly Category _category;
-        public string CategoryId => _category.CategoryId;
+        public string CategoryID => _category.CategoryID;
         public string CategoryName => _category.CategoryName;
-        public string Description => _category.Description;
+        public string CategoryStatus => _category.CategoryStatus;
 
         public CategoryViewModel(Category category)
         {

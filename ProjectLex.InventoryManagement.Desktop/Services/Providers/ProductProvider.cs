@@ -23,7 +23,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Services.Providers
 
         public async Task<IEnumerable<Product>> GetAll()
         {
-            using InventoryContext context = _dbContextFactory.GetDbContext();
+            using InventoryManagementContext context = _dbContextFactory.GetDbContext();
             IEnumerable<ProductDTO> productDTOs = await context.Products.ToListAsync();
 
             return productDTOs.Select(ModelConverters.ProductDTOToProduct);

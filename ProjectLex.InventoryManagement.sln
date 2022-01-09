@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectLex.InventoryManagement.Database", "ProjectLex.InventoryManagement.Database\ProjectLex.InventoryManagement.Database.csproj", "{C507A10D-C5EA-400F-AD7B-811C63DF9B51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectLex.InventoryManagement.Database", "ProjectLex.InventoryManagement.Database\ProjectLex.InventoryManagement.Database.csproj", "{C507A10D-C5EA-400F-AD7B-811C63DF9B51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectLex.InventoryManagement.Desktop", "ProjectLex.InventoryManagement.Desktop\ProjectLex.InventoryManagement.Desktop.csproj", "{6EAAD627-3C64-4668-915F-6CC29A218851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectLex.InventoryManagement.Desktop", "ProjectLex.InventoryManagement.Desktop\ProjectLex.InventoryManagement.Desktop.csproj", "{6EAAD627-3C64-4668-915F-6CC29A218851}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

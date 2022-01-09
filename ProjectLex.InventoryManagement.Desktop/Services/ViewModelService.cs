@@ -1,4 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Collections;
+using ProjectLex.InventoryManagement.Desktop.Commands;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.Services
 {
@@ -15,6 +17,22 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         private readonly CollectionStore _collectionStore;
 
         public NavigationStore NavigationStore => _navigationStore;
+
+        private readonly ICommand _toCreateCategoryViewModelCommand;
+        public ICommand ToCreateCategoryViewModelCommand => _toCreateCategoryViewModelCommand;
+
+
+        private readonly ICommand _toCategoryListViewModelCommand;
+        public ICommand ToCategoryListViewModelCommand => _toCategoryListViewModelCommand;
+
+
+        private readonly ICommand _toCreateBrandViewModelCommand;
+        public ICommand ToCreateBrandViewModelCommand => _toCreateBrandViewModelCommand;
+
+
+        private readonly ICommand _toBrandListViewModelCommand;
+        public ICommand ToBrandListViewModelCommand => _toBrandListViewModelCommand;
+
         public ViewModelService
             (
                 NavigationStore navigationStore,
@@ -23,53 +41,50 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         {
             _navigationStore = navigationStore;
             _collectionStore = collectionStore;
+
+            _toCreateCategoryViewModelCommand = new NavigateCommand<CreateCategoryViewModel>(new NavigationService<CreateCategoryViewModel>(navigationStore, MakeCreateCategoryViewModel));
+            _toCategoryListViewModelCommand = new NavigateCommand<CategoryListViewModel>(new NavigationService<CategoryListViewModel>(navigationStore, MakeCategoryListViewModel));
+            _toCreateBrandViewModelCommand = new NavigateCommand<CreateBrandViewModel>(new NavigationService<CreateBrandViewModel>(navigationStore, MakeCreateBrandListViewModel));
+            _toBrandListViewModelCommand = new NavigateCommand<BrandListViewModel>(new NavigationService<BrandListViewModel>(navigationStore, MakeBrandListViewModel));
         }
 
         public CreateCategoryViewModel MakeCreateCategoryViewModel()
         {
-            return CreateCategoryViewModel.LoadViewModel(
-                _collectionStore.CategoryCollection, 
-                new NavigationService<CategoryListViewModel>(_navigationStore, MakeCategoryListViewModel));
+            return CreateCategoryViewModel.LoadViewModel(_collectionStore.CategoryCollection);
         }
 
         public CategoryListViewModel MakeCategoryListViewModel()
         {
-            return CategoryListViewModel.LoadViewModel(
-                _collectionStore.CategoryCollection, 
-                new NavigationService<CreateCategoryViewModel>(_navigationStore, MakeCreateCategoryViewModel));
+            return CategoryListViewModel.LoadViewModel(_collectionStore.CategoryCollection, _navigationStore);
         }
 
-        public CreateSupplierViewModel MakeCreateSupplierViewModel()
+        public CreateBrandViewModel MakeCreateBrandListViewModel()
         {
-            return CreateSupplierViewModel.LoadViewModel(
-                _collectionStore.SupplierCollection, 
-                new NavigationService<SupplierListViewModel>(_navigationStore, MakeSupplierListViewModel));
+            return CreateBrandViewModel.LoadViewModel(_collectionStore.BrandCollection);
         }
 
-        public SupplierListViewModel MakeSupplierListViewModel()
+        public BrandListViewModel MakeBrandListViewModel()
         {
-            return SupplierListViewModel.LoadViewModel(
-                _collectionStore.SupplierCollection, 
-                new NavigationService<CreateSupplierViewModel>(_navigationStore, MakeCreateSupplierViewModel));
+            return BrandListViewModel.LoadViewModel(_collectionStore.BrandCollection, _navigationStore);
         }
 
-        public CreateProductViewModel MakeCreateProductViewModel()
-        {
-            return CreateProductViewModel.LoadViewModel(
-                _collectionStore.ProductCollection,
-                _collectionStore.CategoryCollection,
-                _collectionStore.SupplierCollection,
-                new NavigationService<ProductListViewModel>(_navigationStore, MakeProductListViewModel));
-        }
+        //public CreateProductViewModel MakeCreateProductViewModel()
+        //{
+        //    return CreateProductViewModel.LoadViewModel(
+        //        _collectionStore.ProductCollection,
+        //        _collectionStore.CategoryCollection,
+        //        _collectionStore.SupplierCollection,
+        //        new NavigationService<ProductListViewModel>(_navigationStore, MakeProductListViewModel));
+        //}
 
-        public ProductListViewModel MakeProductListViewModel()
-        {
-            return ProductListViewModel.LoadViewModel(
-                _collectionStore.ProductCollection,
-                _collectionStore.CategoryCollection,
-                _collectionStore.SupplierCollection, 
-                new NavigationService<CreateProductViewModel>(_navigationStore, MakeCreateProductViewModel));
-        }
+        //public ProductListViewModel MakeProductListViewModel()
+        //{
+        //    return ProductListViewModel.LoadViewModel(
+        //        _collectionStore.ProductCollection,
+        //        _collectionStore.CategoryCollection,
+        //        _collectionStore.SupplierCollection, 
+        //        new NavigationService<CreateProductViewModel>(_navigationStore, MakeCreateProductViewModel));
+        //}
 
     }
 }

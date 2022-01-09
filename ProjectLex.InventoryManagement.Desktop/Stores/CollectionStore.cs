@@ -12,23 +12,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Stores
     public class CollectionStore
     {
         private readonly CategoryCollection _categoryCollection;
-        private readonly ProductCollection _productCollection;
-        private readonly SupplierCollection _supplierCollection;
+        private readonly BrandCollection _brandCollection;
 
         public CategoryCollection CategoryCollection => _categoryCollection;
-        public SupplierCollection SupplierCollection => _supplierCollection;
-        public ProductCollection ProductCollection => _productCollection;
+        public BrandCollection BrandCollection => _brandCollection;
 
 
         public CollectionStore(
             CategoryCollection categoryCollection,
-            ProductCollection productCollection,
-            SupplierCollection supplierCollection
+            BrandCollection brandCollection
             )
         {
             _categoryCollection = categoryCollection;
-            _supplierCollection = supplierCollection;
-            _productCollection = productCollection;
+            _brandCollection = brandCollection;
 
         }
 

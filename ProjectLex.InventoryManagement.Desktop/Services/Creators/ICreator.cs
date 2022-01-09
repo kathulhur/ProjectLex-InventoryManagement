@@ -12,6 +12,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Services.Creators
     public interface ICreator<TModel>
     {
 
-        public Task Create(TModel category);
+        public Task Create(TModel model);
     }
 }

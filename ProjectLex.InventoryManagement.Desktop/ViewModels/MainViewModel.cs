@@ -16,31 +16,21 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ViewModelBase CurrentViewModel => _viewModelService.NavigationStore.CurrentViewModel;
 
         public ICommand ToCategoryListViewModelCommand { get; }
-        public ICommand ToSupplierListViewModelCommand { get; }
+        public ICommand ToCreateCategoryViewModelCommand { get; }
+        public ICommand ToBrandListViewModelCommand { get; }
+        public ICommand ToCreateBrandViewModelCommand { get; }
 
         public MainViewModel(ViewModelService viewModelService)
         {
             _viewModelService = viewModelService;
             _viewModelService.NavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            viewModelService.NavigationStore.CurrentViewModel = viewModelService.MakeCreateProductViewModel();
+            viewModelService.NavigationStore.CurrentViewModel = viewModelService.MakeCategoryListViewModel();
 
-            ToCategoryListViewModelCommand = new NavigateCommand<CategoryListViewModel>
-                (
-                    new NavigationService<CategoryListViewModel>
-                    (
-                        _viewModelService.NavigationStore,
-                        _viewModelService.MakeCategoryListViewModel
-                    )
-                );
+            ToCategoryListViewModelCommand = viewModelService.ToCategoryListViewModelCommand;
+            ToCreateCategoryViewModelCommand = viewModelService.ToCreateCategoryViewModelCommand;
 
-            ToSupplierListViewModelCommand = new NavigateCommand<SupplierListViewModel>
-                (
-                    new NavigationService<SupplierListViewModel>
-                    (
-                        _viewModelService.NavigationStore,
-                        _viewModelService.MakeSupplierListViewModel
-                    )
-                );
+            ToBrandListViewModelCommand = viewModelService.ToBrandListViewModelCommand;
+            ToCreateBrandViewModelCommand = viewModelService.ToCreateBrandViewModelCommand;
         }
 
         private void OnCurrentViewModelChanged()
