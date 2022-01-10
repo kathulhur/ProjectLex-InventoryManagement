@@ -43,6 +43,15 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         private readonly ICommand _toRoleListViewModelCommand;
         public ICommand ToRoleListViewModelCommand => _toRoleListViewModelCommand;
 
+
+
+        private readonly ICommand _toCreateUserViewModelCommand;
+        public ICommand ToCreateUserViewModelCommand => _toCreateUserViewModelCommand;
+
+
+        private readonly ICommand _toUserListViewModelCommand;
+        public ICommand ToUserListViewModelCommand => _toUserListViewModelCommand;
+
         public ViewModelService
             (
                 NavigationStore navigationStore,
@@ -54,11 +63,17 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
 
             _toCreateCategoryViewModelCommand = new NavigateCommand<CreateCategoryViewModel>(new NavigationService<CreateCategoryViewModel>(navigationStore, MakeCreateCategoryViewModel));
             _toCategoryListViewModelCommand = new NavigateCommand<CategoryListViewModel>(new NavigationService<CategoryListViewModel>(navigationStore, MakeCategoryListViewModel));
+            
             _toCreateBrandViewModelCommand = new NavigateCommand<CreateBrandViewModel>(new NavigationService<CreateBrandViewModel>(navigationStore, MakeCreateBrandListViewModel));
             _toBrandListViewModelCommand = new NavigateCommand<BrandListViewModel>(new NavigationService<BrandListViewModel>(navigationStore, MakeBrandListViewModel));
+            
             _toCreateRoleViewModelCommand = new NavigateCommand<CreateRoleViewModel>(new NavigationService<CreateRoleViewModel>(navigationStore, MakeCreateRoleListViewModel));
             _toRoleListViewModelCommand = new NavigateCommand<RoleListViewModel>(new NavigationService<RoleListViewModel>(navigationStore, MakeRoleListViewModel));
+            
+            _toCreateUserViewModelCommand = new NavigateCommand<CreateUserViewModel>(new NavigationService<CreateUserViewModel>(navigationStore, MakeCreateUserListViewModel));
+            _toUserListViewModelCommand = new NavigateCommand<UserListViewModel>(new NavigationService<UserListViewModel>(navigationStore, MakeUserListViewModel));
         }
+
 
         public CreateCategoryViewModel MakeCreateCategoryViewModel()
         {
@@ -70,6 +85,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
             return CategoryListViewModel.LoadViewModel(_collectionStore.CategoryCollection, _navigationStore);
         }
 
+
+
         public CreateBrandViewModel MakeCreateBrandListViewModel()
         {
             return CreateBrandViewModel.LoadViewModel(_collectionStore.BrandCollection);
@@ -80,6 +97,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
             return BrandListViewModel.LoadViewModel(_collectionStore.BrandCollection, _navigationStore);
         }
 
+
+
         public CreateRoleViewModel MakeCreateRoleListViewModel()
         {
             return CreateRoleViewModel.LoadViewModel(_collectionStore.RoleCollection);
@@ -88,6 +107,18 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         public RoleListViewModel MakeRoleListViewModel()
         {
             return RoleListViewModel.LoadViewModel(_collectionStore.RoleCollection, _navigationStore);
+        }
+
+
+
+        public CreateUserViewModel MakeCreateUserListViewModel()
+        {
+            return CreateUserViewModel.LoadViewModel(_collectionStore.UserCollection, _collectionStore.RoleCollection);
+        }
+
+        public UserListViewModel MakeUserListViewModel()
+        {
+            return UserListViewModel.LoadViewModel(_collectionStore.UserCollection, _collectionStore.RoleCollection, _navigationStore);
         }
 
         //public CreateProductViewModel MakeCreateProductViewModel()

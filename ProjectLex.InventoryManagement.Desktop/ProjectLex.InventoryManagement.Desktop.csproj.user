@@ -32,10 +32,19 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\CreateUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\CreateRoleView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\ModifyUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ModifyRoleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RoleListView.xaml">

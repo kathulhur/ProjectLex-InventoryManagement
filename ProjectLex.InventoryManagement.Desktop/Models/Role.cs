@@ -14,11 +14,13 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
         public string RoleName { get; set; }
         public string RoleStatus { get; set; }
 
-        public Role(RoleDTO brandDTO)
+        public IEnumerable<User> Users { get; set; }
+
+        public Role(RoleDTO roleDTO)
         {
-            RoleID = brandDTO.RoleID.ToString();
-            RoleName = brandDTO.RoleName;
-            RoleStatus = brandDTO.RoleStatus;
+            RoleID = roleDTO.RoleID.ToString();
+            RoleName = roleDTO.RoleName;
+            RoleStatus = roleDTO.RoleStatus;
         }
 
         public Role(CreateRoleViewModel createRoleViewModel)
@@ -34,11 +36,11 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
             RoleStatus = modifyRoleViewModel.RoleStatus;
         }
 
-        public Role(RoleViewModel brandViewModel)
+        public Role(RoleViewModel roleViewModel)
         {
-            RoleID = brandViewModel.RoleID;
-            RoleName = brandViewModel.RoleName;
-            RoleStatus = brandViewModel.RoleStatus;
+            RoleID = roleViewModel.RoleID;
+            RoleName = roleViewModel.RoleName;
+            RoleStatus = roleViewModel.RoleStatus;
         }
 
     }

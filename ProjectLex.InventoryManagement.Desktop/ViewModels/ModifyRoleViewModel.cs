@@ -74,7 +74,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public static ModifyRoleViewModel LoadViewModel(IDataCollection<Role> roleCollection, RoleViewModel roleViewModel)
         {
-            return new ModifyRoleViewModel(roleCollection, roleViewModel);
+            ModifyRoleViewModel viewModel = new ModifyRoleViewModel(roleCollection, roleViewModel);
+            return viewModel;
         }
 
         protected override void Dispose(bool disposing)

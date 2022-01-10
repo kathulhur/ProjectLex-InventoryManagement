@@ -48,7 +48,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public void NavigateToModifyBrand(object obj)
         {
             BrandViewModel brandViewModel = (BrandViewModel)obj;
-            _navigationStore.CurrentViewModel = new ModifyBrandViewModel(_brandCollection, brandViewModel);
+            _navigationStore.CurrentViewModel = ModifyBrandViewModel.LoadViewModel(_brandCollection, brandViewModel);
 
         }
 
@@ -56,8 +56,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             BrandListViewModel viewModel = new BrandListViewModel(brandCollection, navigationStore);
             viewModel.LoadBrandsCommand.Execute(null);
-
             return viewModel;
+
+            
         }
 
         public void OnBrandRemoved(Brand brand)

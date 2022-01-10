@@ -43,7 +43,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public static ModifyCategoryViewModel LoadViewModel(IDataCollection<Category> collection)
         {
-            return new ModifyCategoryViewModel(collection);
+            ModifyCategoryViewModel viewModel = new ModifyCategoryViewModel(collection);
+            return viewModel;
         }
 
         public string CategoryId

@@ -37,10 +37,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\CreateUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CreateRoleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ModifyUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ModifyRoleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\RoleListView.xaml.cs">
@@ -55,11 +64,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\CreateUserView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\CreateRoleView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\ModifyUserView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ModifyRoleView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

@@ -74,7 +74,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public static ModifyBrandViewModel LoadViewModel(IDataCollection<Brand> brandCollection, BrandViewModel brandViewModel)
         {
-            return new ModifyBrandViewModel(brandCollection, brandViewModel);
+            ModifyBrandViewModel viewModel = new ModifyBrandViewModel(brandCollection, brandViewModel);
+            return viewModel;
         }
 
         protected override void Dispose(bool disposing)

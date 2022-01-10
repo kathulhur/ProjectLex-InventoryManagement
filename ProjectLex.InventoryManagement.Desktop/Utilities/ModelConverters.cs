@@ -41,6 +41,17 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
             };
         }
 
+        public static UserDTO UserToUserDTO(User user)
+        {
+            return new UserDTO()
+            {
+                UserID = new Guid(user.UserID),
+                RoleId = new Guid(user.RoleID),
+                UserUsername = user.UserUsername,
+                UserPassword = user.UserPassword
+            };
+        }
+
 
         //public static Supplier CreateSupplierViewModelToSupplier(CreateSupplierViewModel supplierViewModel)
         //{

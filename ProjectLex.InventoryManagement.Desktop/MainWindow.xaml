@@ -44,6 +44,18 @@
                 <views:ModifyRoleView />
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type view_models:UserListViewModel}">
+                <views:UserListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateUserViewModel}">
+                <views:CreateUserView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:ModifyUserViewModel}">
+                <views:ModifyUserView />
+            </DataTemplate>
+
 
 
 
@@ -54,12 +66,14 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
         <Button Grid.Row="0" Content="Category List" Command="{Binding ToCategoryListViewModelCommand}"/>
         <Button Grid.Row="1" Content="Brand List" Command="{Binding ToBrandListViewModelCommand}"/>
         <Button Grid.Row="2" Content="Role List" Command="{Binding ToRoleListViewModelCommand}"/>
+        <Button Grid.Row="3" Content="User List" Command="{Binding ToUserListViewModelCommand}"/>
 
-        <ContentControl Grid.Row="3" Content="{Binding CurrentViewModel}" />
+        <ContentControl Grid.Row="4" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>
