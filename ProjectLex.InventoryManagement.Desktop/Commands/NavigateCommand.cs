@@ -9,18 +9,17 @@ using System.Threading.Tasks;
 
 namespace ProjectLex.InventoryManagement.Desktop.Commands
 {
-    class NavigateCommand <TViewModel> : CommandBase where TViewModel : ViewModelBase
+    class NavigateCommand : CommandBase
     {
-        private readonly NavigationService<TViewModel> _navigationService;
-
-        public NavigateCommand(NavigationService<TViewModel> navigationService)
+        public Action<object> _navigateToView;
+        public NavigateCommand(Action<object> navigateToView)
         {
-            _navigationService = navigationService;
+            _navigateToView = navigateToView;
         }
 
         public override void Execute(object parameter)
         {
-            _navigationService.Navigate();
+            _navigateToView(parameter);
         }
     }
 }

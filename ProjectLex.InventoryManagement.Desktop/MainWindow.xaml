@@ -19,7 +19,11 @@
             <DataTemplate DataType="{x:Type view_models:CreateCategoryViewModel}">
                 <views:CreateCategoryView />
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type view_models:ModifyCategoryViewModel}">
+                <views:ModifyCategoryView />
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type view_models:BrandListViewModel}">
                 <views:BrandListView />
             </DataTemplate>
@@ -70,9 +74,20 @@
             </DataTemplate>
 
 
+            <DataTemplate DataType="{x:Type view_models:AttributeListViewModel}">
+                <views:AttributeListView />
+            </DataTemplate>
 
+            <DataTemplate DataType="{x:Type view_models:CreateAttributeViewModel}">
+                <views:CreateAttributeView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:ModifyAttributeViewModel}">
+                <views:ModifyAttributeView />
+            </DataTemplate>
 
         </Grid.Resources>
+        
         
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -81,14 +96,16 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
-        <Button Grid.Row="0" Content="Category List" Command="{Binding ToCategoryListViewModelCommand}"/>
-        <Button Grid.Row="1" Content="Brand List" Command="{Binding ToBrandListViewModelCommand}"/>
-        <Button Grid.Row="2" Content="Role List" Command="{Binding ToRoleListViewModelCommand}"/>
-        <Button Grid.Row="3" Content="User List" Command="{Binding ToUserListViewModelCommand}"/>
-        <Button Grid.Row="4" Content="Store List" Command="{Binding ToStoreListViewModelCommand}"/>
+        <Button Grid.Row="0" Content="Category List" Command="{Binding NavigateToCategoryListCommand}"/>
+        <Button Grid.Row="1" Content="Brand List" Command="{Binding NavigateToBrandListCommand}"/>
+        <Button Grid.Row="2" Content="Role List" Command="{Binding NavigateToRoleListCommand}"/>
+        <Button Grid.Row="3" Content="User List" Command="{Binding NavigateToUserListCommand}"/>
+        <Button Grid.Row="4" Content="Store List" Command="{Binding NavigateToStoreListCommand}"/>
+        <Button Grid.Row="5" Content="Attribute List" Command="{Binding NavigateToAttributeListCommand}"/>
 
-        <ContentControl Grid.Row="5" Content="{Binding CurrentViewModel}" />
+        <ContentControl Grid.Row="6" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

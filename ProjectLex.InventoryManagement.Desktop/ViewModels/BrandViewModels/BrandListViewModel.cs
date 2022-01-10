@@ -1,0 +1,111 @@
+﻿using ProjectLex.InventoryManagement.Desktop.Collections;
+using ProjectLex.InventoryManagement.Desktop.Commands;
+using ProjectLex.InventoryManagement.Desktop.Models;
+using ProjectLex.InventoryManagement.Desktop.Services;
+using ProjectLex.InventoryManagement.Desktop.Stores;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace ProjectLex.InventoryManagement.Desktop.ViewModels
+{
+    public class BrandListViewModel : ViewModelBase
+    {
+
+        private bool _isDisposed = false;
+        private readonly NavigationStore _navigationStore;
+        private readonly ObservableCollection<BrandViewModel> _brands;
+        public IEnumerable<BrandViewModel> Brands => _brands;
+
+        private readonly BrandCollection _brandCollection;
+
+        public ICommand ToCreateBrandCommand { get; }
+        public ICommand LoadBrandsCommand { get; }
+        public ICommand RemoveBrandCommand { get; }
+        public ICommand NavigateToModifyBrandCommand { get; }
+        public ICommand NavigateToCreateBrandCommand { get; }
+
+        public BrandListViewModel(NavigationStore navigationStore, BrandCollection brandCollection)
+        {
+            _navigationStore = navigationStore;
+            _brandCollection = brandCollection;
+            _brandCollection.BrandRemoved += OnBrandRemoved;
+            _brands = new ObservableCollection<BrandViewModel>();
+            LoadBrandsCommand = new LoadDataCommand<Brand>(_brandCollection, OnBrandLoaded);
+            RemoveBrandCommand = new RemoveDataCommand<Brand>(_brandCollection, CreateBrand, CanRemoveBrand);
+            NavigateToModifyBrandCommand = new NavigateCommand(NavigateToModifyBrand);
+            NavigateToCreateBrandCommand = new NavigateCommand(NavigateToCreateBrand);
+        }
+
+        public static BrandListViewModel LoadViewModel(NavigationStore navigationStore, BrandCollection brandCollection)
+        {
+            BrandListViewModel viewModel = new BrandListViewModel(navigationStore, brandCollection);
+            viewModel.LoadBrandsCommand.Execute(null);
+            return viewModel;
+        }
+        public void NavigateToModifyBrand(object obj)
+        {
+            BrandViewModel brandViewModel = (BrandViewModel)obj;
+            _navigationStore.CurrentViewModel = ModifyBrandViewModel.LoadViewModel(_navigationStore, _brandCollection, brandViewModel);
+        }
+
+        public void NavigateToCreateBrand(object obj)
+        {
+            _navigationStore.CurrentViewModel = CreateBrandViewModel.LoadViewModel(_navigationStore, _brandCollection);
+        }
+
+        public Brand CreateBrand(object obj)
+        {
+            return new Brand((BrandViewModel)obj);
+        }
+
+
+
+        public void OnBrandRemoved(Brand brand)
+        {
+            BrandViewModel removedBrandViewModel = _brands.Where(b => b.BrandID == brand.BrandID).First();
+            _brands.Remove(removedBrandViewModel);
+        }
+        
+        public bool CanRemoveBrand(object obj)
+        {
+            return true;
+        }
+
+        private void OnBrandLoaded()
+        {
+            _brands.Clear();
+
+            foreach (Brand b in _brandCollection.DataList)
+            {
+                BrandViewModel brandViewModel = new BrandViewModel(b);
+                _brands.Add(brandViewModel);
+            }
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            //Note: Implement finalizer only if the object have unmanaged resources
+
+            if (!this._isDisposed)
+            {
+                if (disposing) // dispose all unamanage and managed resources
+                {
+                    // dispose resources here
+                    _brandCollection.BrandRemoved -= OnBrandRemoved;
+                }
+
+            }
+
+            // call methods to cleanup the unamanaged resources
+
+            _isDisposed = true;
+            base.Dispose(disposing);
+        }
+    }
+}

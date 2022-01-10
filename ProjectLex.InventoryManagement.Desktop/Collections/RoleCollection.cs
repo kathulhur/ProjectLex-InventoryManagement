@@ -19,8 +19,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         private List<Role> _dataList;
 
-        private Lazy<Task> _initializeLazy;
-
         public IEnumerable<Role> DataList => _dataList;
 
 
@@ -28,30 +26,25 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             _controller = controller;
             _dataList = new List<Role>();
-            _initializeLazy = new Lazy<Task>(Initialize);
         }
 
         public event Action<Role> RoleCreated;
         public event Action<Role> RoleRemoved;
         public event Action<Role> RoleModified;
-        private async Task Initialize()
-        {
-            IEnumerable<Role> data = await _controller.Provider.GetAll();
-            _dataList.Clear();
-            _dataList.AddRange(data);
-        }
 
         public async Task Load()
         {
             try
             {
-                await _initializeLazy.Value;
+                IEnumerable<Role> data = await _controller.Provider.GetAll();
+                _dataList.Clear();
+                _dataList.AddRange(data);
             }
             catch (Exception e)
             {
+                Debug.WriteLine("RoleCollection.Load : ");
                 Debug.WriteLine(e.Message);
-                _initializeLazy = new Lazy<Task>(Initialize);
-                throw;
+                Debug.WriteLine(e.InnerException);
             }
         }
 

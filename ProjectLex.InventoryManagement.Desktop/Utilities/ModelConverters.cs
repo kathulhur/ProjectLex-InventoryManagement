@@ -65,6 +65,26 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
             };
         }
 
+        public static OrderDTO OrderToOrderDTO(Order order)
+        {
+            return new OrderDTO()
+            {
+                OrderID = new Guid(order.OrderID),
+                UserID = new Guid(order.UserID),
+                CustomerName = order.CustomerName,
+                OrderTotal = Convert.ToDecimal(order.OrderTotal),
+            };
+        }
+
+        public static AttributeDTO AttributeToAttributeDTO(Models.Attribute attribute)
+        {
+            return new AttributeDTO()
+            {
+                AttributeID = new Guid(attribute.AttributeID),
+                AttributeName = attribute.AttributeName,
+            };
+        }
+
 
         //public static Supplier CreateSupplierViewModelToSupplier(CreateSupplierViewModel supplierViewModel)
         //{

@@ -17,151 +17,78 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
         private readonly CollectionStore _collectionStore;
 
         public NavigationStore NavigationStore => _navigationStore;
-
-        private readonly ICommand _toCreateCategoryViewModelCommand;
-        public ICommand ToCreateCategoryViewModelCommand => _toCreateCategoryViewModelCommand;
-
+        public CollectionStore CollectionStore => _collectionStore;
 
         private readonly ICommand _toCategoryListViewModelCommand;
         public ICommand ToCategoryListViewModelCommand => _toCategoryListViewModelCommand;
-
-
-
-        private readonly ICommand _toCreateBrandViewModelCommand;
-        public ICommand ToCreateBrandViewModelCommand => _toCreateBrandViewModelCommand;
 
 
         private readonly ICommand _toBrandListViewModelCommand;
         public ICommand ToBrandListViewModelCommand => _toBrandListViewModelCommand;
 
 
-
-        private readonly ICommand _toCreateRoleViewModelCommand;
-        public ICommand ToCreateRoleViewModelCommand => _toCreateRoleViewModelCommand;
-
-
         private readonly ICommand _toRoleListViewModelCommand;
         public ICommand ToRoleListViewModelCommand => _toRoleListViewModelCommand;
 
-
-
-        private readonly ICommand _toCreateUserViewModelCommand;
-        public ICommand ToCreateUserViewModelCommand => _toCreateUserViewModelCommand;
 
         private readonly ICommand _toUserListViewModelCommand;
         public ICommand ToUserListViewModelCommand => _toUserListViewModelCommand;
 
 
-
-        private readonly ICommand _toCreateStoreViewModelCommand;
-        public ICommand ToCreateStoreViewModelCommand => _toCreateStoreViewModelCommand;
-
         private readonly ICommand _toStoreListViewModelCommand;
         public ICommand ToStoreListViewModelCommand => _toStoreListViewModelCommand;
 
-        public ViewModelService
-            (
-                NavigationStore navigationStore,
-                CollectionStore collectionStore
-            )
+        private readonly ICommand _toOrderListViewModelCommand;
+        public ICommand ToOrderListViewModelCommand => _toOrderListViewModelCommand;
+
+        private readonly ICommand _toAttributeListViewModelCommand;
+        public ICommand ToAttributeListViewModelCommand => _toAttributeListViewModelCommand;
+
+
+        public ViewModelService(NavigationStore navigationStore, CollectionStore collectionStore)
         {
             _navigationStore = navigationStore;
             _collectionStore = collectionStore;
 
-            _toCreateCategoryViewModelCommand = new NavigateCommand<CreateCategoryViewModel>(new NavigationService<CreateCategoryViewModel>(navigationStore, MakeCreateCategoryViewModel));
-            _toCategoryListViewModelCommand = new NavigateCommand<CategoryListViewModel>(new NavigationService<CategoryListViewModel>(navigationStore, MakeCategoryListViewModel));
-            
-
-            _toCreateBrandViewModelCommand = new NavigateCommand<CreateBrandViewModel>(new NavigationService<CreateBrandViewModel>(navigationStore, MakeCreateBrandViewModel));
-            _toBrandListViewModelCommand = new NavigateCommand<BrandListViewModel>(new NavigationService<BrandListViewModel>(navigationStore, MakeBrandListViewModel));
-
-            
-            _toCreateRoleViewModelCommand = new NavigateCommand<CreateRoleViewModel>(new NavigationService<CreateRoleViewModel>(navigationStore, MakeCreateRoleViewModel));
-            _toRoleListViewModelCommand = new NavigateCommand<RoleListViewModel>(new NavigationService<RoleListViewModel>(navigationStore, MakeRoleListViewModel));
-            
-
-            _toCreateUserViewModelCommand = new NavigateCommand<CreateUserViewModel>(new NavigationService<CreateUserViewModel>(navigationStore, MakeCreateUserViewModel));
-            _toUserListViewModelCommand = new NavigateCommand<UserListViewModel>(new NavigationService<UserListViewModel>(navigationStore, MakeUserListViewModel));
-
-
-            _toCreateStoreViewModelCommand = new NavigateCommand<CreateStoreViewModel>(new NavigationService<CreateStoreViewModel>(navigationStore, MakeCreateStoreViewModel));
-            _toStoreListViewModelCommand = new NavigateCommand<StoreListViewModel>(new NavigationService<StoreListViewModel>(navigationStore, MakeStoreListViewModel));
+            _toCategoryListViewModelCommand = new NavigateCommand(NavigateToCategoryList);
+            _toBrandListViewModelCommand = new NavigateCommand(NavigateToBrandList);
+            _toRoleListViewModelCommand = new NavigateCommand(NavigateToRoleList);
+            _toUserListViewModelCommand = new NavigateCommand(NavigateToUserList);
+            _toStoreListViewModelCommand = new NavigateCommand(NavigateToStoreList);
+            _toAttributeListViewModelCommand = new NavigateCommand(NavigateToAttributeList);
         }
 
-
-        public CreateCategoryViewModel MakeCreateCategoryViewModel()
+        public void NavigateToCategoryList(object obj)
         {
-            return CreateCategoryViewModel.LoadViewModel(_collectionStore.CategoryCollection);
+            _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(NavigationStore, _collectionStore.CategoryCollection);
         }
 
-        public CategoryListViewModel MakeCategoryListViewModel()
+
+        public void NavigateToBrandList(object ojb)
         {
-            return CategoryListViewModel.LoadViewModel(_collectionStore.CategoryCollection, _navigationStore);
+            _navigationStore.CurrentViewModel = BrandListViewModel.LoadViewModel(_navigationStore, _collectionStore.BrandCollection);
         }
 
-
-        public CreateStoreViewModel MakeCreateStoreViewModel()
+        public void NavigateToStoreList(object obj)
         {
-            return CreateStoreViewModel.LoadViewModel(_collectionStore.StoreCollection);
+            _navigationStore.CurrentViewModel = StoreListViewModel.LoadViewModel(_navigationStore, _collectionStore.StoreCollection);
         }
 
-        public StoreListViewModel MakeStoreListViewModel()
+        public void NavigateToRoleList(object obj)
         {
-            return StoreListViewModel.LoadViewModel(_collectionStore.StoreCollection, _navigationStore);
+            _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore, _collectionStore.RoleCollection);
         }
 
-
-        public CreateBrandViewModel MakeCreateBrandViewModel()
+        public void NavigateToUserList(object obj)
         {
-            return CreateBrandViewModel.LoadViewModel(_collectionStore.BrandCollection);
+            _navigationStore.CurrentViewModel = UserListViewModel.LoadViewModel(_navigationStore, _collectionStore.UserCollection, _collectionStore.RoleCollection);
         }
 
-        public BrandListViewModel MakeBrandListViewModel()
+        public void NavigateToAttributeList(object obj)
         {
-            return BrandListViewModel.LoadViewModel(_collectionStore.BrandCollection, _navigationStore);
+            _navigationStore.CurrentViewModel = AttributeListViewModel.LoadViewModel(_navigationStore, _collectionStore.AttributeCollection);
         }
 
-
-
-        public CreateRoleViewModel MakeCreateRoleViewModel()
-        {
-            return CreateRoleViewModel.LoadViewModel(_collectionStore.RoleCollection);
-        }
-
-        public RoleListViewModel MakeRoleListViewModel()
-        {
-            return RoleListViewModel.LoadViewModel(_collectionStore.RoleCollection, _navigationStore);
-        }
-
-
-
-        public CreateUserViewModel MakeCreateUserViewModel()
-        {
-            return CreateUserViewModel.LoadViewModel(_collectionStore.UserCollection, _collectionStore.RoleCollection);
-        }
-
-        public UserListViewModel MakeUserListViewModel()
-        {
-            return UserListViewModel.LoadViewModel(_collectionStore.UserCollection, _collectionStore.RoleCollection, _navigationStore);
-        }
-
-        //public CreateProductViewModel MakeCreateProductViewModel()
-        //{
-        //    return CreateProductViewModel.LoadViewModel(
-        //        _collectionStore.ProductCollection,
-        //        _collectionStore.CategoryCollection,
-        //        _collectionStore.SupplierCollection,
-        //        new NavigationService<ProductListViewModel>(_navigationStore, MakeProductListViewModel));
-        //}
-
-        //public ProductListViewModel MakeProductListViewModel()
-        //{
-        //    return ProductListViewModel.LoadViewModel(
-        //        _collectionStore.ProductCollection,
-        //        _collectionStore.CategoryCollection,
-        //        _collectionStore.SupplierCollection, 
-        //        new NavigationService<CreateProductViewModel>(_navigationStore, MakeCreateProductViewModel));
-        //}
 
     }
 }

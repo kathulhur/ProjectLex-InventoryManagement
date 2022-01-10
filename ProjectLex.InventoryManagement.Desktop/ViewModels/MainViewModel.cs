@@ -1,4 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
+using ProjectLex.InventoryManagement.Desktop.Models;
 using ProjectLex.InventoryManagement.Desktop.Services;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
@@ -15,41 +16,30 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ViewModelService _viewModelService;
         public ViewModelBase CurrentViewModel => _viewModelService.NavigationStore.CurrentViewModel;
 
-        public ICommand ToCategoryListViewModelCommand { get; }
-        public ICommand ToCreateCategoryViewModelCommand { get; }
+        private readonly User _user;
+        public User CurrentUser => _user;
 
-        public ICommand ToBrandListViewModelCommand { get; }
-        public ICommand ToCreateBrandViewModelCommand { get; }
+        public ICommand NavigateToCategoryListCommand { get; }
+        public ICommand NavigateToBrandListCommand { get; }
+        public ICommand NavigateToRoleListCommand { get; }
+        public ICommand NavigateToStoreListCommand { get; }
+        public ICommand NavigateToUserListCommand { get; }
+        public ICommand NavigateToAttributeListCommand { get; }
 
-        public ICommand ToRoleListViewModelCommand { get; }
-        public ICommand ToCreateRoleViewModelCommand { get; }
-
-        public ICommand ToUserListViewModelCommand { get; }
-        public ICommand ToCreateUserViewModelCommand { get; }
-        
-        public ICommand ToStoreListViewModelCommand { get; }
-        public ICommand ToCreateStoreViewModelCommand { get; }
-
-        public MainViewModel(ViewModelService viewModelService)
+        public MainViewModel(User user, ViewModelService viewModelService)
         {
+            _user = user;
+
             _viewModelService = viewModelService;
             _viewModelService.NavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            viewModelService.NavigationStore.CurrentViewModel = viewModelService.MakeCategoryListViewModel();
+            viewModelService.NavigationStore.CurrentViewModel = CreateCategoryViewModel.LoadViewModel(_viewModelService.NavigationStore, _viewModelService.CollectionStore.CategoryCollection);
 
-            ToCategoryListViewModelCommand = viewModelService.ToCategoryListViewModelCommand;
-            ToCreateCategoryViewModelCommand = viewModelService.ToCreateCategoryViewModelCommand;
-
-            ToBrandListViewModelCommand = viewModelService.ToBrandListViewModelCommand;
-            ToCreateBrandViewModelCommand = viewModelService.ToCreateBrandViewModelCommand;
-
-            ToRoleListViewModelCommand = viewModelService.ToRoleListViewModelCommand;
-            ToCreateRoleViewModelCommand = viewModelService.ToCreateRoleViewModelCommand;
-
-            ToUserListViewModelCommand = viewModelService.ToUserListViewModelCommand;
-            ToCreateUserViewModelCommand = viewModelService.ToCreateUserViewModelCommand;
-            
-            ToStoreListViewModelCommand = viewModelService.ToStoreListViewModelCommand;
-            ToCreateStoreViewModelCommand = viewModelService.ToCreateStoreViewModelCommand;
+            NavigateToCategoryListCommand = viewModelService.ToCategoryListViewModelCommand;
+            NavigateToBrandListCommand = viewModelService.ToBrandListViewModelCommand;
+            NavigateToRoleListCommand = viewModelService.ToRoleListViewModelCommand;
+            NavigateToUserListCommand = viewModelService.ToUserListViewModelCommand;
+            NavigateToStoreListCommand = viewModelService.ToStoreListViewModelCommand;
+            NavigateToAttributeListCommand = viewModelService.ToAttributeListViewModelCommand;
         }
 
         private void OnCurrentViewModelChanged()

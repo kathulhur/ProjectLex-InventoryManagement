@@ -11,7 +11,6 @@
   <ItemGroup>
     <Compile Remove="Collections\Warehouse.cs" />
     <Compile Remove="Commands\CreateCategoryCommand1.cs" />
-    <Compile Remove="Models\Attribute.cs" />
     <Compile Remove="Models\AttributeValue.cs" />
     <Compile Remove="Models\Product.cs" />
     <Compile Remove="Models\ProductCategory.cs" />
@@ -41,83 +40,136 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\CreateStoreView.xaml.cs">
+    <Compile Update="Views\AttributeViews\AttributeListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ModifyStoreView.xaml.cs">
+    <Compile Update="Views\AttributeViews\CreateAttributeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\StoreListView.xaml.cs">
+    <Compile Update="Views\AttributeViews\ModifyBrandView - Copy.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModifyAttributeView.xaml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AttributeViews\ModifyAttributeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CreateUserView.xaml.cs">
+    <Compile Update="Views\CategoryViews\ModifyCategoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CreateRoleView.xaml.cs">
+    <Compile Update="Views\StoreViews\CreateStoreView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ModifyUserView.xaml.cs">
+    <Compile Update="Views\StoreViews\ModifyStoreView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ModifyRoleView.xaml.cs">
+    <Compile Update="Views\StoreViews\StoreListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\UserListView.xaml.cs">
+    <Compile Update="Views\OrderViews\CreateOrderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\RoleListView.xaml.cs">
+    <Compile Update="Views\OrderViews\ModifyOrderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ModifyBrandView.xaml.cs">
+    <Compile Update="Views\OrderViews\OrderListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CreateBrandView.xaml.cs">
+    <Compile Update="Views\UserViews\CreateUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RoleViews\CreateRoleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserViews\ModifyUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RoleViews\ModifyRoleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserViews\UserListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RoleViews\RoleListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\BrandViews\ModifyBrandView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\BrandViews\CreateBrandView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Views\CreateStoreView.xaml">
+    <Page Update="Views\AttributeViews\AttributeListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyStoreView.xaml">
+    <Page Update="Views\AttributeViews\CreateAttributeView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StoreListView.xaml">
+    <Page Update="Views\AttributeViews\ModifyAttributeView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateUserView.xaml">
+    <Page Update="Views\CategoryViews\ModifyCategoryView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateRoleView.xaml">
+    <Page Update="Views\StoreViews\CreateStoreView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyUserView.xaml">
+    <Page Update="Views\StoreViews\ModifyStoreView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyRoleView.xaml">
+    <Page Update="Views\StoreViews\StoreListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserListView.xaml">
+    <Page Update="Views\OrderViews\CreateOrderView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\RoleListView.xaml">
+    <Page Update="Views\OrderViews\ModifyOrderView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyBrandView.xaml">
+    <Page Update="Views\OrderViews\OrderListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateBrandView.xaml">
+    <Page Update="Views\UserViews\CreateUserView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\CreateRoleView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserViews\ModifyUserView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\ModifyRoleView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserViews\UserListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\RoleListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BrandViews\ModifyBrandView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BrandViews\CreateBrandView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

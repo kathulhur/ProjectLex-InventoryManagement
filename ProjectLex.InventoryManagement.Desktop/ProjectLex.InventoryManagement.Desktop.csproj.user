@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ShowAllFiles>false</ShowAllFiles>
+    <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
@@ -12,16 +12,16 @@
     <Compile Update="LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CategoryListView.xaml.cs">
+    <Compile Update="Views\CategoryViews\CategoryListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CreateCategoryView.xaml.cs">
+    <Compile Update="Views\CategoryViews\CreateCategoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CreateProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\BrandListView.xaml.cs">
+    <Compile Update="Views\BrandViews\BrandListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -32,49 +32,70 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateStoreView.xaml">
+    <Page Update="Views\AttributeViews\AttributeListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyStoreView.xaml">
+    <Page Update="Views\AttributeViews\CreateAttributeView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StoreListView.xaml">
+    <Page Update="Views\AttributeViews\ModifyAttributeView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateUserView.xaml">
+    <Page Update="Views\CategoryViews\ModifyCategoryView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateRoleView.xaml">
+    <Page Update="Views\StoreViews\CreateStoreView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyUserView.xaml">
+    <Page Update="Views\StoreViews\ModifyStoreView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyRoleView.xaml">
+    <Page Update="Views\StoreViews\StoreListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserListView.xaml">
+    <Page Update="Views\OrderViews\CreateOrderView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\RoleListView.xaml">
+    <Page Update="Views\OrderViews\ModifyOrderView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CategoryListView.xaml">
+    <Page Update="Views\OrderViews\OrderListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ModifyBrandView.xaml">
+    <Page Update="Views\UserViews\CreateUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\CreateRoleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserViews\ModifyUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\ModifyRoleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserViews\UserListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\RoleListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CategoryViews\CategoryListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BrandViews\ModifyBrandView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CreateProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateBrandView.xaml">
+    <Page Update="Views\BrandViews\CreateBrandView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateCategoryView.xaml">
+    <Page Update="Views\CategoryViews\CreateCategoryView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BrandListView.xaml">
+    <Page Update="Views\BrandViews\BrandListView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

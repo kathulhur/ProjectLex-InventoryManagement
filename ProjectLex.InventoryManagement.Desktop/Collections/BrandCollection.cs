@@ -19,8 +19,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         private List<Brand> _dataList;
 
-        private Lazy<Task> _initializeLazy;
-
         public IEnumerable<Brand> DataList => _dataList;
 
 
@@ -28,30 +26,25 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             _controller = controller;
             _dataList = new List<Brand>();
-            _initializeLazy = new Lazy<Task>(Initialize);
         }
 
         public event Action<Brand> BrandCreated;
         public event Action<Brand> BrandRemoved;
         public event Action<Brand> BrandModified;
-        private async Task Initialize()
-        {
-            IEnumerable<Brand> data = await _controller.Provider.GetAll();
-            _dataList.Clear();
-            _dataList.AddRange(data);
-        }
 
         public async Task Load()
         {
             try
             {
-                await _initializeLazy.Value;
+                IEnumerable<Brand> data = await _controller.Provider.GetAll();
+                _dataList.Clear();
+                _dataList.AddRange(data);
             }
             catch (Exception e)
             {
+                Debug.WriteLine("BrandCollection.Load");
                 Debug.WriteLine(e.Message);
-                _initializeLazy = new Lazy<Task>(Initialize);
-                throw;
+                Debug.WriteLine(e.InnerException);
             }
         }
 

@@ -61,6 +61,13 @@ namespace ProjectLex.InventoryManagement.Desktop
         private readonly IModifier<Store> _storeModifier;
         private readonly StoreCollection _storeCollection;
 
+        private readonly IProvider<Models.Attribute> _attributeProvider;
+        private readonly ICreator<Models.Attribute> _attributeCreator;
+        private readonly IController<Models.Attribute> _attributeController;
+        private readonly IRemover<Models.Attribute> _attributeRemover;
+        private readonly IModifier<Models.Attribute> _attributeModifier;
+        private readonly AttributeCollection _attributeCollection;
+
         //private readonly IProvider<Product> _productProvider;
         //private readonly ICreator<Product> _productCreator;
         //private readonly IController<Product> _productController;
@@ -69,7 +76,9 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         private readonly CollectionStore _collectionStore;
 
-        private readonly ContextFactory _contextFactory; 
+        private readonly ContextFactory _contextFactory;
+
+        private readonly AuthenticationService _authenticationService;
         public App()
         {
             _navigationStore = new NavigationStore();
@@ -105,6 +114,7 @@ namespace ProjectLex.InventoryManagement.Desktop
             _userController = new DataController<User>(_userProvider, _userCreator, _userRemover, _userModifier);
             _userCollection = new UserCollection(_userController);
 
+            _authenticationService = AuthenticationService.LoadAuthenticationService(_userCollection);
 
             _storeProvider = new StoreProvider(_contextFactory);
             _storeCreator = new StoreCreator(_contextFactory);
@@ -113,6 +123,13 @@ namespace ProjectLex.InventoryManagement.Desktop
             _storeController = new DataController<Store>(_storeProvider, _storeCreator, _storeRemover, _storeModifier);
             _storeCollection = new StoreCollection(_storeController);
 
+
+            _attributeProvider = new AttributeProvider(_contextFactory);
+            _attributeCreator = new AttributeCreator(_contextFactory);
+            _attributeRemover = new AttributeRemover(_contextFactory);
+            _attributeModifier = new AttributeModifier(_contextFactory);
+            _attributeController = new DataController<Models.Attribute>(_attributeProvider, _attributeCreator, _attributeRemover, _attributeModifier);
+            _attributeCollection = new AttributeCollection(_attributeController);
             //_productProvider = new ProductProvider(_contextFactory);
             //_productCreator = new ProductCreator(_contextFactory);
             //_productController = new ProductController(_productProvider, _productCreator);
@@ -124,7 +141,8 @@ namespace ProjectLex.InventoryManagement.Desktop
                 _brandCollection,
                 _roleCollection,
                 _userCollection,
-                _storeCollection
+                _storeCollection,
+                _attributeCollection
             );
 
             _viewModelService = new ViewModelService
@@ -137,7 +155,7 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new LoginWindow(_viewModelService);
+            MainWindow = new LoginWindow(_authenticationService, _viewModelService);
             MainWindow.Show();
 
             base.OnStartup(e);

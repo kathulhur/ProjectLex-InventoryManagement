@@ -19,7 +19,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         private List<Category> _dataList;
 
-        private Lazy<Task> _initializeLazy;
         public IEnumerable<Category> DataList => _dataList;
 
         public event Action<Category> CategoryCreated;
@@ -45,29 +44,24 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             _controller = controller;
             _dataList = new List<Category>();
-            _initializeLazy = new Lazy<Task>(Initialize);
         }
 
         
 
-        private async Task Initialize()
-        {
-            IEnumerable<Category> data = await _controller.Provider.GetAll();
-            _dataList.Clear();
-            _dataList.AddRange(data);
-        }
 
         public async Task Load()
         {
             try
             {
-                await _initializeLazy.Value;
+                IEnumerable<Category> data = await _controller.Provider.GetAll();
+                _dataList.Clear();
+                _dataList.AddRange(data);
             }
             catch (Exception e)
             {
+                Debug.WriteLine("CategoryCollection.Load : ");
                 Debug.WriteLine(e.Message);
-                _initializeLazy = new Lazy<Task>(Initialize);
-                throw;
+                Debug.WriteLine(e.InnerException);
             }
         }
 
