@@ -15,24 +15,28 @@ namespace ProjectLex.InventoryManagement.Desktop.Stores
         private readonly BrandCollection _brandCollection;
         private readonly RoleCollection _roleCollection;
         private readonly UserCollection _userCollection;
+        private readonly StoreCollection _storeCollection;
 
         public CategoryCollection CategoryCollection => _categoryCollection;
         public BrandCollection BrandCollection => _brandCollection;
         public RoleCollection RoleCollection => _roleCollection;
         public UserCollection UserCollection => _userCollection;
+        public StoreCollection StoreCollection => _storeCollection;
 
 
         public CollectionStore(
             CategoryCollection categoryCollection,
             BrandCollection brandCollection,
             RoleCollection roleCollection,
-            UserCollection userCollection
+            UserCollection userCollection,
+            StoreCollection storeCollection
             )
         {
             _categoryCollection = categoryCollection;
             _brandCollection = brandCollection;
             _roleCollection = roleCollection;
             _userCollection = userCollection;
+            _storeCollection = storeCollection;
 
         }
 

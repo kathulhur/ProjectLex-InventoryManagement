@@ -12,7 +12,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
     {
         public string UserID { get; }
         public string RoleID { get; }
-        public Role Role { get; }
         public string UserUsername { get; }
         public string UserPassword { get; }
 
@@ -20,7 +19,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
         {
             UserID = userDTO.UserID.ToString();
             RoleID = userDTO.RoleId.ToString();
-            Role = new Role(userDTO.Role);
             UserUsername = userDTO.UserUsername;
             UserPassword = userDTO.UserPassword;
         }
@@ -29,7 +27,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
         {
             UserID = Guid.NewGuid().ToString();
             RoleID = createUserViewModel.RoleID;
-            Role = new Role(createUserViewModel.Role);
             UserUsername = createUserViewModel.UserUsername;
             UserPassword = createUserViewModel.UserPassword;
         }
@@ -38,17 +35,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
         {
             UserID = modifyUserViewModel.UserID;
             RoleID = modifyUserViewModel.RoleID;
-            Role = new Role(modifyUserViewModel.Role);
             UserUsername = modifyUserViewModel.UserUsername;
             UserPassword = modifyUserViewModel.UserPassword;
         }
 
-        public User(UserViewModel brandViewModel)
+        public User(UserViewModel userViewModel)
         {
-            UserID = brandViewModel.UserID;
-            RoleID = brandViewModel.RoleID;
-            UserUsername = brandViewModel.UserUsername;
-            UserPassword = brandViewModel.UserPassword;
+            UserID = userViewModel.UserID;
+            RoleID = userViewModel.RoleID;
+            UserUsername = userViewModel.UserUsername;
+            UserPassword = userViewModel.UserPassword;
         }
 
     }

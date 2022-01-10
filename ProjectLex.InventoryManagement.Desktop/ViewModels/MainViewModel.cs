@@ -26,6 +26,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public ICommand ToUserListViewModelCommand { get; }
         public ICommand ToCreateUserViewModelCommand { get; }
+        
+        public ICommand ToStoreListViewModelCommand { get; }
+        public ICommand ToCreateStoreViewModelCommand { get; }
 
         public MainViewModel(ViewModelService viewModelService)
         {
@@ -44,6 +47,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             ToUserListViewModelCommand = viewModelService.ToUserListViewModelCommand;
             ToCreateUserViewModelCommand = viewModelService.ToCreateUserViewModelCommand;
+            
+            ToStoreListViewModelCommand = viewModelService.ToStoreListViewModelCommand;
+            ToCreateStoreViewModelCommand = viewModelService.ToCreateStoreViewModelCommand;
         }
 
         private void OnCurrentViewModelChanged()

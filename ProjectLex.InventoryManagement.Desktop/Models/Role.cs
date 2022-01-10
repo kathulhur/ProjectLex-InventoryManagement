@@ -14,8 +14,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Models
         public string RoleName { get; set; }
         public string RoleStatus { get; set; }
 
-        public IEnumerable<User> Users { get; set; }
-
         public Role(RoleDTO roleDTO)
         {
             RoleID = roleDTO.RoleID.ToString();

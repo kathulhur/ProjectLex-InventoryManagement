@@ -54,6 +54,13 @@ namespace ProjectLex.InventoryManagement.Desktop
         private readonly IModifier<User> _userModifier;
         private readonly UserCollection _userCollection;
 
+        private readonly IProvider<Store> _storeProvider;
+        private readonly ICreator<Store> _storeCreator;
+        private readonly IController<Store> _storeController;
+        private readonly IRemover<Store> _storeRemover;
+        private readonly IModifier<Store> _storeModifier;
+        private readonly StoreCollection _storeCollection;
+
         //private readonly IProvider<Product> _productProvider;
         //private readonly ICreator<Product> _productCreator;
         //private readonly IController<Product> _productController;
@@ -98,6 +105,14 @@ namespace ProjectLex.InventoryManagement.Desktop
             _userController = new DataController<User>(_userProvider, _userCreator, _userRemover, _userModifier);
             _userCollection = new UserCollection(_userController);
 
+
+            _storeProvider = new StoreProvider(_contextFactory);
+            _storeCreator = new StoreCreator(_contextFactory);
+            _storeRemover = new StoreRemover(_contextFactory);
+            _storeModifier = new StoreModifier(_contextFactory);
+            _storeController = new DataController<Store>(_storeProvider, _storeCreator, _storeRemover, _storeModifier);
+            _storeCollection = new StoreCollection(_storeController);
+
             //_productProvider = new ProductProvider(_contextFactory);
             //_productCreator = new ProductCreator(_contextFactory);
             //_productController = new ProductController(_productProvider, _productCreator);
@@ -108,7 +123,8 @@ namespace ProjectLex.InventoryManagement.Desktop
                 _categoryCollection,
                 _brandCollection,
                 _roleCollection,
-                _userCollection
+                _userCollection,
+                _storeCollection
             );
 
             _viewModelService = new ViewModelService

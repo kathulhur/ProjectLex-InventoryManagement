@@ -63,7 +63,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public void OnBrandRemoved(Brand brand)
         {
-            BrandViewModel brandViewModel = new BrandViewModel(brand);
             BrandViewModel removedBrandViewModel = _brands.Where(b => b.BrandID == brand.BrandID).First();
             _brands.Remove(removedBrandViewModel);
         }

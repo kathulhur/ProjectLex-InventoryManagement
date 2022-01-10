@@ -27,10 +27,16 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public ICommand ToCreateUserCommand { get; }
         public ICommand LoadUsersCommand { get; }
+        public ICommand LoadRolesCommand { get; }
         public ICommand RemoveUserCommand { get; }
         public ICommand NavigateToModifyUserCommand { get; }
 
-        public UserListViewModel(UserCollection userCollection, RoleCollection roleCollection, NavigationStore navigationStore)
+        public UserListViewModel
+            (
+                UserCollection userCollection, 
+                RoleCollection roleCollection, 
+                NavigationStore navigationStore
+            )
         {
             _navigationStore = navigationStore;
             _userCollection = userCollection;
@@ -38,6 +44,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _userCollection.UserRemoved += OnUserRemoved;
             _users = new ObservableCollection<UserViewModel>();
             LoadUsersCommand = new LoadDataCommand<User>(_userCollection, OnUserLoaded);
+            LoadRolesCommand = new LoadDataCommand<Role>(_roleCollection, OnUserLoaded);
             RemoveUserCommand = new RemoveDataCommand<User>(_userCollection, CreateUser, CanRemoveUser);
             NavigateToModifyUserCommand = new ModifyDataNavigateCommand(NavigateToModifyUser);
 
@@ -55,18 +62,23 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         }
 
-        public static UserListViewModel LoadViewModel(UserCollection userCollection, RoleCollection roleCollection, NavigationStore navigationStore)
+        public static UserListViewModel LoadViewModel
+            (
+                UserCollection userCollection, 
+                RoleCollection roleCollection, 
+                NavigationStore navigationStore
+            )
         {
             UserListViewModel viewModel = new UserListViewModel(userCollection, roleCollection, navigationStore);
             viewModel.LoadUsersCommand.Execute(null);
+            viewModel.LoadRolesCommand.Execute(null);
 
             return viewModel;
         }
 
         public void OnUserRemoved(User user)
         {
-            UserViewModel userViewModel = new UserViewModel(user);
-            UserViewModel removedUserViewModel = _users.First(r => r.UserID == userViewModel.UserID);
+            UserViewModel removedUserViewModel = _users.First(r => r.UserID == user.UserID);
             _users.Remove(removedUserViewModel);
 
         }
@@ -80,9 +92,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             _users.Clear();
 
-            foreach (User r in _userCollection.DataList)
+            foreach (User u in _userCollection.DataList)
             {
-                UserViewModel userViewModel = new UserViewModel(r);
+                Role role = _roleCollection.DataList.Where(r => r.RoleID == u.RoleID).FirstOrDefault();
+                UserViewModel userViewModel = new UserViewModel(u, role);
                 _users.Add(userViewModel);
             }
 

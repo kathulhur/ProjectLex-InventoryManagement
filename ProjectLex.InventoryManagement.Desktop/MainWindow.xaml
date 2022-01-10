@@ -57,11 +57,25 @@
             </DataTemplate>
 
 
+            <DataTemplate DataType="{x:Type view_models:StoreListViewModel}">
+                <views:StoreListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateStoreViewModel}">
+                <views:CreateStoreView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:ModifyStoreViewModel}">
+                <views:ModifyStoreView />
+            </DataTemplate>
+
+
 
 
         </Grid.Resources>
         
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -73,7 +87,8 @@
         <Button Grid.Row="1" Content="Brand List" Command="{Binding ToBrandListViewModelCommand}"/>
         <Button Grid.Row="2" Content="Role List" Command="{Binding ToRoleListViewModelCommand}"/>
         <Button Grid.Row="3" Content="User List" Command="{Binding ToUserListViewModelCommand}"/>
+        <Button Grid.Row="4" Content="Store List" Command="{Binding ToStoreListViewModelCommand}"/>
 
-        <ContentControl Grid.Row="4" Content="{Binding CurrentViewModel}" />
+        <ContentControl Grid.Row="5" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

@@ -11,6 +11,10 @@
   <ItemGroup>
     <Compile Remove="Collections\Warehouse.cs" />
     <Compile Remove="Commands\CreateCategoryCommand1.cs" />
+    <Compile Remove="Models\Attribute.cs" />
+    <Compile Remove="Models\AttributeValue.cs" />
+    <Compile Remove="Models\Product.cs" />
+    <Compile Remove="Models\ProductCategory.cs" />
     <Compile Remove="Services\Creators\ProductCreator.cs" />
     <Compile Remove="Services\Providers\ProductProvider.cs" />
     <Compile Remove="Stores\ProductStore.cs" />
@@ -37,6 +41,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\CreateStoreView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ModifyStoreView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StoreListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CreateUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -64,6 +77,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\CreateStoreView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ModifyStoreView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StoreListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\CreateUserView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

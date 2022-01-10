@@ -63,8 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void OnCategoryRemoved(Category category)
         {
-            CategoryViewModel categoryViewModel = new CategoryViewModel(category);
-            categoryViewModel = _categories.Where(c => c.CategoryID == category.CategoryID).First();
+            CategoryViewModel categoryViewModel = _categories.Where(c => c.CategoryID == category.CategoryID).First();
             _categories.Remove(categoryViewModel);
         }
 

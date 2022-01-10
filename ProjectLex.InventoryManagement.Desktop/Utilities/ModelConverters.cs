@@ -21,6 +21,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
             };
 
         }
+
+        public static StoreDTO StoreToStoreDTO(Store store)
+        {
+            return new StoreDTO()
+            {
+                StoreID = new Guid(store.StoreID),
+                StoreName = store.StoreName,
+                StoreStatus = store.StoreStatus
+            };
+
+        }
+
+
         public static BrandDTO BrandToBrandDTO(Brand brand)
         {
             return new BrandDTO()
