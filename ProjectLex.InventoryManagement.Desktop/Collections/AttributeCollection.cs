@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,16 +13,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class AttributeCollection : IDataCollection<Models.Attribute>, ILoadable<Models.Attribute>
     {
-        private readonly IController<Models.Attribute> _controller;
+        private readonly IProvider<Models.Attribute> _provider;
 
         private List<Models.Attribute> _dataList;
 
         public IEnumerable<Models.Attribute> DataList => _dataList;
 
 
-        public AttributeCollection(IController<Models.Attribute> controller)
+        public AttributeCollection(IProvider<Models.Attribute> controller)
         {
-            _controller = controller;
+            _provider = controller;
             _dataList = new List<Models.Attribute>();
         }
 
@@ -36,7 +34,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             try
             {
-                IEnumerable<Models.Attribute> data = await _controller.Provider.GetAll();
+                IEnumerable<Models.Attribute> data = await _provider.GetAll();
                 _dataList.Clear();
                 _dataList.AddRange(data);
             }
@@ -50,19 +48,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<Models.Attribute>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(Models.Attribute newAttribute)
         {
-            await _controller.Creator.Create(newAttribute);
+            await _provider.Create(newAttribute);
             _dataList.Add(newAttribute);
             OnAttributeCreated(newAttribute);
         }
 
         public async Task Remove(Models.Attribute attribute)
         {
-            await _controller.Remover.Remove(attribute);
+            await _provider.Remove(attribute);
             Models.Attribute removedAttribute = _dataList.Where(b => b.AttributeID == attribute.AttributeID).First();
             _dataList.Remove(removedAttribute);
             OnAttributeRemoved(removedAttribute);
@@ -70,7 +68,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(Models.Attribute modifiedAttribute)
         {
-            await _controller.Modifier.Modify(modifiedAttribute);
+            await _provider.Modify(modifiedAttribute);
             int index = _dataList.FindIndex(b => b.AttributeID == modifiedAttribute.AttributeID);
             _dataList[index] = modifiedAttribute;
             OnAttributeModified(modifiedAttribute);

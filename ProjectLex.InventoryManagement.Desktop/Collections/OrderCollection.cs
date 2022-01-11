@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,7 +13,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class OrderCollection : IDataCollection<Order>, ILoadable<Order>
     {
-        private readonly IController<Order> _controller;
+        private readonly IProvider<Order> _provider;
 
         private List<Order> _dataList;
 
@@ -24,9 +22,9 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         public IEnumerable<Order> DataList => _dataList;
 
 
-        public OrderCollection(IController<Order> controller)
+        public OrderCollection(IProvider<Order> provider)
         {
-            _controller = controller;
+            _provider = provider;
             _dataList = new List<Order>();
             _initializeLazy = new Lazy<Task>(Initialize);
         }
@@ -36,7 +34,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         public event Action<Order> OrderModified;
         private async Task Initialize()
         {
-            IEnumerable<Order> data = await _controller.Provider.GetAll();
+            IEnumerable<Order> data = await _provider.GetAll();
             _dataList.Clear();
             _dataList.AddRange(data);
         }
@@ -57,19 +55,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<Order>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(Order newOrder)
         {
-            await _controller.Creator.Create(newOrder);
+            await _provider.Create(newOrder);
             _dataList.Add(newOrder);
             OnOrderCreated(newOrder);
         }
 
         public async Task Remove(Order order)
         {
-            await _controller.Remover.Remove(order);
+            await _provider.Remove(order);
             Order removedOrder = _dataList.Where(r => r.OrderID == order.OrderID).First();
             _dataList.Remove(removedOrder);
             OnOrderRemoved(removedOrder);
@@ -77,7 +75,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(Order modifiedOrder)
         {
-            await _controller.Modifier.Modify(modifiedOrder);
+            await _provider.Modify(modifiedOrder);
             int index = _dataList.FindIndex(b => b.OrderID == modifiedOrder.OrderID);
             _dataList[index] = modifiedOrder;
             OnOrderModified(modifiedOrder);

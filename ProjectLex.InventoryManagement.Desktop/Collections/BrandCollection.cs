@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,16 +13,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class BrandCollection : IDataCollection<Brand>, ILoadable<Brand>
     {
-        private readonly IController<Brand> _controller;
+        private readonly IProvider<Brand> _provider;
 
         private List<Brand> _dataList;
 
         public IEnumerable<Brand> DataList => _dataList;
 
 
-        public BrandCollection(IController<Brand> controller)
+        public BrandCollection(IProvider<Brand> provider)
         {
-            _controller = controller;
+            _provider = provider;
             _dataList = new List<Brand>();
         }
 
@@ -36,7 +34,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             try
             {
-                IEnumerable<Brand> data = await _controller.Provider.GetAll();
+                IEnumerable<Brand> data = await _provider.GetAll();
                 _dataList.Clear();
                 _dataList.AddRange(data);
             }
@@ -50,19 +48,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<Brand>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(Brand newBrand)
         {
-            await _controller.Creator.Create(newBrand);
+            await _provider.Create(newBrand);
             _dataList.Add(newBrand);
             OnBrandCreated(newBrand);
         }
 
         public async Task Remove(Brand brand)
         {
-            await _controller.Remover.Remove(brand);
+            await _provider.Remove(brand);
             Brand removedBrand = _dataList.Where(b => b.BrandID == brand.BrandID).First();
             _dataList.Remove(removedBrand);
             OnBrandRemoved(removedBrand);
@@ -70,7 +68,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(Brand modifiedBrand)
         {
-            await _controller.Modifier.Modify(modifiedBrand);
+            await _provider.Modify(modifiedBrand);
             int index = _dataList.FindIndex(b => b.BrandID == modifiedBrand.BrandID);
             _dataList[index] = modifiedBrand;
             OnBrandModified(modifiedBrand);

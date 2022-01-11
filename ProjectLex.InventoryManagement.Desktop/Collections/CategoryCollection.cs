@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,7 +13,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class CategoryCollection : IDataCollection<Category>, ILoadable<Category>
     {
-        private readonly IController<Category> _controller;
+        private readonly IProvider<Category> _provider;
 
         private List<Category> _dataList;
 
@@ -24,6 +22,11 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         public event Action<Category> CategoryCreated;
         public event Action<Category> CategoryRemoved;
         public event Action<Category> CategoryModified;
+        public CategoryCollection(IProvider<Category> provider)
+        {
+            _provider = provider;
+            _dataList = new List<Category>();
+        }
 
         private void OnCategoryCreated(Category category)
         {
@@ -40,11 +43,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
             CategoryRemoved?.Invoke(modifiedCategory);
         }
 
-        public CategoryCollection(IController<Category> controller)
-        {
-            _controller = controller;
-            _dataList = new List<Category>();
-        }
 
         
 
@@ -53,7 +51,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             try
             {
-                IEnumerable<Category> data = await _controller.Provider.GetAll();
+                IEnumerable<Category> data = await _provider.GetAll();
                 _dataList.Clear();
                 _dataList.AddRange(data);
             }
@@ -67,19 +65,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<Category>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(Category newCategory)
         {
-            await _controller.Creator.Create(newCategory);
+            await _provider.Create(newCategory);
             _dataList.Add(newCategory);
             OnCategoryCreated(newCategory);
         }
 
         public async Task Remove(Category category)
         {
-            await _controller.Remover.Remove(category);
+            await _provider.Remove(category);
             Category removedCategory = _dataList.Where(c => c.CategoryID == category.CategoryID).First();
             _dataList.Remove(removedCategory);
             OnCategoryRemoved(removedCategory);
@@ -87,7 +85,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(Category modifiedCategory)
         {
-            await _controller.Modifier.Modify(modifiedCategory);
+            await _provider.Modify(modifiedCategory);
             int index = _dataList.FindIndex(c => c.CategoryID == modifiedCategory.CategoryID);
             _dataList[index] = modifiedCategory;
             OnCategoryModified(modifiedCategory);

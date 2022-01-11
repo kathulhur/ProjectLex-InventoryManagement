@@ -1,5 +1,4 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
 using System;
 using System.Collections.Generic;

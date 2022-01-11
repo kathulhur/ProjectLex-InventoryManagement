@@ -12,5 +12,11 @@ namespace ProjectLex.InventoryManagement.Desktop.Services.Providers
     {
         public Task<IEnumerable<TModel>> GetAll();
 
+        public Task Remove(TModel model);
+
+        public Task Modify(TModel model);
+
+        public Task Create(TModel model);
+
     }
 }

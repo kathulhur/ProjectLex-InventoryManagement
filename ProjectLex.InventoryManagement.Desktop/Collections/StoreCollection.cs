@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,7 +13,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class StoreCollection : IDataCollection<Store>, ILoadable<Store>
     {
-        private readonly IController<Store> _controller;
+        private readonly IProvider<Store> _provider;
 
         private List<Store> _dataList;
 
@@ -40,9 +38,9 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
             StoreRemoved?.Invoke(modifiedStore);
         }
 
-        public StoreCollection(IController<Store> controller)
+        public StoreCollection(IProvider<Store> provider)
         {
-            _controller = controller;
+            _provider = provider;
             _dataList = new List<Store>();
         }
 
@@ -51,7 +49,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             try
             {
-                IEnumerable<Store> data = await _controller.Provider.GetAll();
+                IEnumerable<Store> data = await _provider.GetAll();
                 _dataList.Clear();
                 _dataList.AddRange(data);
             }
@@ -65,19 +63,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<Store>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(Store newStore)
         {
-            await _controller.Creator.Create(newStore);
+            await _provider.Create(newStore);
             _dataList.Add(newStore);
             OnStoreCreated(newStore);
         }
 
         public async Task Remove(Store store)
         {
-            await _controller.Remover.Remove(store);
+            await _provider.Remove(store);
             Store removedStore = _dataList.Where(c => c.StoreID == store.StoreID).First();
             _dataList.Remove(removedStore);
             OnStoreRemoved(removedStore);
@@ -85,7 +83,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(Store modifiedStore)
         {
-            await _controller.Modifier.Modify(modifiedStore);
+            await _provider.Modify(modifiedStore);
             int index = _dataList.FindIndex(c => c.StoreID == modifiedStore.StoreID);
             _dataList[index] = modifiedStore;
             OnStoreModified(modifiedStore);

@@ -11,7 +11,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
     public abstract class DatabaseServiceBase
     {
         private readonly ContextFactory _dbContextFactory;
-        public ContextFactory ContextFactory => _dbContextFactory;
+        protected ContextFactory ContextFactory => _dbContextFactory;
 
         public DatabaseServiceBase(ContextFactory dbContextFactory)
         {

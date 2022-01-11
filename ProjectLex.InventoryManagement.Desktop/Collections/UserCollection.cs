@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,16 +13,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class UserCollection : IDataCollection<User>, ILoadable<User>
     {
-        private readonly IController<User> _controller;
+        private readonly IProvider<User> _provider;
 
         private List<User> _dataList;
 
         public IEnumerable<User> DataList => _dataList;
 
 
-        public UserCollection(IController<User> controller)
+        public UserCollection(IProvider<User> provider)
         {
-            _controller = controller;
+            _provider = provider;
             _dataList = new List<User>();
         }
 
@@ -37,7 +35,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             try
             {
-                IEnumerable<User> data = await _controller.Provider.GetAll();
+                IEnumerable<User> data = await _provider.GetAll();
                 _dataList.Clear();
                 _dataList.AddRange(data);
             }
@@ -51,19 +49,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(User newUser)
         {
-            await _controller.Creator.Create(newUser);
+            await _provider.Create(newUser);
             _dataList.Add(newUser);
             OnUserCreated(newUser);
         }
 
         public async Task Remove(User user)
         {
-            await _controller.Remover.Remove(user);
+            await _provider.Remove(user);
             User removedUser = _dataList.Where(r => r.UserID == user.UserID).First();
             _dataList.Remove(removedUser);
             OnUserRemoved(removedUser);
@@ -71,7 +69,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(User modifiedUser)
         {
-            await _controller.Modifier.Modify(modifiedUser);
+            await _provider.Modify(modifiedUser);
             int index = _dataList.FindIndex(b => b.UserID == modifiedUser.UserID);
             _dataList[index] = modifiedUser;
             OnUserModified(modifiedUser);

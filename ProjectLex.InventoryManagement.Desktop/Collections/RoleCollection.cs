@@ -1,7 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Controllers;
 using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services.Creators;
 using ProjectLex.InventoryManagement.Desktop.Services.Providers;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -15,16 +13,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 {
     public class RoleCollection : IDataCollection<Role>, ILoadable<Role>
     {
-        private readonly IController<Role> _controller;
+        private readonly IProvider<Role> _provider;
 
         private List<Role> _dataList;
 
         public IEnumerable<Role> DataList => _dataList;
 
 
-        public RoleCollection(IController<Role> controller)
+        public RoleCollection(IProvider<Role> provider)
         {
-            _controller = controller;
+            _provider = provider;
             _dataList = new List<Role>();
         }
 
@@ -36,7 +34,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
         {
             try
             {
-                IEnumerable<Role> data = await _controller.Provider.GetAll();
+                IEnumerable<Role> data = await _provider.GetAll();
                 _dataList.Clear();
                 _dataList.AddRange(data);
             }
@@ -50,19 +48,19 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task<IEnumerable<Role>> GetAll()
         {
-            return await _controller.Provider.GetAll();
+            return await _provider.GetAll();
         }
 
         public async Task Create(Role newRole)
         {
-            await _controller.Creator.Create(newRole);
+            await _provider.Create(newRole);
             _dataList.Add(newRole);
             OnRoleCreated(newRole);
         }
 
         public async Task Remove(Role role)
         {
-            await _controller.Remover.Remove(role);
+            await _provider.Remove(role);
             Role removedRole = _dataList.Where(r => r.RoleID == role.RoleID).First();
             _dataList.Remove(removedRole);
             OnRoleRemoved(removedRole);
@@ -70,7 +68,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Collections
 
         public async Task Modify(Role modifiedRole)
         {
-            await _controller.Modifier.Modify(modifiedRole);
+            await _provider.Modify(modifiedRole);
             int index = _dataList.FindIndex(b => b.RoleID == modifiedRole.RoleID);
             _dataList[index] = modifiedRole;
             OnRoleModified(modifiedRole);
