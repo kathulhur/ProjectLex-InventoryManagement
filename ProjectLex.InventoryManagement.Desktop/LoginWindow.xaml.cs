@@ -1,6 +1,4 @@
 ﻿using MaterialDesignThemes.Wpf;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -24,12 +22,9 @@ namespace ProjectLex.InventoryManagement.Desktop
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private readonly ViewModelService _viewModelService;
-        private readonly AuthenticationService _authenticationService;
-        public LoginWindow(AuthenticationService authenticationService, ViewModelService viewModelService)
+        
+        public LoginWindow()
         {
-            _authenticationService = authenticationService;
-            _viewModelService = viewModelService;
             InitializeComponent();
         }
 
@@ -69,20 +64,8 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         private void LoginUser(object sender, RoutedEventArgs e)
         {
-            User user = _authenticationService.Authenticate(txtUsername.Text, txtPassword.Password);
-            if(user == null)
-            {
-                MessageBox.Show("Username or Password is incorrect");
-            } else
-            {
-                Application.Current.MainWindow = new MainWindow()
-                {
-                    DataContext = new MainViewModel(user,_viewModelService)
-                };
-
-                Application.Current.MainWindow.Show();
-                this.Close();
-            }
+            
+            
 
         }
     }

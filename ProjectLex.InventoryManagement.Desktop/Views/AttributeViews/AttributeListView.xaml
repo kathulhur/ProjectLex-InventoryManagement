@@ -65,18 +65,28 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Content="Delete" 
+                                    <Button Content="Add" 
                                             Grid.Column="0"
+                                            Command=
+                                                "{
+                                                    Binding DataContext.NavigateToAttributeValueListCommand, 
+                                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:AttributeListView}
+                                                }"
+                                            CommandParameter="{ Binding }"/>
+
+                                    <Button Content="Delete" 
+                                            Grid.Column="1"
                                             Command=
                                                 "{
                                                     Binding DataContext.RemoveAttributeCommand, 
                                                     RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:AttributeListView}
                                                 }"
                                             CommandParameter="{ Binding }"/>
-
+                                    
                                     <Button Content="Update" 
-                                            Grid.Column="1"
+                                            Grid.Column="2"
                                             Command=
                                                 "{
                                                     Binding DataContext.NavigateToModifyAttributeCommand, 

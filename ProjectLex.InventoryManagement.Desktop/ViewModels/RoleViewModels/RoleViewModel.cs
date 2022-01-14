@@ -1,4 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Models;
+﻿using ProjectLex.InventoryManagement.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     public class RoleViewModel : ViewModelBase
     {
         private readonly Role _role;
-        public string RoleID => _role.RoleID;
+        public Role Role => _role;
+        public string RoleID => _role.RoleID.ToString();
         public string RoleName => _role.RoleName;
         public string RoleStatus => _role.RoleStatus;
 

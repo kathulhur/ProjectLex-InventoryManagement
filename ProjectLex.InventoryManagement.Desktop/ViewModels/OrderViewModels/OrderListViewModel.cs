@@ -1,7 +1,6 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
@@ -18,88 +18,68 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
 
         private bool _isDisposed = false;
+
         private readonly NavigationStore _navigationStore;
+        private readonly UnitOfWork _unitOfWork;
+
         private readonly ObservableCollection<OrderViewModel> _orders;
         public IEnumerable<OrderViewModel> Orders => _orders;
 
-        private readonly OrderCollection _orderCollection;
-        private readonly UserCollection _userCollection;
+        public RelayCommand NavigateToCreateOrderCommand { get; }
+        public RelayCommand LoadOrdersCommand { get; }
+        public RelayCommand<OrderViewModel> RemoveOrderCommand { get; }
+        public RelayCommand<OrderViewModel> NavigateToEditOrderCommand { get; }
 
-        public ICommand ToCreateOrderCommand { get; }
-        public ICommand LoadOrdersCommand { get; }
-        public ICommand LoadUsersCommand { get; }
-        public ICommand RemoveOrderCommand { get; }
-        public ICommand NavigateToModifyOrderCommand { get; }
-
-        public OrderListViewModel
-            (
-                OrderCollection orderCollection, 
-                UserCollection userCollection, 
-                NavigationStore navigationStore
-            )
+        public OrderListViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            _orderCollection = orderCollection;
-            _userCollection = userCollection;
-            _orderCollection.OrderRemoved += OnOrderRemoved;
+            _unitOfWork = new UnitOfWork();
             _orders = new ObservableCollection<OrderViewModel>();
-            LoadOrdersCommand = new LoadDataCommand<Order>(_orderCollection, OnOrderLoaded);
-            LoadUsersCommand = new LoadDataCommand<User>(_userCollection, OnOrderLoaded);
-            RemoveOrderCommand = new RemoveDataCommand<Order>(_orderCollection, CreateOrder, CanRemoveOrder);
-            NavigateToModifyOrderCommand = new ModifyDataNavigateCommand(NavigateToModifyOrder);
+
+            LoadOrdersCommand = new RelayCommand(LoadOrders);
+            NavigateToCreateOrderCommand = new RelayCommand(NavigateToCreateOrder);
+            RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
+            NavigateToEditOrderCommand = new RelayCommand<OrderViewModel>(NavigateToEditOrder);
 
         }
 
-        public Order CreateOrder(object obj)
+        private void RemoveOrder(OrderViewModel orderViewModel)
         {
-            return new Order((OrderViewModel)obj);
+            _unitOfWork.OrderRepository.Delete(orderViewModel.Order);
+            _unitOfWork.Save();
+            MessageBox.Show("Successful");
+            _orders.Remove(orderViewModel);
         }
 
-        public void NavigateToModifyOrder(object obj)
+        private void NavigateToEditOrder(OrderViewModel orderViewModel)
         {
-            OrderViewModel orderViewModel = (OrderViewModel)obj;
-            _navigationStore.CurrentViewModel = ModifyOrderViewModel.LoadViewModel(_orderCollection, _userCollection, orderViewModel);
-
+            _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
         }
 
-        public static OrderListViewModel LoadViewModel
-            (
-                OrderCollection orderCollection, 
-                UserCollection userCollection, 
-                NavigationStore navigationStore
-            )
+        private void NavigateToCreateOrder()
         {
-            OrderListViewModel viewModel = new OrderListViewModel(orderCollection, userCollection, navigationStore);
-            viewModel.LoadOrdersCommand.Execute(null);
-            viewModel.LoadUsersCommand.Execute(null);
-
-            return viewModel;
+            _navigationStore.CurrentViewModel = CreateOrderViewModel.LoadViewModel(_navigationStore);
         }
 
-        public void OnOrderRemoved(Order order)
-        {
-            OrderViewModel removedOrderViewModel = _orders.First(r => r.OrderID == order.OrderID);
-            _orders.Remove(removedOrderViewModel);
-
-        }
-        
-        public bool CanRemoveOrder(object obj)
-        {
-            return true;
-        }
-
-        private void OnOrderLoaded()
+        private void LoadOrders()
         {
             _orders.Clear();
-
-            foreach (Order u in _orderCollection.DataList)
+            foreach (Order o in _unitOfWork.OrderRepository.Get(includeProperties: "User"))
             {
-                User user = _userCollection.DataList.Where(r => r.UserID == u.UserID).FirstOrDefault();
-                OrderViewModel orderViewModel = new OrderViewModel(u, user);
-                _orders.Add(orderViewModel);
+                _orders.Add(new OrderViewModel(o));
             }
 
         }
+        
+
+        public static OrderListViewModel LoadViewModel(NavigationStore navigationStore)
+        {
+            OrderListViewModel viewModel = new OrderListViewModel(navigationStore);
+            viewModel.LoadOrdersCommand.Execute(null);
+
+            return viewModel;
+        }
+        
 
         protected override void Dispose(bool disposing)
         {
@@ -110,7 +90,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _orderCollection.OrderRemoved -= OnOrderRemoved;
+                    _unitOfWork.Dispose();
                 }
 
             }

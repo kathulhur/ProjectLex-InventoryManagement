@@ -1,4 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Models;
+﻿using ProjectLex.InventoryManagement.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,30 +9,29 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
     public class OrderViewModel : ViewModelBase
     {
-        public readonly string OrderID;
-        public readonly string UserID;
-
-        public readonly UserViewModel User;
-
-        public readonly string CustomerName;
-        public readonly string OrderTotal;
-
-
-        public OrderViewModel(Order order, User user)
+        private Order _order;
+        public Order Order => _order;
+        public string OrderID => _order.OrderID.ToString();
+        public string UserID => _order.OrderID.ToString();
+        public UserViewModel User
         {
-            OrderID = order.OrderID;
-            UserID = order.UserID;
-            User = new UserViewModel(user);
-            CustomerName = order.CustomerName;
-            OrderTotal = order.OrderTotal;
+            get
+            {
+                if (_order.User != null)
+                {
+                    return new UserViewModel(_order.User);
+                }
+                return null;
+            }
         }
+
+        public string CustomerName => _order.CustomerName;
+        public string OrderTotal => _order.OrderTotal.ToString();
+
 
         public OrderViewModel(Order order)
         {
-            OrderID = order.OrderID;
-            UserID = order.UserID;
-            CustomerName = order.CustomerName;
-            OrderTotal = order.OrderTotal;
+            _order = order;
         }
 
     }

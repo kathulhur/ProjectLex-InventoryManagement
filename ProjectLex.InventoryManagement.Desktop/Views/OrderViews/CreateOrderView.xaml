@@ -16,6 +16,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock
@@ -24,8 +25,25 @@
             Text="Add User"/>
 
 
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Role"/>
+
+            <ComboBox Grid.Row="1" SelectedValue="{Binding UserID}" SelectedValuePath="UserID" ItemsSource="{Binding Users}">
+                <ComboBox.ItemTemplate>
+                    <ItemContainerTemplate>
+                        <TextBlock Text="{Binding UserUsername}"/>
+                    </ItemContainerTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        
         <Grid 
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="0 25 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -41,7 +59,7 @@
             
 
         <Grid 
-            Grid.Row="2"
+            Grid.Row="3"
             Margin="0 25 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -58,7 +76,7 @@
         
 
         <StackPanel 
-            Grid.Row="3" 
+            Grid.Row="4" 
             Orientation="Horizontal"
             Margin="0 25 0 0">
             <Button 

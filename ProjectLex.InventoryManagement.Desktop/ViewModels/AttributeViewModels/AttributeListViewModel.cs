@@ -22,28 +22,32 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public IEnumerable<AttributeViewModel> Attributes => _attributes;
 
         private readonly AttributeCollection _attributeCollection;
+        private readonly AttributeValueCollection _attributeValueCollection;
 
         public ICommand ToCreateAttributeCommand { get; }
         public ICommand LoadAttributesCommand { get; }
         public ICommand RemoveAttributeCommand { get; }
         public ICommand NavigateToModifyAttributeCommand { get; }
         public ICommand NavigateToCreateAttributeCommand { get; }
+        public ICommand NavigateToAttributeValueListCommand { get; }
 
-        public AttributeListViewModel(NavigationStore navigationStore, AttributeCollection attributeCollection)
+        public AttributeListViewModel(NavigationStore navigationStore, AttributeCollection attributeCollection, AttributeValueCollection attributeValueCollection)
         {
             _navigationStore = navigationStore;
             _attributeCollection = attributeCollection;
+            _attributeValueCollection = attributeValueCollection;
             _attributeCollection.AttributeRemoved += OnAttributeRemoved;
             _attributes = new ObservableCollection<AttributeViewModel>();
             LoadAttributesCommand = new LoadDataCommand<Models.Attribute>(_attributeCollection, OnAttributeLoaded);
             RemoveAttributeCommand = new RemoveDataCommand<Models.Attribute>(_attributeCollection, CreateAttribute, CanRemoveAttribute);
             NavigateToModifyAttributeCommand = new NavigateCommand(NavigateToModifyAttribute);
             NavigateToCreateAttributeCommand = new NavigateCommand(NavigateToCreateAttribute);
+            NavigateToAttributeValueListCommand = new NavigateCommand(NavigateToAttributeValueList);
         }
 
-        public static AttributeListViewModel LoadViewModel(NavigationStore navigationStore, AttributeCollection attributeCollection)
+        public static AttributeListViewModel LoadViewModel(NavigationStore navigationStore, AttributeCollection attributeCollection, AttributeValueCollection attributeValueCollection)
         {
-            AttributeListViewModel viewModel = new AttributeListViewModel(navigationStore, attributeCollection);
+            AttributeListViewModel viewModel = new AttributeListViewModel(navigationStore, attributeCollection, attributeValueCollection);
             viewModel.LoadAttributesCommand.Execute(null);
             return viewModel;
         }
@@ -56,6 +60,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public void NavigateToCreateAttribute(object obj)
         {
             _navigationStore.CurrentViewModel = CreateAttributeViewModel.LoadViewModel(_navigationStore, _attributeCollection);
+        }
+
+        public void NavigateToAttributeValueList(object obj)
+        {
+            AttributeViewModel selectedAttribute = (AttributeViewModel)obj;
+            _navigationStore.CurrentViewModel = AttributeValueListViewModel.LoadViewModel(_navigationStore, _attributeValueCollection, selectedAttribute);
         }
 
         public Models.Attribute CreateAttribute(object obj)

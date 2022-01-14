@@ -1,8 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
-using ProjectLex.InventoryManagement.Desktop.Stores;
+﻿using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProjectLex.InventoryManagement.Desktop.DAL;
+using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
+using System.Windows;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -20,72 +20,58 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ObservableCollection<StoreViewModel> _stores;
         public IEnumerable<StoreViewModel> Stores => _stores;
 
-        private readonly StoreCollection _storeCollection;
+        private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
-        public ICommand LoadStoresCommand { get; }
-        public ICommand RemoveStoreCommand { get; }
-        public ICommand NavigateToModifyStoreCommand { get; }
-        public ICommand NavigateToCreateStoreCommand { get; }
+        public RelayCommand LoadStoresCommand { get; }
+        public RelayCommand<StoreViewModel> RemoveStoreCommand { get; }
+        public RelayCommand<StoreViewModel> NavigateToModifyStoreCommand { get; }
+        public RelayCommand NavigateToCreateStoreCommand { get; }
 
-        public StoreListViewModel(NavigationStore navigationStore, StoreCollection storeCollection)
+        public StoreListViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            _storeCollection = storeCollection;
-            _storeCollection.StoreRemoved += OnStoreRemoved;
+            _unitOfWork = new UnitOfWork();
             _stores = new ObservableCollection<StoreViewModel>();
-            LoadStoresCommand = new LoadDataCommand<Store>(_storeCollection, OnDataLoaded);
-            RemoveStoreCommand = new RemoveDataCommand<Store>(_storeCollection, CreateStore, CanDelete);
-            NavigateToModifyStoreCommand = new NavigateCommand(NavigateToModifyStore);
-            NavigateToCreateStoreCommand = new NavigateCommand(NavigateToCreateStore);
+
+            LoadStoresCommand = new RelayCommand(LoadStores);
+            RemoveStoreCommand = new RelayCommand<StoreViewModel>(RemoveStore);
+            NavigateToModifyStoreCommand = new RelayCommand<StoreViewModel>(NavigateToModifyStore);
+            NavigateToCreateStoreCommand = new RelayCommand(NavigateToCreateStore);
         }
 
-        public static StoreListViewModel LoadViewModel(NavigationStore navigationStore, StoreCollection storeCollection)
+        private void NavigateToModifyStore(StoreViewModel storeViewModel)
         {
-            StoreListViewModel viewModel = new StoreListViewModel(navigationStore, storeCollection);
+            _navigationStore.CurrentViewModel = EditStoreViewModel.LoadViewModel(_navigationStore, storeViewModel.Store);
+        }
+        private void RemoveStore(StoreViewModel storeViewModel)
+        {
+            _unitOfWork.StoreRepository.Delete(storeViewModel.Store);
+            _unitOfWork.Save();
+            _stores.Remove(storeViewModel);
+            MessageBox.Show("Delete Successful");
+        }
+
+        private void LoadStores()
+        {
+            foreach(Store s in _unitOfWork.StoreRepository.Get())
+            {
+                _stores.Add(new StoreViewModel(s));
+            }
+        }
+
+        private void NavigateToCreateStore()
+        {
+            _navigationStore.CurrentViewModel = CreateStoreViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public static StoreListViewModel LoadViewModel(NavigationStore navigationStore)
+        {
+            StoreListViewModel viewModel = new StoreListViewModel(navigationStore);
             viewModel.LoadStoresCommand.Execute(null);
 
             return viewModel;
         }
 
-        public void NavigateToModifyStore(object obj)
-        {
-            StoreViewModel storeViewModel = (StoreViewModel)obj;
-            _navigationStore.CurrentViewModel = ModifyStoreViewModel.LoadViewModel(_navigationStore, _storeCollection, storeViewModel);
-        }
-
-        public void NavigateToCreateStore(object obj)
-        {
-            _navigationStore.CurrentViewModel = CreateStoreViewModel.LoadViewModel(_navigationStore, _storeCollection);
-        }
-
-        public Store CreateStore(object obj)
-        {
-            return new Store((StoreViewModel)obj);
-        }
-
-
-        private void OnDataLoaded()
-        {
-            _stores.Clear();
-
-            foreach (Store c in _storeCollection.DataList)
-            {
-                StoreViewModel newStoreViewModel = new StoreViewModel(c);
-                _stores.Add(newStoreViewModel);
-            }
-
-        }
-
-        private void OnStoreRemoved(Store store)
-        {
-            StoreViewModel storeViewModel = _stores.Where(c => c.StoreID == store.StoreID).First();
-            _stores.Remove(storeViewModel);
-        }
-
-        private bool CanDelete(object obj)
-        {
-            return true;
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -96,7 +82,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _storeCollection.StoreRemoved -= OnStoreRemoved;
+                    _unitOfWork.Dispose();
                 }
 
             }

@@ -9,13 +9,38 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Collections\Warehouse.cs" />
-    <Compile Remove="Commands\CreateCategoryCommand1.cs" />
-    <Compile Remove="Models\AttributeValue.cs" />
-    <Compile Remove="Models\Product.cs" />
-    <Compile Remove="Models\ProductCategory.cs" />
-    <Compile Remove="Services\Providers\ProductProvider.cs" />
+    <Compile Remove="Models\**" />
+    <Compile Remove="Repositories\**" />
+    <Compile Remove="Services\Providers\**" />
+    <Compile Remove="ViewModels\AttributeValueViewModels\**" />
+    <Compile Remove="ViewModels\AttributeViewModels\**" />
+    <Compile Remove="ViewModels\ProductCategoryViewModels\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <EmbeddedResource Remove="Services\Providers\**" />
+    <EmbeddedResource Remove="ViewModels\AttributeValueViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\AttributeViewModels\**" />
+    <EmbeddedResource Remove="ViewModels\ProductCategoryViewModels\**" />
+    <None Remove="Models\**" />
+    <None Remove="Repositories\**" />
+    <None Remove="Services\Providers\**" />
+    <None Remove="ViewModels\AttributeValueViewModels\**" />
+    <None Remove="ViewModels\AttributeViewModels\**" />
+    <None Remove="ViewModels\ProductCategoryViewModels\**" />
+    <Page Remove="Models\**" />
+    <Page Remove="Repositories\**" />
+    <Page Remove="Services\Providers\**" />
+    <Page Remove="ViewModels\AttributeValueViewModels\**" />
+    <Page Remove="ViewModels\AttributeViewModels\**" />
+    <Page Remove="ViewModels\ProductCategoryViewModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\AuthenticationService.cs" />
+    <Compile Remove="Services\DatabaseServiceBase.cs" />
+    <Compile Remove="Stores\CollectionStore.cs" />
     <Compile Remove="Stores\ProductStore.cs" />
+    <Compile Remove="ViewModels\CommandViewModel.cs" />
     <Compile Remove="ViewModels\CreateProductViewModel.cs" />
     <Compile Remove="ViewModels\ProductListViewModel.cs" />
     <Compile Remove="ViewModels\ProductViewModel.cs" />
@@ -28,6 +53,7 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,13 +78,19 @@
     <Compile Update="Views\AttributeViews\ModifyAttributeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CategoryViews\ModifyCategoryView.xaml.cs">
+    <Compile Update="Views\CategoryViews\EditCategoryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProductViews\ProductListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProductViews\EditProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StoreViews\CreateStoreView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\StoreViews\ModifyStoreView.xaml.cs">
+    <Compile Update="Views\StoreViews\EditStoreView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StoreViews\StoreListView.xaml.cs">
@@ -67,34 +99,52 @@
     <Compile Update="Views\OrderViews\CreateOrderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\OrderViews\ModifyOrderView.xaml.cs">
+    <Compile Update="Views\OrderViews\EditOrderView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\OrderViews\OrderListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AttributeValueViews\CreateAttributeValueView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AttributeValueViews\ModifyAttributeValueView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AttributeValueViews\AttributeValueListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\UserViews\CreateUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\RoleViews\CreateRoleView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\UserViews\ModifyUserView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\RoleViews\ModifyRoleView.xaml.cs">
+    <Compile Update="Views\UserViews\EditUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserViews\UserListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\OrderDetailViews\CreateOrderDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RoleViews\CreateRoleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OrderDetailViews\EditOrderDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RoleViews\EditRoleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OrderDetailViews\OrderDetailListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\RoleViews\RoleListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\BrandViews\ModifyBrandView.xaml.cs">
+    <Compile Update="Views\SupplierViews\EditSupplierView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\BrandViews\CreateBrandView.xaml.cs">
+    <Compile Update="Views\SupplierViews\CreateSupplierView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -112,7 +162,15 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CategoryViews\ModifyCategoryView.xaml">
+    <Page Update="Views\CategoryViews\EditCategoryView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProductViews\ProductListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProductViews\EditProductView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -120,7 +178,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StoreViews\ModifyStoreView.xaml">
+    <Page Update="Views\StoreViews\EditStoreView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -132,7 +190,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\OrderViews\ModifyOrderView.xaml">
+    <Page Update="Views\OrderViews\EditOrderView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -140,19 +198,23 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AttributeValueViews\CreateAttributeValueView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AttributeValueViews\ModifyAttributeValueView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AttributeValueViews\AttributeValueListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\UserViews\CreateUserView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\RoleViews\CreateRoleView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\UserViews\ModifyUserView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\RoleViews\ModifyRoleView.xaml">
+    <Page Update="Views\UserViews\EditUserView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -160,21 +222,42 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\OrderDetailViews\CreateOrderDetailView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\CreateRoleView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrderDetailViews\EditOrderDetailView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoleViews\EditRoleView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrderDetailViews\OrderDetailListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\RoleViews\RoleListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BrandViews\ModifyBrandView.xaml">
+    <Page Update="Views\SupplierViews\EditSupplierView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BrandViews\CreateBrandView.xaml">
+    <Page Update="Views\SupplierViews\CreateSupplierView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
 

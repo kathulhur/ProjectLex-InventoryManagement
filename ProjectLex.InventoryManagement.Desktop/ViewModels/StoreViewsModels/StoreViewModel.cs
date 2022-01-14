@@ -1,4 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Models;
+﻿using ProjectLex.InventoryManagement.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     public class StoreViewModel : ViewModelBase
     {
         private readonly Store _store;
-        public string StoreID => _store.StoreID;
+        public Store Store => _store;
+        public string StoreID => _store.StoreID.ToString();
         public string StoreName => _store.StoreName;
         public string StoreStatus => _store.StoreStatus;
 

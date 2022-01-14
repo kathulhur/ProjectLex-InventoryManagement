@@ -1,7 +1,6 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
@@ -15,17 +14,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     public class CreateRoleViewModel : ViewModelBase
     {
         private bool _isDisposed = false;
-
-        private string _roleID;
-        public string RoleID
-        {
-            get { return _roleID; }
-            set
-            {
-                _roleID = value;
-                OnPropertyChanged(nameof(RoleID));
-            }
-        }
 
         private string _roleName;
         public string RoleName
@@ -50,35 +38,44 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
        
 
-        private readonly RoleCollection _roleCollection;
+        private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
 
-        public ICommand SubmitCommand { get; }
-        public ICommand CancelCommand { get; }
+        public RelayCommand SubmitCommand { get; }
+        public RelayCommand CancelCommand { get; }
 
-        public CreateRoleViewModel(NavigationStore navigationStore, RoleCollection roleCollection)
+        public CreateRoleViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            _roleCollection = roleCollection;
-            SubmitCommand = new CreateDataCommand<Role>(roleCollection, CreateRole, CanCreateRole);
-            CancelCommand = new NavigateCommand(NavigateToRoleList);
+            SubmitCommand = new RelayCommand(CreateRole);
+            CancelCommand = new RelayCommand(NavigateToRoleList);
+            _unitOfWork = new UnitOfWork();
         }
-        public static CreateRoleViewModel LoadViewModel(NavigationStore navigationStore, RoleCollection roleCollection)
+
+
+        public void CreateRole()
         {
-            return new CreateRoleViewModel(navigationStore, roleCollection);
+            Role newRole = new Role
+            {
+                RoleID = Guid.NewGuid(),
+                RoleName = this.RoleName,
+                RoleStatus = this.RoleStatus
+            };
+            _unitOfWork.RoleRepository.Insert(newRole);
+            _unitOfWork.Save();
+
         }
 
-        public void NavigateToRoleList(object obj)
+        public void NavigateToRoleList()
         {
-            _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore, _roleCollection);
+            _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore);
         }
 
-        public Role CreateRole(object obj)
+
+        public static CreateRoleViewModel LoadViewModel(NavigationStore navigationStore)
         {
-            return new Role((CreateRoleViewModel)obj);
+            return new CreateRoleViewModel(navigationStore);
         }
-
-
 
         protected override void Dispose(bool disposing)
         {
@@ -87,6 +84,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
+                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

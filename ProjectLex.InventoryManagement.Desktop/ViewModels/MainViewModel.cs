@@ -1,6 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
+﻿using Microsoft.Toolkit.Mvvm.Input;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
@@ -13,33 +11,69 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
-        private readonly ViewModelService _viewModelService;
-        public ViewModelBase CurrentViewModel => _viewModelService.NavigationStore.CurrentViewModel;
+        private readonly NavigationStore _navigationStore;
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
 
-        private readonly User _user;
-        public User CurrentUser => _user;
 
-        public ICommand NavigateToCategoryListCommand { get; }
-        public ICommand NavigateToBrandListCommand { get; }
-        public ICommand NavigateToRoleListCommand { get; }
-        public ICommand NavigateToStoreListCommand { get; }
-        public ICommand NavigateToUserListCommand { get; }
-        public ICommand NavigateToAttributeListCommand { get; }
+        public RelayCommand NavigateToRoleListCommand { get; }
+        public RelayCommand NavigateToCategoryListCommand { get; }
+        public RelayCommand NavigateToStoreListCommand { get; }
+        public RelayCommand NavigateToSupplierListCommand { get; }
+        public RelayCommand NavigateToUserListCommand { get; }
+        public RelayCommand NavigateToProductListCommand { get; }
+        public RelayCommand NavigateToOrderListCommand { get; }
 
-        public MainViewModel(User user, ViewModelService viewModelService)
+        public MainViewModel(NavigationStore navigationStore)
         {
-            _user = user;
+            _navigationStore = navigationStore;
 
-            _viewModelService = viewModelService;
-            _viewModelService.NavigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-            viewModelService.NavigationStore.CurrentViewModel = CreateCategoryViewModel.LoadViewModel(_viewModelService.NavigationStore, _viewModelService.CollectionStore.CategoryCollection);
+            _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore);
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            NavigateToCategoryListCommand = viewModelService.ToCategoryListViewModelCommand;
-            NavigateToBrandListCommand = viewModelService.ToBrandListViewModelCommand;
-            NavigateToRoleListCommand = viewModelService.ToRoleListViewModelCommand;
-            NavigateToUserListCommand = viewModelService.ToUserListViewModelCommand;
-            NavigateToStoreListCommand = viewModelService.ToStoreListViewModelCommand;
-            NavigateToAttributeListCommand = viewModelService.ToAttributeListViewModelCommand;
+            NavigateToRoleListCommand = new RelayCommand(NavigateToRoleList);
+            NavigateToCategoryListCommand = new RelayCommand(NavigateToCategoryList);
+            NavigateToStoreListCommand = new RelayCommand(NavigateToStoreList);
+            NavigateToSupplierListCommand = new RelayCommand(NavigateToSupplierList);
+            NavigateToUserListCommand = new RelayCommand(NavigateToUserList);
+            NavigateToProductListCommand = new RelayCommand(NavigateToProductList);
+            NavigateToOrderListCommand = new RelayCommand(NavigateToOrderList);
+
+        }
+
+        public void NavigateToRoleList()
+        {
+            _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public void NavigateToCategoryList()
+        {
+            _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public void NavigateToStoreList()
+        {
+            _navigationStore.CurrentViewModel = StoreListViewModel.LoadViewModel(_navigationStore);
+        }
+
+
+        public void NavigateToSupplierList()
+        {
+            _navigationStore.CurrentViewModel = SupplierListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public void NavigateToUserList()
+        {
+            _navigationStore.CurrentViewModel = UserListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public void NavigateToProductList()
+        {
+            _navigationStore.CurrentViewModel = ProductListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public void NavigateToOrderList()
+        {
+            _navigationStore.CurrentViewModel = OrderListViewModel.LoadViewModel(_navigationStore);
         }
 
         private void OnCurrentViewModelChanged()

@@ -79,16 +79,12 @@
             Margin="0 25 0 0">
             <Button 
                 Content="Submit"
-                Command="{Binding SubmitCommand}"
+                Command="{Binding SubmitCommand }"
                 CommandParameter="{Binding}"/>
             <Button 
                 Margin="10 0 0 0" 
                 Content="Cancel"
-                Command=
-                "{
-                    Binding DataContext.NavigateToUserListCommand,
-                    RelativeSource={RelativeSource AncestorType={x:Type Window}}
-                }"/>
+                Command="{ Binding CancelCommand }"/>
 
         </StackPanel>
 

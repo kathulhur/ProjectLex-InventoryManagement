@@ -1,7 +1,6 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
@@ -18,81 +17,66 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
 
         private bool _isDisposed = false;
+
+        private UnitOfWork _unitOfWork;
+
         private readonly NavigationStore _navigationStore;
         private readonly ObservableCollection<RoleViewModel> _roles;
         public IEnumerable<RoleViewModel> Roles => _roles;
 
-        private readonly RoleCollection _roleCollection;
+        public RelayCommand LoadRolesCommand { get; }
+        public RelayCommand NavigateToCreateRoleCommand { get; }
+        public RelayCommand<RoleViewModel> NavigateToEditRoleCommand { get; }
+        public RelayCommand<RoleViewModel> RemoveRoleCommand { get; }
 
-        public ICommand ToCreateRoleCommand { get; }
-        public ICommand LoadRolesCommand { get; }
-        public ICommand RemoveRoleCommand { get; }
-        public ICommand NavigateToModifyRoleCommand { get; }
-        public ICommand NavigateToCreateRoleCommand { get; }
-
-        public RoleListViewModel(NavigationStore navigationStore, RoleCollection roleCollection)
+        public RoleListViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            _roleCollection = roleCollection;
-            _roleCollection.RoleRemoved += OnRoleRemoved;
+
+            _unitOfWork = new UnitOfWork();
             _roles = new ObservableCollection<RoleViewModel>();
-            LoadRolesCommand = new LoadDataCommand<Role>(_roleCollection, OnRoleLoaded);
-            RemoveRoleCommand = new RemoveDataCommand<Role>(_roleCollection, CreateRole, CanRemoveRole);
-            NavigateToModifyRoleCommand = new NavigateCommand(NavigateToModifyRole);
-            NavigateToCreateRoleCommand = new NavigateCommand(NavigateToCreateRole);
+            LoadRolesCommand = new RelayCommand(LoadData);
+            RemoveRoleCommand = new RelayCommand<RoleViewModel>(RemoveRole);
+            NavigateToCreateRoleCommand = new RelayCommand(NavigateToCreateRole);
+            NavigateToEditRoleCommand = new RelayCommand<RoleViewModel>(NavigateToEditRole);
+        }
+
+        public void NavigateToEditRole(RoleViewModel roleViewModel)
+        {
+            _navigationStore.CurrentViewModel = EditRoleViewModel.LoadViewModel(_navigationStore, roleViewModel.Role);
+        }
+
+
+        public void NavigateToCreateRole()
+        {
+            _navigationStore.CurrentViewModel = CreateRoleViewModel.LoadViewModel(_navigationStore);
+        }
+
+        public void RemoveRole(RoleViewModel roleViewModel)
+        {
+            _unitOfWork.RoleRepository.Delete(roleViewModel.Role);
+            _unitOfWork.Save();
+            _roles.Remove(roleViewModel);
 
         }
 
-        public static RoleListViewModel LoadViewModel(NavigationStore navigationStore, RoleCollection roleCollection)
+        public void LoadData()
         {
-            RoleListViewModel viewModel = new RoleListViewModel(navigationStore, roleCollection);
-            viewModel.LoadRolesCommand.Execute(null);
+            foreach(Role r in _unitOfWork.RoleRepository.Get())
+            {
+                _roles.Add(new RoleViewModel(r));
+            }
+        }
 
+
+        public static RoleListViewModel LoadViewModel(NavigationStore navigationStore)
+        {
+            RoleListViewModel viewModel = new RoleListViewModel(navigationStore);
+            viewModel.LoadRolesCommand.Execute(null);
             return viewModel;
         }
 
-        public Role CreateRole(object obj)
-        {
-            return new Role((RoleViewModel)obj);
-        }
 
-        public void NavigateToModifyRole(object obj)
-        {
-            RoleViewModel roleViewModel = (RoleViewModel)obj;
-            _navigationStore.CurrentViewModel = ModifyRoleViewModel.LoadViewModel(_navigationStore, _roleCollection, roleViewModel);
-
-        }
-
-        public void NavigateToCreateRole(object obj)
-        {
-            _navigationStore.CurrentViewModel = CreateRoleViewModel.LoadViewModel(_navigationStore, _roleCollection);
-
-        }
-
-        public void OnRoleRemoved(Role role)
-        {
-            RoleViewModel roleViewModel = new RoleViewModel(role);
-            RoleViewModel removedRoleViewModel = _roles.First(r => r.RoleID == roleViewModel.RoleID);
-            _roles.Remove(removedRoleViewModel);
-
-        }
-        
-        public bool CanRemoveRole(object obj)
-        {
-            return true;
-        }
-
-        private void OnRoleLoaded()
-        {
-            _roles.Clear();
-
-            foreach (Role r in _roleCollection.DataList)
-            {
-                RoleViewModel roleViewModel = new RoleViewModel(r);
-                _roles.Add(roleViewModel);
-            }
-
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -103,7 +87,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _roleCollection.RoleRemoved -= OnRoleRemoved;
+                    _unitOfWork.Dispose();
                 }
 
             }

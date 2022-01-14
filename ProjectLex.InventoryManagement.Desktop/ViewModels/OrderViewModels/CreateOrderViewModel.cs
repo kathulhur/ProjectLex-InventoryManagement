@@ -1,7 +1,6 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
@@ -18,79 +18,98 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private bool _isDisposed = false;
 
 
-        private string _orderID;
-        public string OrderID
+        private Order _order;
+
+
+        public string UserID
         {
-            get { return _orderID; }
+            get { return _order.UserID.ToString(); }
             set
             {
-                _orderID = value;
-                OnPropertyChanged(nameof(OrderID));
+                _order.UserID = new Guid(value);
+                OnPropertyChanged(nameof(UserID));
             }
         }
 
-        private UserViewModel _user;
-        private string _userID => _user.UserID;
-        public string UserID => _userID;
 
-
-        private string _customerName;
         public string CustomerName
         {
-            get { return _customerName; }
+            get { return _order.CustomerName; }
             set
             {
-                _customerName = value;
+                _order.CustomerName = value;
                 OnPropertyChanged(nameof(CustomerName));
             }
         }
 
-        private string _orderTotal;
+
         public string OrderTotal
         {
-            get { return _orderTotal; }
+            get { return _order.OrderTotal.ToString(); }
             set
             {
-                _orderTotal = value;
+                _order.OrderTotal = Convert.ToDecimal(value);
                 OnPropertyChanged(nameof(OrderTotal));
             }
         }
-       
 
-        private readonly IDataCollection<Order> _orderCollection;
-        private readonly UserCollection _userCollection;
+
+        private readonly NavigationStore _navigationStore;
+        private readonly UnitOfWork _unitOfWork;
 
         private readonly ObservableCollection<UserViewModel> _users;
         public IEnumerable<UserViewModel> Users => _users;
         
 
 
-        public ICommand SubmitCommand { get; }
-        public ICommand CancelCommand { get; }
-        private ICommand LoadUsersCommand { get; }
+        public RelayCommand SubmitCommand { get; }
+        public RelayCommand CancelCommand { get; }
+        private RelayCommand LoadUsersCommand { get; }
 
-        public CreateOrderViewModel(User user, IDataCollection<Order> orderCollection)
+        public CreateOrderViewModel(NavigationStore navigationStore)
         {
-            _orderCollection = orderCollection;
-            _user = new UserViewModel(user);
+            _navigationStore = navigationStore;
+            _unitOfWork = new UnitOfWork();
             _users = new ObservableCollection<UserViewModel>();
-            SubmitCommand = new CreateDataCommand<Order>(orderCollection, CreateOrder, CanCreateOrder);
+
+            _order = new Order
+            {
+                OrderID = Guid.NewGuid()
+            };
+
+            SubmitCommand = new RelayCommand(CreateOrder);
+            CancelCommand = new RelayCommand(NavigateToOrderList);
+            LoadUsersCommand = new RelayCommand(LoadUsers);
         }
 
-        public Order CreateOrder(object obj)
+        private void CreateOrder()
         {
-            return new Order((CreateOrderViewModel)obj);
+            _unitOfWork.OrderRepository.Insert(_order);
+            _unitOfWork.Save();
+            MessageBox.Show("Successful");
+        }
+
+        private void NavigateToOrderList()
+        {
+            _navigationStore.CurrentViewModel = OrderListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        private void LoadUsers()
+        {
+            _users.Clear();
+            foreach(User u in _unitOfWork.UserRepository.Get())
+            {
+                _users.Add(new UserViewModel(u));
+            }
         }
 
 
-
-        public static CreateOrderViewModel LoadViewModel(User user, IDataCollection<Order> orderCollection)
+        public static CreateOrderViewModel LoadViewModel(NavigationStore navigationStore)
         {
-            CreateOrderViewModel viewModel = new CreateOrderViewModel(user, orderCollection);
+            CreateOrderViewModel viewModel = new CreateOrderViewModel(navigationStore);
             viewModel.LoadUsersCommand.Execute(null);
             return viewModel;
         }
-
 
 
         protected override void Dispose(bool disposing)
@@ -100,6 +119,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
+                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

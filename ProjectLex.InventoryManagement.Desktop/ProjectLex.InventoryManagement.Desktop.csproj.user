@@ -18,10 +18,10 @@
     <Compile Update="Views\CategoryViews\CreateCategoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CreateProductView.xaml.cs">
+    <Compile Update="Views\ProductViews\CreateProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\BrandViews\BrandListView.xaml.cs">
+    <Compile Update="Views\SupplierViews\SupplierListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -41,13 +41,19 @@
     <Page Update="Views\AttributeViews\ModifyAttributeView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CategoryViews\ModifyCategoryView.xaml">
+    <Page Update="Views\CategoryViews\EditCategoryView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProductViews\ProductListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProductViews\EditProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StoreViews\CreateStoreView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StoreViews\ModifyStoreView.xaml">
+    <Page Update="Views\StoreViews\EditStoreView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StoreViews\StoreListView.xaml">
@@ -56,25 +62,43 @@
     <Page Update="Views\OrderViews\CreateOrderView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\OrderViews\ModifyOrderView.xaml">
+    <Page Update="Views\OrderViews\EditOrderView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrderViews\OrderListView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AttributeValueViews\CreateAttributeValueView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AttributeValueViews\ModifyAttributeValueView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AttributeValueViews\AttributeValueListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\UserViews\CreateUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserViews\EditUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserViews\UserListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OrderDetailViews\CreateOrderDetailView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RoleViews\CreateRoleView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserViews\ModifyUserView.xaml">
+    <Page Update="Views\OrderDetailViews\EditOrderDetailView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\RoleViews\ModifyRoleView.xaml">
+    <Page Update="Views\RoleViews\EditRoleView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserViews\UserListView.xaml">
+    <Page Update="Views\OrderDetailViews\OrderDetailListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RoleViews\RoleListView.xaml">
@@ -83,19 +107,19 @@
     <Page Update="Views\CategoryViews\CategoryListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BrandViews\ModifyBrandView.xaml">
+    <Page Update="Views\SupplierViews\EditSupplierView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CreateProductView.xaml">
+    <Page Update="Views\ProductViews\CreateProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BrandViews\CreateBrandView.xaml">
+    <Page Update="Views\SupplierViews\CreateSupplierView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CategoryViews\CreateCategoryView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BrandViews\BrandListView.xaml">
+    <Page Update="Views\SupplierViews\SupplierListView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

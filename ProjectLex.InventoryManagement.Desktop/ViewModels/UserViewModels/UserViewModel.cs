@@ -1,4 +1,4 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Models;
+﻿using ProjectLex.InventoryManagement.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +9,32 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
     public class UserViewModel : ViewModelBase
     {
-        public string UserID { get; }
-        public string RoleID { get; }
-        public RoleViewModel Role { get; }
-        public string UserUsername { get; }
-        public string UserPassword { get; }
+        private readonly User _user;
 
-
-        public UserViewModel(User user, Role role)
+        public User User => _user;
+        public string UserID => _user.UserID.ToString();
+        public string RoleID => _user.RoleID.ToString();
+        public RoleViewModel Role
         {
-            UserID = user.UserID;
-            RoleID = user.RoleID;
-            UserUsername = user.UserUsername;
-            UserPassword = user.UserPassword;
-            Role = new RoleViewModel(role);
+            get
+            {
+                if(_user.Role != null)
+                {
+                    return new RoleViewModel(_user.Role);
+                }
+                return null;
+            }
         }
 
-        public UserViewModel(User user, RoleViewModel role)
-        {
-            UserID = user.UserID;
-            RoleID = user.RoleID;
-            UserUsername = user.UserUsername;
-            UserPassword = user.UserPassword;
-            Role = role;
-        }
+        public string UserUsername => _user.UserUsername;
+        public string UserPassword => _user.UserPassword;
+
 
         public UserViewModel(User user)
         {
-            UserID = user.UserID;
-            RoleID = user.RoleID;
-            UserUsername = user.UserUsername;
-            UserPassword = user.UserPassword;
-
+            _user = user;
         }
+
+        
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectLex.InventoryManagement.Database", "ProjectLex.InventoryManagement.Database\ProjectLex.InventoryManagement.Database.csproj", "{C507A10D-C5EA-400F-AD7B-811C63DF9B51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectLex.InventoryManagement.Desktop", "ProjectLex.InventoryManagement.Desktop\ProjectLex.InventoryManagement.Desktop.csproj", "{6EAAD627-3C64-4668-915F-6CC29A218851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectLex.InventoryManagement.Desktop", "ProjectLex.InventoryManagement.Desktop\ProjectLex.InventoryManagement.Desktop.csproj", "{C8EF8F0D-AC22-406E-9119-A2E61BD9DCB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C507A10D-C5EA-400F-AD7B-811C63DF9B51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C507A10D-C5EA-400F-AD7B-811C63DF9B51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C507A10D-C5EA-400F-AD7B-811C63DF9B51}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EAAD627-3C64-4668-915F-6CC29A218851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EAAD627-3C64-4668-915F-6CC29A218851}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EAAD627-3C64-4668-915F-6CC29A218851}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EAAD627-3C64-4668-915F-6CC29A218851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8EF8F0D-AC22-406E-9119-A2E61BD9DCB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8EF8F0D-AC22-406E-9119-A2E61BD9DCB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8EF8F0D-AC22-406E-9119-A2E61BD9DCB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8EF8F0D-AC22-406E-9119-A2E61BD9DCB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

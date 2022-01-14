@@ -10,8 +10,8 @@
         Title="MainWindow" Height="450" Width="800"
         Icon="/Assets/logo.png">
     <Grid>
+        
         <Grid.Resources>
-
             <DataTemplate DataType="{x:Type view_models:CategoryListViewModel}">
                 <views:CategoryListView />
             </DataTemplate>
@@ -20,22 +20,28 @@
                 <views:CreateCategoryView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:ModifyCategoryViewModel}">
-                <views:ModifyCategoryView />
+            <DataTemplate DataType="{x:Type view_models:EditCategoryViewModel}">
+                <views:EditCategoryView />
+            </DataTemplate>
+            
+            
+            
+
+            <DataTemplate DataType="{x:Type view_models:SupplierListViewModel}">
+                <views:SupplierListView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:BrandListViewModel}">
-                <views:BrandListView />
+            <DataTemplate DataType="{x:Type view_models:CreateSupplierViewModel}">
+                <views:CreateSupplierView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:CreateBrandViewModel}">
-                <views:CreateBrandView />
+            <DataTemplate DataType="{x:Type view_models:EditSupplierViewModel}">
+                <views:EditSupplierView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:ModifyBrandViewModel}">
-                <views:ModifyBrandView />
-            </DataTemplate>
-
+            
+            
+            
             <DataTemplate DataType="{x:Type view_models:RoleListViewModel}">
                 <views:RoleListView />
             </DataTemplate>
@@ -44,10 +50,13 @@
                 <views:CreateRoleView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:ModifyRoleViewModel}">
-                <views:ModifyRoleView />
+            <DataTemplate DataType="{x:Type view_models:EditRoleViewModel}">
+                <views:EditRoleView />
             </DataTemplate>
 
+            
+            
+            
             <DataTemplate DataType="{x:Type view_models:UserListViewModel}">
                 <views:UserListView />
             </DataTemplate>
@@ -56,10 +65,12 @@
                 <views:CreateUserView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:ModifyUserViewModel}">
-                <views:ModifyUserView />
+            <DataTemplate DataType="{x:Type view_models:EditUserViewModel}">
+                <views:EditUserView />
             </DataTemplate>
 
+            
+            
 
             <DataTemplate DataType="{x:Type view_models:StoreListViewModel}">
                 <views:StoreListView />
@@ -69,12 +80,57 @@
                 <views:CreateStoreView />
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type view_models:ModifyStoreViewModel}">
-                <views:ModifyStoreView />
+            <DataTemplate DataType="{x:Type view_models:EditStoreViewModel}">
+                <views:EditStoreView />
+            </DataTemplate>
+
+            
+
+
+
+            <DataTemplate DataType="{x:Type view_models:ProductListViewModel}">
+                <views:ProductListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateProductViewModel}">
+                <views:CreateProductView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:EditProductViewModel}">
+                <views:EditProductView />
             </DataTemplate>
 
 
-            <DataTemplate DataType="{x:Type view_models:AttributeListViewModel}">
+            
+
+            <DataTemplate DataType="{x:Type view_models:OrderListViewModel}">
+                <views:OrderListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateOrderViewModel}">
+                <views:CreateOrderView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:EditOrderViewModel}">
+                <views:EditOrderView />
+            </DataTemplate>
+
+
+
+
+            <DataTemplate DataType="{x:Type view_models:OrderDetailListViewModel}">
+                <views:OrderDetailListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateOrderDetailViewModel}">
+                <views:CreateOrderDetailView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:EditOrderDetailViewModel}">
+                <views:EditOrderDetailView />
+            </DataTemplate>
+
+            <!--<DataTemplate DataType="{x:Type view_models:AttributeListViewModel}">
                 <views:AttributeListView />
             </DataTemplate>
 
@@ -85,6 +141,18 @@
             <DataTemplate DataType="{x:Type view_models:ModifyAttributeViewModel}">
                 <views:ModifyAttributeView />
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:AttributeValueListViewModel}">
+                <views:AttributeValueListView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:CreateAttributeValueViewModel}">
+                <views:CreateAttributeValueView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type view_models:ModifyAttributeValueViewModel}">
+                <views:ModifyAttributeValueView />
+            </DataTemplate>-->
 
         </Grid.Resources>
         
@@ -97,15 +165,20 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
         <Button Grid.Row="0" Content="Category List" Command="{Binding NavigateToCategoryListCommand}"/>
-        <Button Grid.Row="1" Content="Brand List" Command="{Binding NavigateToBrandListCommand}"/>
+        <Button Grid.Row="1" Content="Supplier List" Command="{Binding NavigateToSupplierListCommand}"/>
         <Button Grid.Row="2" Content="Role List" Command="{Binding NavigateToRoleListCommand}"/>
         <Button Grid.Row="3" Content="User List" Command="{Binding NavigateToUserListCommand}"/>
         <Button Grid.Row="4" Content="Store List" Command="{Binding NavigateToStoreListCommand}"/>
-        <Button Grid.Row="5" Content="Attribute List" Command="{Binding NavigateToAttributeListCommand}"/>
+        <Button Grid.Row="5" Content="Product List" Command="{Binding NavigateToProductListCommand}"/>
+        <Button Grid.Row="6" Content="Order List" Command="{Binding NavigateToOrderListCommand}"/>
+        <!--<Button Grid.Row="7" Content="Order List" Command="{Binding NavigateToOrderDetailListCommand}"/>-->
+        <!--<Button Grid.Row="5" Content="Attribute List" Command="{Binding NavigateToAttributeListCommand}"/>-->
 
-        <ContentControl Grid.Row="6" Content="{Binding CurrentViewModel}" />
+        <ContentControl Grid.Row="8" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

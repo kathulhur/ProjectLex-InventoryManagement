@@ -43,14 +43,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
 
         public ICommand SubmitCommand { get; }
-        public ICommand CancelCommand { get; }
+        public ICommand CancelCommand { get; } // will use the one in the main viewmodel instead, ignore this
 
         public CreateAttributeViewModel(NavigationStore navigationStore, AttributeCollection attributeCollection)
         {
             _navigationStore = navigationStore;
             _attributeCollection = attributeCollection;
             SubmitCommand = new CreateDataCommand<Models.Attribute>(attributeCollection, CreateAttribute, CanCreateAttribute);
-            CancelCommand = new NavigateCommand(NavigateToAttributeList);
         }
 
         public static CreateAttributeViewModel LoadViewModel(NavigationStore navigationStore, AttributeCollection attributeCollection)
@@ -58,10 +57,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             return new CreateAttributeViewModel(navigationStore, attributeCollection);
         }
 
-        public void NavigateToAttributeList(object obj)
-        {
-            _navigationStore.CurrentViewModel = AttributeListViewModel.LoadViewModel(_navigationStore, _attributeCollection);
-        }
 
         public Models.Attribute CreateAttribute(object obj)
         {

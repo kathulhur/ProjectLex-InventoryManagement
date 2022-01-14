@@ -87,7 +87,7 @@
                                             Grid.Column="1"
                                             Command=
                                             "{
-                                                Binding DataContext.NavigateToModifyRoleCommand, 
+                                                Binding DataContext.NavigateToEditRoleCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:RoleListView}
                                             }"
                                             CommandParameter="{Binding}"/>

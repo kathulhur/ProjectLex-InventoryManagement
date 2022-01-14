@@ -1,14 +1,15 @@
-﻿using ProjectLex.InventoryManagement.Desktop.Collections;
-using ProjectLex.InventoryManagement.Desktop.Commands;
-using ProjectLex.InventoryManagement.Desktop.Models;
-using ProjectLex.InventoryManagement.Desktop.Services;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
@@ -17,114 +18,100 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
         private bool _isDisposed = false;
 
+        private User _user;
 
-        private string _userID;
-        public string UserID
-        {
-            get { return _userID; }
-            set
-            {
-                _userID = value;
-                OnPropertyChanged(nameof(UserID));
-            }
-        }
-
-        private string _roleID => Role.RoleID;
-        public string RoleID => _roleID;
-
-
-        private RoleViewModel _role;
 
         public RoleViewModel Role
         {
-            get { return _role; }
+            get { return _roles.Single(r => r.RoleID == _user.RoleID.ToString()); }
             set
             {
-                _role = value;
+                _user.RoleID = new Guid(value.RoleID);
                 OnPropertyChanged(nameof(Role));
             }
         }
 
-
-        private string _userUsername;
         public string UserUsername
         {
-            get { return _userUsername; }
+            get { return _user.UserUsername; }
             set
             {
-                _userUsername = value;
+                _user.UserUsername = value;
                 OnPropertyChanged(nameof(UserUsername));
             }
         }
 
-        private string _userPassword;
         public string UserPassword
         {
-            get { return _userPassword; }
+            get { return _user.UserPassword; }
             set
             {
-                _userPassword = value;
+                _user.UserPassword = value;
                 OnPropertyChanged(nameof(UserPassword));
             }
         }
        
-
-        private readonly UserCollection _userCollection;
-        private readonly RoleCollection _roleCollection;
         private readonly NavigationStore _navigationStore;
+        private readonly UnitOfWork _unitOfWork;
 
         private readonly ObservableCollection<RoleViewModel> _roles;
         public IEnumerable<RoleViewModel> Roles => _roles;
         
 
 
-        public ICommand SubmitCommand { get; }
-        public ICommand CancelCommand { get; }
-        private ICommand LoadRolesCommand { get; }
+        public RelayCommand SubmitCommand { get; }
+        public RelayCommand CancelCommand { get; }
+        private RelayCommand LoadRolesCommand { get; }
 
-        public CreateUserViewModel(NavigationStore navigationStore, UserCollection userCollection, RoleCollection roleCollection)
+        public CreateUserViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            _userCollection = userCollection;
-            _roleCollection = roleCollection;
+            _unitOfWork = new UnitOfWork();
             _roles = new ObservableCollection<RoleViewModel>();
-            SubmitCommand = new CreateDataCommand<User>(userCollection, CreateUser, CanCreateUser);
-            CancelCommand = new NavigateCommand(NavigateToUserList);
-            LoadRolesCommand = new LoadDataCommand<Role>(_roleCollection, OnDataLoaded);
+
+            _user = new User()
+            {
+                UserID = Guid.NewGuid()
+            };
+
+            SubmitCommand = new RelayCommand(CreateUser, CanCreateUser);
+            CancelCommand = new RelayCommand(NavigateToUserList);
+            LoadRolesCommand = new RelayCommand(LoadRoles);
         }
 
-        public static CreateUserViewModel LoadViewModel(NavigationStore navigationStore, UserCollection userCollection, RoleCollection roleCollection)
+        private void CreateUser()
         {
-            CreateUserViewModel viewModel = new CreateUserViewModel(navigationStore, userCollection, roleCollection);
+            //Debug.WriteLine("Role ID" + _user.Role.RoleID);
+            _unitOfWork.UserRepository.Insert(_user);
+            _unitOfWork.Save();
+            MessageBox.Show("Successful");
+        }
+        private bool CanCreateUser()
+        {
+            return true;
+        }
+
+        private void NavigateToUserList()
+        {
+            _navigationStore.CurrentViewModel = UserListViewModel.LoadViewModel(_navigationStore);
+        }
+
+        private void LoadRoles()
+        {
+            _roles.Clear();
+            foreach(Role r in _unitOfWork.RoleRepository.Get())
+            {
+                _roles.Add(new RoleViewModel(r));
+            }
+            _user.RoleID = new Guid(_roles[0].RoleID);
+        }
+
+        public static CreateUserViewModel LoadViewModel(NavigationStore navigationStore)
+        {
+            CreateUserViewModel viewModel = new CreateUserViewModel(navigationStore);
             viewModel.LoadRolesCommand.Execute(null);
             return viewModel;
         }
-
-        public void NavigateToUserList(object obj)
-        {
-            _navigationStore.CurrentViewModel = UserListViewModel.LoadViewModel(_navigationStore, _userCollection, _roleCollection);
-        }
-
-
-        public User CreateUser(object obj)
-        {
-            return new User((CreateUserViewModel)obj);
-        }
-
-        private void OnDataLoaded()
-        {
-            _roles.Clear();
-
-            foreach (Role c in _roleCollection.DataList)
-            {
-                RoleViewModel roleViewModel = new RoleViewModel(c);
-                _roles.Add(roleViewModel);
-            }
-
-        }
-
-
-
 
 
         protected override void Dispose(bool disposing)
@@ -134,17 +121,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
+                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }
             this._isDisposed = true;
 
             base.Dispose(disposing);
-        }
-
-        public bool CanCreateUser(object obj)
-        {
-            return true;
         }
     }
 }

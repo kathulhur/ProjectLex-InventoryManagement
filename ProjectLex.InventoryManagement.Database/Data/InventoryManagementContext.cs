@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjectLex.InventoryManagement.Database.DTOs;
+using ProjectLex.InventoryManagement.Database.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,20 +10,19 @@ namespace ProjectLex.InventoryManagement.Database.Data
 {
     public class InventoryManagementContext : DbContext
     {
-        public DbSet<AttributeDTO> Attributes { get; set; }
-        public DbSet<AttributeValueDTO> AttributeValues { get; set; }
-        public DbSet<BrandDTO> Brands { get; set; }
-        public DbSet<CategoryDTO> Categories { get; set; }
-        public DbSet<CompanyDTO> Companies { get; set; }
-        public DbSet<OrderDetailDTO> OrderDetails { get; set; }
-        public DbSet<OrderDTO> Orders { get; set; }
-        public DbSet<ProductDTO> Products { get; set; }
-        public DbSet<ProductBrandDTO> ProductBrands { get; set; }
-        public DbSet<ProductAttributeDTO> ProductAttributes { get; set; }
-        public DbSet<ProductCategoryDTO> ProductCategories { get; set; }
-        public DbSet<RoleDTO> Roles { get; set; }
-        public DbSet<StoreDTO> Stores { get; set; }
-        public DbSet<UserDTO> Users { get; set; }
+        public DbSet<Models.Attribute> Attributes { get; set; }
+        public DbSet<AttributeValue> AttributeValues { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Store> Stores { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,24 +31,25 @@ namespace ProjectLex.InventoryManagement.Database.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<ProductDTO>()
+                .Entity<Product>()
                 .HasKey(p => new { p.ProductID, p.StoreID });
 
-            modelBuilder
-                .Entity<ProductBrandDTO>()
-                .HasKey(pb => new { pb.ProductID, pb.StoreID, pb.BrandID });
 
             modelBuilder
-                .Entity<ProductCategoryDTO>()
+                .Entity<ProductCategory>()
                 .HasKey(pc => new { pc.ProductID, pc.StoreID, pc.CategoryID });
 
             modelBuilder
-                .Entity<ProductAttributeDTO>()
-                .HasKey(pa => new { pa.ProductID, pa.StoreID, pa.AttributeID });
+                .Entity<ProductAttributeValue>()
+                .HasKey(pav => new { pav.ProductID, pav.StoreID, pav.AttributeValueID, pav.AttributeID });
 
             modelBuilder
-                .Entity<OrderDetailDTO>()
-                .HasKey(pa => new { pa.ProductID, pa.StoreID, pa.OrderID });
+                .Entity<OrderDetail>()
+                .HasKey(od => new { od.ProductID, od.StoreID, od.OrderID });
+
+            modelBuilder
+                .Entity<AttributeValue>()
+                .HasKey(av => new { av.AttributeValueID, av.AttributeID });
         }
 
     }
