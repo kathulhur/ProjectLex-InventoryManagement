@@ -28,9 +28,8 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new MainWindow()
+            MainWindow = new LoginWindow(_navigationStore)
             {
-                DataContext = new MainViewModel(_navigationStore)
             };
             MainWindow.Show();
 

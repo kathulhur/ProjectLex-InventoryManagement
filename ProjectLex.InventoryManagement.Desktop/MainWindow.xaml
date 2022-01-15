@@ -179,6 +179,7 @@
         <!--<Button Grid.Row="7" Content="Order List" Command="{Binding NavigateToOrderDetailListCommand}"/>-->
         <!--<Button Grid.Row="5" Content="Attribute List" Command="{Binding NavigateToAttributeListCommand}"/>-->
 
+        <Button Grid.Row="7"  Command="{ Binding LogOutCommand }">Logout</Button>
         <ContentControl Grid.Row="8" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

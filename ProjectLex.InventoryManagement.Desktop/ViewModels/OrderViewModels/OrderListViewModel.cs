@@ -25,7 +25,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ObservableCollection<OrderViewModel> _orders;
         public IEnumerable<OrderViewModel> Orders => _orders;
 
-        public RelayCommand NavigateToCreateOrderCommand { get; }
+        public RelayCommand<OrderViewModel> NavigateToCreateOrderCommand { get; }
         public RelayCommand LoadOrdersCommand { get; }
         public RelayCommand<OrderViewModel> RemoveOrderCommand { get; }
         public RelayCommand<OrderViewModel> NavigateToEditOrderCommand { get; }
@@ -37,7 +37,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orders = new ObservableCollection<OrderViewModel>();
 
             LoadOrdersCommand = new RelayCommand(LoadOrders);
-            NavigateToCreateOrderCommand = new RelayCommand(NavigateToCreateOrder);
+            NavigateToCreateOrderCommand = new RelayCommand<OrderViewModel>(NavigateToCreateOrder);
             RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
             NavigateToEditOrderCommand = new RelayCommand<OrderViewModel>(NavigateToEditOrder);
 
@@ -56,9 +56,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
         }
 
-        private void NavigateToCreateOrder()
+        private void NavigateToCreateOrder(OrderViewModel orderViewModel)
         {
-            _navigationStore.CurrentViewModel = CreateOrderViewModel.LoadViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = CreateOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
         }
 
         private void LoadOrders()

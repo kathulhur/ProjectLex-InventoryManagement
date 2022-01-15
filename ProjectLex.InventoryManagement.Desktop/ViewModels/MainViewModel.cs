@@ -2,9 +2,11 @@
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
@@ -13,7 +15,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
         private readonly NavigationStore _navigationStore;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-
+        private readonly MainWindow _mainWindow;
 
         public RelayCommand NavigateToRoleListCommand { get; }
         public RelayCommand NavigateToCategoryListCommand { get; }
@@ -22,11 +24,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand NavigateToUserListCommand { get; }
         public RelayCommand NavigateToProductListCommand { get; }
         public RelayCommand NavigateToOrderListCommand { get; }
-
-        public MainViewModel(NavigationStore navigationStore)
+        public RelayCommand LogOutCommand { get; }
+        public MainViewModel(MainWindow mainWindow, NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-
+            _mainWindow = mainWindow;
             _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore);
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
@@ -37,8 +39,25 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             NavigateToUserListCommand = new RelayCommand(NavigateToUserList);
             NavigateToProductListCommand = new RelayCommand(NavigateToProductList);
             NavigateToOrderListCommand = new RelayCommand(NavigateToOrderList);
+            LogOutCommand = new RelayCommand(LogOut);
 
+            mainWindow.Closed += OnClosed;
         }
+
+        private void LogOut()
+        {
+            _mainWindow.Close();
+        }
+
+
+        private void OnClosed(Object obj, EventArgs e)
+        {
+            Application.Current.MainWindow = new LoginWindow(_navigationStore);
+            Application.Current.MainWindow.Show();
+            this.Dispose();
+        }
+
+
 
         public void NavigateToRoleList()
         {

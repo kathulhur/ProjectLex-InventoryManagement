@@ -57,6 +57,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
+
+        private readonly OrderDetailListViewModel _orderDetailListViewModel;
+        public OrderDetailListViewModel OrderDetailListViewModel => _orderDetailListViewModel;
+
         private readonly ObservableCollection<UserViewModel> _users;
         public IEnumerable<UserViewModel> Users => _users;
         
@@ -66,12 +70,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand CancelCommand { get; }
         private RelayCommand LoadUsersCommand { get; }
 
-        public CreateOrderViewModel(NavigationStore navigationStore)
+        public CreateOrderViewModel(NavigationStore navigationStore, Order order)
         {
+            _order = order;
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
             _users = new ObservableCollection<UserViewModel>();
-
+            _orderDetailListViewModel = OrderDetailListViewModel.LoadViewModel(_navigationStore, _order);
             _order = new Order
             {
                 OrderID = Guid.NewGuid()
@@ -104,9 +109,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
 
 
-        public static CreateOrderViewModel LoadViewModel(NavigationStore navigationStore)
+        public static CreateOrderViewModel LoadViewModel(NavigationStore navigationStore, Order order)
         {
-            CreateOrderViewModel viewModel = new CreateOrderViewModel(navigationStore);
+            CreateOrderViewModel viewModel = new CreateOrderViewModel(navigationStore, order);
             viewModel.LoadUsersCommand.Execute(null);
             return viewModel;
         }

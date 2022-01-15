@@ -36,7 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\AuthenticationService.cs" />
     <Compile Remove="Services\DatabaseServiceBase.cs" />
     <Compile Remove="Stores\CollectionStore.cs" />
     <Compile Remove="Stores\ProductStore.cs" />
@@ -257,7 +256,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
 

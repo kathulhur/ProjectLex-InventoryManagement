@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
-    public class ViewModelBase : ObservableObject, IDisposable
+    public class ViewModelBase : ObservableValidator, IDisposable
     {
         
         private bool disposed = false;

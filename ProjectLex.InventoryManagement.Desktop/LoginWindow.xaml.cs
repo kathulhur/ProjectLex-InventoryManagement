@@ -22,9 +22,10 @@ namespace ProjectLex.InventoryManagement.Desktop
     /// </summary>
     public partial class LoginWindow : Window
     {
-        
-        public LoginWindow()
+        private readonly NavigationStore _navigationStore;
+        public LoginWindow(NavigationStore navigationStore)
         {
+            _navigationStore = navigationStore;
             InitializeComponent();
         }
 
@@ -64,9 +65,12 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         private void LoginUser(object sender, RoutedEventArgs e)
         {
-            
-            
-
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.DataContext = new MainViewModel(mainWindow, _navigationStore);
+            Application.Current.MainWindow = mainWindow;
+            Application.Current.MainWindow.Show();
+            e.Handled = true;
+            this.Close();
         }
     }
 }
