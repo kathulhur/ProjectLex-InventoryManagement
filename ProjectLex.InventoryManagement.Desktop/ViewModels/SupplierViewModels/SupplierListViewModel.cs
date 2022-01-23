@@ -17,7 +17,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
 
         private bool _isDisposed = false;
+        
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen => _isDialogOpen;
 
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
 
         private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
@@ -28,8 +33,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ICommand ToCreateSupplierCommand { get; }
         public RelayCommand LoadSuppliersCommand { get; }
         public RelayCommand<SupplierViewModel> RemoveSupplierCommand { get; }
-        public RelayCommand<SupplierViewModel> NavigateToEditSupplierCommand { get; }
-        public RelayCommand NavigateToCreateSupplierCommand { get; }
+        public RelayCommand<SupplierViewModel> EditSupplierCommand { get; }
+        public RelayCommand CreateSupplierCommand { get; }
 
         public SupplierListViewModel(NavigationStore navigationStore)
         {
@@ -38,9 +43,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _suppliers = new ObservableCollection<SupplierViewModel>();
 
             LoadSuppliersCommand = new RelayCommand(LoadSuppliers);
-            RemoveSupplierCommand = new RelayCommand<SupplierViewModel>(RemoveSupplier, CanRemoveSupplier);
-            NavigateToEditSupplierCommand = new RelayCommand<SupplierViewModel>(NavigateToEditSupplier);
-            NavigateToCreateSupplierCommand = new RelayCommand(NavigateToCreateSupplier);
+            RemoveSupplierCommand = new RelayCommand<SupplierViewModel>(RemoveSupplier);
+            EditSupplierCommand = new RelayCommand<SupplierViewModel>(EditSupplier);
+            CreateSupplierCommand = new RelayCommand(CreateSupplier);
         }
 
         private void RemoveSupplier(SupplierViewModel supplierViewModel)
@@ -51,22 +56,36 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             MessageBox.Show("Successful");
         }
 
-        private bool CanRemoveSupplier(SupplierViewModel supplierViweModel)
+
+        private void CreateSupplier()
         {
-            return true;
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = CreateSupplierViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
-        private void NavigateToCreateSupplier()
+
+        private void EditSupplier(SupplierViewModel supplierViewModel)
         {
-            _navigationStore.CurrentViewModel = CreateSupplierViewModel.LoadViewModel(_navigationStore);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = EditSupplierViewModel.LoadViewModel(_navigationStore, supplierViewModel.Supplier, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
 
-        private void NavigateToEditSupplier(SupplierViewModel supplierViewModel)
+        private void CloseDialogCallback()
         {
-            _navigationStore.CurrentViewModel = EditSupplierViewModel.LoadViewModel(_navigationStore, supplierViewModel.Supplier);
-        }
+            _isDialogOpen = false;
+            OnPropertyChanged(nameof(IsDialogOpen));
 
+            LoadSuppliersCommand.Execute(null);
+        }
 
         private void LoadSuppliers()
         {
@@ -94,6 +113,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
+                    _dialogViewModel?.Dispose();
                 }
 
             }

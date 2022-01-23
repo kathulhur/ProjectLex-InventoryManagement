@@ -3,6 +3,8 @@ using ProjectLex.InventoryManagement.Desktop.Stores;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +57,7 @@ namespace ProjectLex.InventoryManagement.Desktop
         private void exitApp(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+            
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

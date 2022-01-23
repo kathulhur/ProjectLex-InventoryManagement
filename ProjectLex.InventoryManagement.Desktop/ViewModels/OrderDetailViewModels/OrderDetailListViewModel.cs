@@ -16,6 +16,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
         private bool _isDisposed = false;
 
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
+
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen => _isDialogOpen;
+
+
         private readonly Order _order;
 
         private readonly NavigationStore _navigationStore;
@@ -24,13 +31,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ObservableCollection<OrderDetailViewModel> _orderDetails;
         public IEnumerable<OrderDetailViewModel> OrderDetails => _orderDetails;
 
-
-
-        public RelayCommand ToCreateOrderDetailCommand { get; }
         public RelayCommand LoadOrderDetailsCommand { get; }
         public RelayCommand<OrderDetailViewModel> RemoveOrderDetailCommand { get; }
-        public RelayCommand<OrderDetailViewModel> NavigateToEditOrderDetailCommand { get; }
-        public RelayCommand NavigateToCreateOrderDetailCommand { get; }
+        public RelayCommand<OrderDetailViewModel> EditOrderDetailCommand { get; }
+        public RelayCommand CreateOrderDetailCommand { get; }
 
         public OrderDetailListViewModel(NavigationStore navigationStore, Order order)
         {
@@ -42,9 +46,34 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             LoadOrderDetailsCommand = new RelayCommand(LoadOrderDetails);
             RemoveOrderDetailCommand = new RelayCommand<OrderDetailViewModel>(RemoveOrderDetail);
-            NavigateToEditOrderDetailCommand = new RelayCommand<OrderDetailViewModel>(NavigateToEditOrderDetail);
-            NavigateToCreateOrderDetailCommand = new RelayCommand(NavigateToCreateOrderDetail);
+            EditOrderDetailCommand = new RelayCommand<OrderDetailViewModel>(EditOrderDetail);
+            CreateOrderDetailCommand = new RelayCommand(CreateOrderDetail);
 
+        }
+
+
+        private void EditOrderDetail(OrderDetailViewModel orderDetailViewModel)
+        {
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = EditOrderDetailViewModel.LoadViewModel(_navigationStore, orderDetailViewModel.OrderDetail, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
+        }
+
+        private void CreateOrderDetail()
+        {
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = CreateOrderDetailViewModel.LoadViewModel(_navigationStore, _order, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
+        }
+
+        private void CloseDialogCallback()
+        {
+            _isDialogOpen = false;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
         private void RemoveOrderDetail(OrderDetailViewModel orderDetailViewModel)
@@ -53,16 +82,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.Save();
             MessageBox.Show("Successful");
             _orderDetails.Remove(orderDetailViewModel);
-        }
-
-        private void NavigateToEditOrderDetail(OrderDetailViewModel orderDetailViewModel)
-        {
-            _navigationStore.CurrentViewModel = EditOrderDetailViewModel.LoadViewModel(_navigationStore, orderDetailViewModel.OrderDetail);
-        }
-
-        private void NavigateToCreateOrderDetail()
-        {
-            _navigationStore.CurrentViewModel = CreateOrderDetailViewModel.LoadViewModel(_navigationStore, _order);
         }
 
         private void LoadOrderDetails()

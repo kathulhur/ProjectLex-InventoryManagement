@@ -12,11 +12,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly OrderDetail _orderDetail;
         public OrderDetail OrderDetail => _orderDetail;
         public string ProductID => _orderDetail.ProductID.ToString();
-        public string StoreID => _orderDetail.StoreID.ToString();
         public string OrderID => _orderDetail.OrderID.ToString();
         public string OrderDetailQuantity => _orderDetail.OrderDetailQuantity.ToString();
         public string OrderDetailAmount => _orderDetail.OrderDetailAmount.ToString();
-        public ProductViewModel Product 
+        public ProductViewModel Product
         {
             get
             {

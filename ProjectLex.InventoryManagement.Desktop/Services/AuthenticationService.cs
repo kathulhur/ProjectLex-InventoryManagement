@@ -9,8 +9,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
 {
     class AuthenticationService
     {
-        private User _user;
-        public User User => _user;
+        private Staff _staff;
+        public Staff Staff => _staff;
 
         public bool IsAuthenticated { get; private set; }
 
@@ -20,7 +20,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Services
 
         }
 
-        public static void Authenticate(string username, string password)
+        public static void Authenticate(string staffname, string password)
         {
 
         }

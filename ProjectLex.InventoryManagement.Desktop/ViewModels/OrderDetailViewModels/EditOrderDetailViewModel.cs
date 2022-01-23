@@ -5,6 +5,7 @@ using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,98 +19,95 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private OrderDetail _orderDetail;
 
+        private ProductViewModel _product;
 
-        private int _productIndex;
-        public int ProductIndex
+        public ProductViewModel Product
         {
-            get { return _productIndex; }
-            set
-            {
-                _productIndex = value;
-                _orderDetail.ProductID = new Guid(_products[_productIndex].ProductID);
-                _orderDetail.StoreID = new Guid(_products[_productIndex].StoreID);
-
-                _orderDetail.OrderDetailAmount = _products[_productIndex].Product.ProductPrice * _orderDetail.OrderDetailQuantity;
-                OnPropertyChanged(nameof(ProductIndex));
-                OnPropertyChanged(nameof(OrderDetailAmount));
-            }
+            get { return _product; }
         }
 
 
+        private string _orderDetailQuantity;
+
+        [Required(ErrorMessage = "Quantity is Required")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Input")]
         public string OrderDetailQuantity
         {
-            get { return _orderDetail.OrderDetailQuantity.ToString(); }
+            get { return _orderDetailQuantity; }
             set
             {
-                _orderDetail.OrderDetailQuantity = Convert.ToInt32(value);
-                _orderDetail.OrderDetailAmount = _products[_productIndex].Product.ProductPrice * _orderDetail.OrderDetailQuantity;
+                _orderDetailQuantity = value;
+                _orderDetailAmount = "NaN";
                 OnPropertyChanged(nameof(OrderDetailQuantity));
                 OnPropertyChanged(nameof(OrderDetailAmount));
+
+                int tempQuantity;
+                if (int.TryParse(_orderDetailQuantity, out tempQuantity))
+                {
+                    _orderDetailAmount = (_product.Product.ProductPrice * Convert.ToInt32(OrderDetailQuantity)).ToString();
+                    OnPropertyChanged(nameof(OrderDetailQuantity));
+                    OnPropertyChanged(nameof(OrderDetailAmount));
+                }
+
             }
         }
+
+        private string _orderDetailAmount;
 
         public string OrderDetailAmount
         {
-            get { return _orderDetail.OrderDetailAmount.ToString(); }
-        }
-
-        private decimal CalculateAmount(decimal amount, int quantity)
-        {
-            return amount * quantity;
+            get { return _orderDetailAmount; }
         }
 
 
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
-        private readonly ObservableCollection<ProductViewModel> _products;
-        public IEnumerable<ProductViewModel> Products => _products;
-
-
 
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
-        private RelayCommand LoadProductsCommand { get; }
+        private Action _closeDialogCallback;
 
-        public EditOrderDetailViewModel(NavigationStore navigationStore, OrderDetail orderDetail)
+        public EditOrderDetailViewModel(NavigationStore navigationStore, OrderDetail orderDetail, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
             _orderDetail = orderDetail;
-            _products = new ObservableCollection<ProductViewModel>();
+            _closeDialogCallback = closeDialogCallback;
 
-
-            SubmitCommand = new RelayCommand(EditOrderDetail);
-            CancelCommand = new RelayCommand(NavigateToEditOrderList);
-            LoadProductsCommand = new RelayCommand(LoadProducts);
+            _orderDetailQuantity = orderDetail.OrderDetailQuantity.ToString();
+            _orderDetailAmount = orderDetail.OrderDetailAmount.ToString();
+            _product = new ProductViewModel(_unitOfWork.ProductRepository.GetByID(orderDetail.ProductID));
+            
+            SubmitCommand = new RelayCommand(Submit);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
-        private void EditOrderDetail()
+        private void Submit()
         {
-            _unitOfWork.OrderDetailRepository.Update(_orderDetail);
-            _unitOfWork.Save();
-            MessageBox.Show("Successful");
-        }
+            ValidateAllProperties();
 
-        private void NavigateToEditOrderList()
-        {
-            _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, _orderDetail.Order);
-        }
-
-        private void LoadProducts()
-        {
-            _products.Clear();
-            foreach(Product p in _unitOfWork.ProductRepository.Get())
+            if (HasErrors)
             {
-                _products.Add(new ProductViewModel(p));
+                return;
             }
+
+            _orderDetail.OrderDetailQuantity = Convert.ToInt32(this.OrderDetailQuantity);
+            _orderDetail.OrderDetailAmount = Convert.ToDecimal(this.OrderDetailAmount);
+
+            MessageBox.Show("Successful");
+            _closeDialogCallback();
+        }
+
+        private void Cancel()
+        {
+            _closeDialogCallback();
         }
 
 
-        public static EditOrderDetailViewModel LoadViewModel(NavigationStore navigationStore, OrderDetail orderDetail)
+        public static EditOrderDetailViewModel LoadViewModel(NavigationStore navigationStore, OrderDetail orderDetail, Action closeDialogCallback)
         {
-            EditOrderDetailViewModel viewModel = new EditOrderDetailViewModel(navigationStore, orderDetail);
-            viewModel.LoadProductsCommand.Execute(null);
+            EditOrderDetailViewModel viewModel = new EditOrderDetailViewModel(navigationStore, orderDetail, closeDialogCallback);
             return viewModel;
         }
 

@@ -26,7 +26,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             set
             {
                 _order.UserID = new Guid(value);
-                OnPropertyChanged(nameof(User));
+                OnPropertyChanged(nameof(Staff));
             }
         }
         public string CustomerName
@@ -91,7 +91,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void LoadUsers()
         {
             _users.Clear();
-            foreach(User u in _unitOfWork.UserRepository.Get())
+            foreach(Staff u in _unitOfWork.UserRepository.Get())
             {
                 _users.Add(new UserViewModel(u));
             }

@@ -4,6 +4,7 @@ using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,72 +17,131 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
         private bool _isDisposed = false;
 
-        private Supplier _supplier;
+        public string _supplierName;
 
-
+        [Required(ErrorMessage = "Name is Required")]
+        [MinLength(2, ErrorMessage = "Name should be longer than 2 characters")]
+        [MaxLength(50, ErrorMessage = "Name longer than 50 characters is Not Allowed")]
         public string SupplierName
         {
-            get { return _supplier.SupplierName; }
+            get => _supplierName;
             set
             {
-                _supplier.SupplierName = value;
-                OnPropertyChanged(nameof(SupplierName));
+                SetProperty(ref _supplierName, value);
+            }
+
+        }
+
+        private string _supplierAddress;
+
+        [Required(ErrorMessage = "Address is Required")]
+        [MinLength(10, ErrorMessage = "Address should be longer than 2 characters")]
+        [MaxLength(50, ErrorMessage = "Address longer than 50 characters is Not Allowed")]
+        public string SupplierAddress
+        {
+            get => _supplierAddress;
+            set
+            {
+                SetProperty(ref _supplierAddress, value);
             }
         }
 
-        private string _supplierStatus;
-        public string SupplierStatus
+        private string _supplierPhone;
+
+        [Required(ErrorMessage = "Phone number is Required")]
+        [MinLength(11, ErrorMessage = "Phone number should be 11 characters long")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Phone should only contain numbers")]
+        public string SupplierPhone
         {
-            get { return _supplier.SupplierStatus; }
+            get => _supplierPhone;
             set
             {
-                _supplier.SupplierStatus = value;
-                OnPropertyChanged(nameof(SupplierStatus));
+                SetProperty(ref _supplierPhone, value);
             }
         }
-       
+
+
+        private string _supplierEmail;
+
+        [Required(ErrorMessage = "Email is Required")]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Invalid Email Format")]
+        public string SupplierEmail
+        {
+            get => _supplierEmail;
+            set
+            {
+                SetProperty(ref _supplierEmail, value);
+            }
+        }
+
+
+        private string _supplierStatus;
+
+        [Required(ErrorMessage = "Status is Required")]
+        public string SupplierStatus
+        {
+            get { return _supplierStatus; }
+            set
+            {
+                SetProperty(ref _supplierStatus, value);
+            }
+        }
+
 
         private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
+        private readonly Action _closeDialogCallback;
 
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
 
-        public CreateSupplierViewModel(NavigationStore navigationStore)
+        public CreateSupplierViewModel(NavigationStore navigationStore, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
+            _closeDialogCallback = closeDialogCallback;
 
-            SubmitCommand = new RelayCommand(CreateSupplier, CanCreateSupplier);
-            CancelCommand = new RelayCommand(NavigateToSupplierList);
-            _supplier = new Supplier()
+
+            SubmitCommand = new RelayCommand(Submit);
+            CancelCommand = new RelayCommand(Cancel);
+        }
+
+
+        private void Submit()
+        {
+            ValidateAllProperties();
+
+            if (HasErrors)
             {
-                SupplierID = Guid.NewGuid()
+                return;
+            }
+
+            Supplier supplier = new Supplier()
+            {
+                SupplierID = Guid.NewGuid(),
+                SupplierName = SupplierName,
+                SupplierAddress = SupplierAddress,
+                SupplierPhone = SupplierPhone,
+                SupplierEmail = SupplierEmail,
+                SupplierStatus = SupplierStatus
             };
-        }
 
-
-        private void CreateSupplier()
-        {
-            _unitOfWork.SupplierRepository.Insert(_supplier);
+            _unitOfWork.SupplierRepository.Insert(supplier);
             _unitOfWork.Save();
-            MessageBox.Show("Successful");
-        }
-
-        private bool CanCreateSupplier()
-        {
-            return true;
-        }
-
-        private void NavigateToSupplierList()
-        {
-            _navigationStore.CurrentViewModel = SupplierListViewModel.LoadViewModel(_navigationStore);
+            _closeDialogCallback();
         }
 
 
-        public static CreateSupplierViewModel LoadViewModel(NavigationStore navigationStore)
+
+        private void Cancel()
         {
-            return new CreateSupplierViewModel(navigationStore);
+            _closeDialogCallback();
+        }
+
+
+        public static CreateSupplierViewModel LoadViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        {
+            return new CreateSupplierViewModel(navigationStore, closeDialogCallback);
         }
 
         protected override void Dispose(bool disposing)

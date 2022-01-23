@@ -13,18 +13,51 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly Product _product;
         public Product Product => _product;
         public string ProductID => _product.ProductID.ToString();
-        public string StoreID => _product.StoreID.ToString();
+        public string LocationID => _product.LocationID.ToString();
         public string SupplierID => _product.SupplierID.ToString();
-        public SupplierViewModel Supplier => new SupplierViewModel(_product.Supplier);
-        public StoreViewModel Store => new StoreViewModel(_product.Store);
+        public string CategoryID => _product.CategoryID.ToString();
         public string ProductName => _product.ProductName;
         public string ProductSKU => _product.ProductSKU;
+        public string ProductUnit => _product.ProductUnit;
         public string ProductPrice => _product.ProductPrice.ToString();
         public string ProductQuantity => _product.ProductQuantity.ToString();
         public string ProductAvailability => _product.ProductAvailability;
-        public List<CategoryViewModel> Categories => _product.ProductCategories.Select(pc => new CategoryViewModel(pc.Category)).ToList();
 
-        //public List<ProductCategoryViewModel> ProductCategories { get; }
+        public LocationViewModel Location
+        {
+            get
+            {
+                if (_product.Location != null)
+                {
+                    return new LocationViewModel(_product.Location);
+                }
+                return null;
+            }
+        }
+
+        public SupplierViewModel Supplier
+        {
+            get
+            {
+                if (_product.Supplier != null)
+                {
+                    return new SupplierViewModel(_product.Supplier);
+                }
+                return null;
+            }
+        }
+
+        public CategoryViewModel Category
+        {
+            get
+            {
+                if (_product.Category != null)
+                {
+                    return new CategoryViewModel(_product.Category);
+                }
+                return null;
+            }
+        }
 
 
         public ProductViewModel(Product product)

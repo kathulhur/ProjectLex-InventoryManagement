@@ -11,10 +11,10 @@ namespace ProjectLex.InventoryManagement.Database.Models
     {
         [Key]
         public Guid OrderID { get; set; }
-        public Guid UserID { get; set; }
-        public string CustomerName { get; set; }
+        public Guid CustomerID { get; set; }
+        public DateTime OrderDate { get; set; }
         public decimal OrderTotal { get; set; }
-        public User User { get; set; }
+        public Customer Customer { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
     }
 }

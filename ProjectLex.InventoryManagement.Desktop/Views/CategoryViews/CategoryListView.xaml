@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CategoryListView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,96 +9,119 @@
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             d:Background="White">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+             Background="{StaticResource MaterialDesignLightBackground}"
+             Foreground="{StaticResource MaterialDesignLightForeground}">
+    
+    <materialDesign:DialogHost 
+        CloseOnClickAway="true" 
+        IsOpen="{ Binding IsDialogOpen, Mode=OneWay}" 
+        DialogBackground="Transparent">
+        
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card UniformCornerRadius="10">
+                <ContentControl Content="{ Binding DialogViewModel }"/>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+        <Grid Margin="30 30 30 30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-            <TextBlock 
-                Grid.Column="0" 
-                Text="Categories"
-                Style="{StaticResource Header}"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Button
-                Grid.Column="1"
-                Command="{ Binding NavigateToCreateCategoryCommand }"
-                Padding="10 0 0 0 "
-                Content="Add Category"/>
-            
+                <TextBlock 
+                    Grid.Column="0" 
+                    Text="Categories"
+                    Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
 
-        </Grid>
+                <Button
+                    Grid.Column="1"
+                    Margin="0 0 10 0"
+                    Style="{StaticResource MaterialDesignPaperButton}"
+                    Command="{ Binding CreateCategoryCommand }"
+                    >
+                    <materialDesign:PackIcon Kind="Add"></materialDesign:PackIcon>
+                </Button>
+            </Grid>
 
-        <ListView Grid.Row="1" Margin="0 25 0 0" ItemsSource="{Binding Categories}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Category ID">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding CategoryID}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+            <Grid 
+                Grid.Row="1">
+                <DataGrid
+                    ItemsSource="{Binding Categories}"
+                    Style="{StaticResource MaterialDesignDataGrid}"
+                    BorderBrush="Black"
+                    BorderThickness="2"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Header="Name"
+                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                            Binding="{Binding CategoryName}"
+                            Width="auto"/>
 
-                    <GridViewColumn Header="Name">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding CategoryName}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        <DataGridTextColumn
+                            Header="Description"
+                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                            Binding="{Binding CategoryDescription}"
+                            Width="*"
+                            MinWidth="200"/>
 
-                    <GridViewColumn Header="Description">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding CategoryStatus}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        <DataGridTextColumn
+                            Header="Status"
+                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                            Binding="{Binding CategoryStatus}"
+                            Width="auto"
+                            MinWidth="100"/>
 
-                    <GridViewColumn Header="Action">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Content="Delete" 
+                        <DataGridTemplateColumn 
+                            Header="Actions"
+                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                            Width="auto"
+                            MinWidth="100">
+                            
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
                                             Grid.Column="0"
+                                            BorderBrush="Orange"
+                                            Margin="0 0 5 0"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.EditCategoryCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Edit"/>
+
+                                        </Button>
+
+                                        <Button
+                                            Grid.Column="1"
+                                            BorderBrush="OrangeRed"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.RemoveCategoryCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Remove"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                                    <Button Content="Update" 
-                                            Grid.Column="1"
-                                            Command="{
-                                                Binding DataContext.NavigateToModifyCategoryCommand, 
-                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
-                                            CommandParameter="{Binding}"/>
-
-                                </Grid>
-                            </DataTemplate>
-                            
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                </GridView>
-            </ListView.View>
-
-        </ListView>
-    </Grid>
+                    </DataGrid.Columns>
+                </DataGrid>
+              
+            </Grid>
+        </Grid>
+            
+    </materialDesign:DialogHost>
 </UserControl>

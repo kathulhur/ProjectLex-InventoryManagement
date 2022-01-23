@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
@@ -18,6 +19,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private bool _isDisposed = false;
 
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen => _isDialogOpen;
+
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
+
         private UnitOfWork _unitOfWork;
 
         private readonly NavigationStore _navigationStore;
@@ -25,8 +32,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public IEnumerable<RoleViewModel> Roles => _roles;
 
         public RelayCommand LoadRolesCommand { get; }
-        public RelayCommand NavigateToCreateRoleCommand { get; }
-        public RelayCommand<RoleViewModel> NavigateToEditRoleCommand { get; }
+        public RelayCommand CreateRoleCommand { get; }
+        public RelayCommand<RoleViewModel> EditRoleCommand { get; }
         public RelayCommand<RoleViewModel> RemoveRoleCommand { get; }
 
         public RoleListViewModel(NavigationStore navigationStore)
@@ -37,19 +44,30 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _roles = new ObservableCollection<RoleViewModel>();
             LoadRolesCommand = new RelayCommand(LoadData);
             RemoveRoleCommand = new RelayCommand<RoleViewModel>(RemoveRole);
-            NavigateToCreateRoleCommand = new RelayCommand(NavigateToCreateRole);
-            NavigateToEditRoleCommand = new RelayCommand<RoleViewModel>(NavigateToEditRole);
+            CreateRoleCommand = new RelayCommand(CreateRole);
+            EditRoleCommand = new RelayCommand<RoleViewModel>(EditRole);
         }
 
-        public void NavigateToEditRole(RoleViewModel roleViewModel)
+        public void EditRole(RoleViewModel roleViewModel)
         {
-            _navigationStore.CurrentViewModel = EditRoleViewModel.LoadViewModel(_navigationStore, roleViewModel.Role);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = EditRoleViewModel.LoadViewModel(_navigationStore, roleViewModel.Role, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
 
-        public void NavigateToCreateRole()
+        public void CreateRole()
         {
-            _navigationStore.CurrentViewModel = CreateRoleViewModel.LoadViewModel(_navigationStore);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = CreateRoleViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
         public void RemoveRole(RoleViewModel roleViewModel)
@@ -57,15 +75,24 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.RoleRepository.Delete(roleViewModel.Role);
             _unitOfWork.Save();
             _roles.Remove(roleViewModel);
-
+            MessageBox.Show("Successful");
         }
 
         public void LoadData()
         {
+            _roles.Clear();
             foreach(Role r in _unitOfWork.RoleRepository.Get())
             {
                 _roles.Add(new RoleViewModel(r));
             }
+        }
+
+        private void CloseDialogCallback()
+        {
+            LoadRolesCommand.Execute(null);
+
+            _isDialogOpen = false;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
 
@@ -88,6 +115,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
+                    _dialogViewModel?.Dispose();
                 }
 
             }

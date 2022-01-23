@@ -18,6 +18,9 @@
     <Compile Update="Views\CategoryViews\CreateCategoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\LocationViews\CreateLocationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProductViews\CreateProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -32,6 +35,12 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="ResourceDictionaries\DataTemplateDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ResourceDictionaries\Styles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AttributeViews\AttributeListView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -44,10 +53,25 @@
     <Page Update="Views\CategoryViews\EditCategoryView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\LocationViews\EditLocationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LocationViews\CreateLocationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ProductViews\ProductListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProductViews\EditProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CustomerViews\EditCustomerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CustomerViews\CustomerListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CustomerViews\CreateCustomerView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StoreViews\CreateStoreView.xaml">
@@ -77,13 +101,13 @@
     <Page Update="Views\AttributeValueViews\AttributeValueListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserViews\CreateUserView.xaml">
+    <Page Update="Views\StaffViews\CreateStaffView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserViews\EditUserView.xaml">
+    <Page Update="Views\StaffViews\EditStaffView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserViews\UserListView.xaml">
+    <Page Update="Views\StaffViews\StaffListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrderDetailViews\CreateOrderDetailView.xaml">

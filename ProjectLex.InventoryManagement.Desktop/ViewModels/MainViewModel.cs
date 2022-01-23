@@ -19,29 +19,32 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public RelayCommand NavigateToRoleListCommand { get; }
         public RelayCommand NavigateToCategoryListCommand { get; }
-        public RelayCommand NavigateToStoreListCommand { get; }
         public RelayCommand NavigateToSupplierListCommand { get; }
-        public RelayCommand NavigateToUserListCommand { get; }
+        public RelayCommand NavigateToStaffListCommand { get; }
         public RelayCommand NavigateToProductListCommand { get; }
         public RelayCommand NavigateToOrderListCommand { get; }
+        public RelayCommand NavigateToLocationListCommand { get; }
+        public RelayCommand NavigateToCustomerListCommand { get; }
+
         public RelayCommand LogOutCommand { get; }
         public MainViewModel(MainWindow mainWindow, NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
             _mainWindow = mainWindow;
-            _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(_navigationStore);
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            NavigateToRoleListCommand = new RelayCommand(NavigateToRoleList);
             NavigateToCategoryListCommand = new RelayCommand(NavigateToCategoryList);
-            NavigateToStoreListCommand = new RelayCommand(NavigateToStoreList);
+            NavigateToRoleListCommand = new RelayCommand(NavigateToRoleList);
             NavigateToSupplierListCommand = new RelayCommand(NavigateToSupplierList);
-            NavigateToUserListCommand = new RelayCommand(NavigateToUserList);
+            NavigateToStaffListCommand = new RelayCommand(NavigateToStaffList);
             NavigateToProductListCommand = new RelayCommand(NavigateToProductList);
             NavigateToOrderListCommand = new RelayCommand(NavigateToOrderList);
+            NavigateToLocationListCommand = new RelayCommand(NavigateToLocationList);
+            NavigateToCustomerListCommand = new RelayCommand(NavigateToCustomerList);
             LogOutCommand = new RelayCommand(LogOut);
 
-            mainWindow.Closed += OnClosed;
+            mainWindow.Closing += OnClosing;
         }
 
         private void LogOut()
@@ -50,7 +53,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
 
 
-        private void OnClosed(Object obj, EventArgs e)
+        private void OnClosing(Object obj, EventArgs e)
         {
             Application.Current.MainWindow = new LoginWindow(_navigationStore);
             Application.Current.MainWindow.Show();
@@ -64,14 +67,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore.CurrentViewModel = RoleListViewModel.LoadViewModel(_navigationStore);
         }
 
+        public void NavigateToLocationList()
+        {
+            _navigationStore.CurrentViewModel =LocationListViewModel.LoadViewModel(_navigationStore);
+        }
+
         public void NavigateToCategoryList()
         {
             _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(_navigationStore);
-        }
-
-        public void NavigateToStoreList()
-        {
-            _navigationStore.CurrentViewModel = StoreListViewModel.LoadViewModel(_navigationStore);
         }
 
 
@@ -80,15 +83,21 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore.CurrentViewModel = SupplierListViewModel.LoadViewModel(_navigationStore);
         }
 
-        public void NavigateToUserList()
+        public void NavigateToStaffList()
         {
-            _navigationStore.CurrentViewModel = UserListViewModel.LoadViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = StaffListViewModel.LoadViewModel(_navigationStore);
         }
 
         public void NavigateToProductList()
         {
             _navigationStore.CurrentViewModel = ProductListViewModel.LoadViewModel(_navigationStore);
         }
+
+        public void NavigateToCustomerList()
+        {
+            _navigationStore.CurrentViewModel = CustomerListViewModel.LoadViewModel(_navigationStore);
+        }
+
 
         public void NavigateToOrderList()
         {

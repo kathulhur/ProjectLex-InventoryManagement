@@ -12,22 +12,21 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private Order _order;
         public Order Order => _order;
         public string OrderID => _order.OrderID.ToString();
-        public string UserID => _order.OrderID.ToString();
-        public UserViewModel User
+        public string CustomerID => _order.OrderID.ToString();
+        public string OrderDate => _order.OrderDate.ToString();
+        public string OrderTotal => _order.OrderTotal.ToString();
+
+        public CustomerViewModel Customer
         {
             get
             {
-                if (_order.User != null)
+                if (_order.Customer != null)
                 {
-                    return new UserViewModel(_order.User);
+                    return new CustomerViewModel(_order.Customer);
                 }
                 return null;
             }
         }
-
-        public string CustomerName => _order.CustomerName;
-        public string OrderTotal => _order.OrderTotal.ToString();
-
 
         public OrderViewModel(Order order)
         {

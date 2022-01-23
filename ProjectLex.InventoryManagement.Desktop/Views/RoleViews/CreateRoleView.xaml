@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateRoleView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,12 +7,15 @@
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             xmlns:utilities="clr-namespace:ProjectLex.InventoryManagement.Desktop.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
-    <Grid>
 
+    <Grid Width="300" Margin="50 50 50 50">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -20,60 +24,99 @@
 
         <TextBlock
             Grid.Row="0"
-            Style="{StaticResource Header}"
-            Text="Add Role"/>
-        
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            Text="New Role"/>
+
         <Grid 
             Grid.Row="1"
-            Margin="0 25 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+            Margin="0 30 0 0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Role Name"/>
-            <TextBox 
-                Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding RoleName, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Row="0" 
+                    Text="Name" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
+                        
+                <TextBox Grid.Row="1"
+                    Text="{ Binding RoleName, UpdateSourceTrigger=PropertyChanged }"
+                    Style="{ StaticResource MaterialDesignTextBox }"
+                    Padding="10"/>
+            </Grid>
+
         </Grid>
+
 
         <Grid 
             Grid.Row="2"
-            Margin="0 25 0 0">
+            Margin="0 30 0 0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Status"/>
-            <TextBox 
-                Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding RoleStatus, UpdateSourceTrigger=PropertyChanged}"
-                />
+            <TextBlock 
+                Grid.Row="0" 
+                Text="Description" 
+                Style="{StaticResource MaterialDesignTextBlock}"
+                FontWeight="DemiBold"/>
+                    
+            <TextBox Grid.Row="1"
+                Text="{Binding RoleDescription, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                MaxHeight="100"
+                Padding="10"
+                TextWrapping="wrap"/>
+
         </Grid>
-        
+
+                
+        <Grid 
+            Grid.Row="3"
+            Margin="0 30 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock 
+                Grid.Row="0" 
+                Text="Status" 
+                Style="{StaticResource MaterialDesignTextBlock}"
+                FontWeight="DemiBold"
+                        />
+
+            <ComboBox Grid.Row="1"
+                        Style="{ StaticResource MaterialDesignComboBox }"
+                        ItemsSource="{ Binding Source={x:Static utilities:Constants._statuses}, Mode=OneWay}"
+                        SelectedItem="{ Binding RoleStatus }"
+                        Padding="10"/>
+        </Grid>
 
         <StackPanel 
-            Grid.Row="3" 
+            Grid.Row="4" 
             Orientation="Horizontal"
-            Margin="0 25 0 0">
+            Margin="0 30 0 0">
             <Button 
                 Content="Submit"
                 Command="{Binding SubmitCommand}"
-                CommandParameter="{Binding}"/>
+                CommandParameter="{Binding}"
+                Style="{StaticResource MaterialDesignPaperButton}"/>
+                        
             <Button 
                 Margin="10 0 0 0" 
                 Content="Cancel"
-                Command=
-                "{
-                    Binding DataContext.NavigateToRoleListCommand,
-                    RelativeSource={RelativeSource AncestorType={x:Type Window}}
-                }"/>
-
+                Command="{ Binding CancelCommand}"
+                Style="{StaticResource MaterialDesignPaperLightButton}"/>
         </StackPanel>
 
 
     </Grid>
+
 </UserControl>

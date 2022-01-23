@@ -11,18 +11,18 @@ namespace ProjectLex.InventoryManagement.Database.Models
     {
         [Key]
         public Guid ProductID { get; set; }
-        [Key]
-        public Guid StoreID { get; set; }
         public Guid SupplierID { get; set; }
+        public Guid LocationID { get; set; }
+        public Guid CategoryID { get; set; }
         public string ProductName { get; set; }
         public string ProductSKU { get; set; }
+        public string ProductUnit { get; set; }
         public decimal ProductPrice { get; set; }
         public int ProductQuantity { get; set; }
         public string ProductAvailability { get; set; }
-        public Store Store { get; set; }
         public Supplier Supplier { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
-        public ICollection<ProductAttributeValue> ProductAttributeValues { get; set; }
+        public Category Category { get; set; }
+        public Location Location { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
     }

@@ -13,14 +13,10 @@ namespace ProjectLex.InventoryManagement.Database.Models
         [Key]
         public Guid ProductID { get; set; }
         [Key]
-        public Guid StoreID { get; set; }
-
-        [Key]
         public Guid OrderID { get; set; }
         public int OrderDetailQuantity { get; set; }
         public decimal OrderDetailAmount { get; set; }
         public Product Product { get; set; }
-
         public Order Order { get; set; }
     }
 }

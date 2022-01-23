@@ -5,16 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:utilities="clr-namespace:ProjectLex.InventoryManagement.Desktop.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
-    <Grid>
 
+    <Grid 
+        Margin="50 50 50 50"
+        Width="600">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -25,127 +24,273 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Style="{StaticResource Header}" Text="Create Product"/>
+        <TextBlock
+            Grid.Row="0"
+            Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+            Text="New Product"/>
 
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+        <Grid 
+            Grid.Row="1"
+            Margin="0 30 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Store"/>
-            <ComboBox Grid.Row="1" SelectedValue="{ Binding StoreID }" SelectedIndex="0" SelectedValuePath="StoreID" ItemsSource="{Binding Stores}">
-                <ComboBox.ItemTemplate>
-                    <ItemContainerTemplate>
-                        <TextBlock Text = "{Binding StoreName}"/>
-                    </ItemContainerTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <Grid 
+                Grid.Column="0"
+                Margin="0 0 20 0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock 
+                        Grid.Row="0" 
+                        Text="Name" 
+                        Style="{ StaticResource MaterialDesignTextBlock }"
+                        FontWeight="DemiBold"/>
+                    
+                    <TextBox 
+                        Grid.Row="1"
+                        Text="{ Binding ProductName, UpdateSourceTrigger=PropertyChanged }"
+                        Style="{ StaticResource MaterialDesignTextBox }"
+                        Padding="10"/>
+                </Grid>
+            </Grid>
+
+            <Grid 
+                Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock 
+                        Grid.Row="0" 
+                        Text="SKU" 
+                        Style="{ StaticResource MaterialDesignTextBlock }"
+                        FontWeight="DemiBold"/>
+                    
+                    <TextBox 
+                        Grid.Row="1"
+                        Text="{ Binding ProductSKU, UpdateSourceTrigger=PropertyChanged }"
+                        Style="{ StaticResource MaterialDesignTextBox }"
+                        Padding="10"/>
+                </Grid>
+            </Grid>
         </Grid>
 
-        <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Supplier"/>
-            <ComboBox Grid.Row="1" SelectedValue="{ Binding SupplierID }" SelectedIndex="0" SelectedValuePath="SupplierID" ItemsSource="{Binding Suppliers}">
-                <ComboBox.ItemTemplate>
-                    <ItemContainerTemplate>
-                        <TextBlock Text = "{Binding SupplierName}"/>
-                    </ItemContainerTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+        <Grid 
+            Grid.Row="2"
+            Margin="0 30 0 0">
+                    
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Quantity" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
+
+                <TextBox 
+                    Grid.Row="1"
+                    Text="{Binding ProductQuantity, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBox}"
+                    Padding="10"/>
+            </Grid>
+
+            <Grid 
+                Grid.Column="1"
+                Margin="10 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Unit" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
+
+                <TextBox 
+                    Grid.Row="1"
+                    Text="{Binding ProductUnit, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBox}"
+                    Padding="10"/>
+            </Grid>
+
+            <Grid 
+                Grid.Column="2"
+                Margin="10 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Price" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
+
+                <TextBox 
+                    Grid.Row="1"
+                    Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBox}"
+                    Padding="10"/>
+            </Grid>
         </Grid>
 
-        <Grid Grid.Row="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Name"/>
-            <TextBox Grid.Row="1" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}"/>
+        <Grid 
+            Grid.Row="3"
+            Margin="0 30 0 0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Supplier" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
+
+                <ComboBox 
+                    Grid.Row="1"
+                    Style="{ StaticResource MaterialDesignComboBox }"
+                    Padding="10"
+                    ItemsSource="{ Binding Suppliers }"
+                    SelectedValue="{ Binding SupplierID }"
+                    SelectedValuePath="SupplierID"
+                    DisplayMemberPath="SupplierName"/>
+            </Grid>
+
+            <Grid 
+                Grid.Column="1"
+                Margin="20 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Category" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
+
+                <ComboBox 
+                    Grid.Row="1"
+                    Padding="10"
+                    Style="{ StaticResource MaterialDesignComboBox }"
+                    ItemsSource="{ Binding Categories }"
+                    SelectedValue="{ Binding CategoryID }"
+                    SelectedValuePath="CategoryID"
+                    DisplayMemberPath="CategoryName"/>
+            </Grid>
         </Grid>
 
-        <Grid Grid.Row="4">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+        <Grid 
+            Grid.Row="4"
+            Margin="0 30 0 0">
 
-            <TextBlock Grid.Row="0" Text="SKU"/>
-            <TextBox Grid.Row="1" Text="{Binding ProductSKU, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+            <Grid 
+                Grid.Column="0"
+                Margin="5 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Price"/>
-            <TextBox Grid.Row="1" Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Location" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
 
-        <Grid Grid.Row="6">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+                <ComboBox 
+                    Grid.Row="1"
+                    Padding="10"
+                    Style="{ StaticResource MaterialDesignComboBox }"
+                    ItemsSource="{ Binding Locations }"
+                    SelectedValue="{ Binding LocationID }"
+                    SelectedValuePath="LocationID"
+                    DisplayMemberPath="LocationString"/>
+            </Grid>
 
-            <TextBlock Grid.Row="0" Text="Quantity"/>
-            <TextBox Grid.Row="1" Text="{Binding ProductQuantity, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
+            <Grid 
+                Grid.Column="1"
+                Margin="20 0 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-        <Grid Grid.Row="7">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Availability" 
+                    Style="{ StaticResource MaterialDesignTextBlock }"
+                    FontWeight="DemiBold"/>
 
-            <TextBlock Grid.Row="0" Text="Availability"/>
-            <TextBox Grid.Row="1" Text="{Binding ProductAvailability, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
-        
-
-        <Grid Grid.Row="8">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Categories"/>
-            <ItemsControl ItemsSource="{Binding Categories}" HorizontalAlignment="Left">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Categoryname}" Margin="0,0,5,5" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                <ComboBox 
+                    Grid.Row="1"
+                    Padding="10"
+                    Style="{ StaticResource MaterialDesignComboBox }"
+                    ItemsSource="{ Binding Source={x:Static utilities:Constants.Availabilities}, Mode=OneWay}"
+                    SelectedItem="{Binding ProductAvailability}"/>
+            </Grid>
+                    
         </Grid>
 
         <StackPanel 
-            Grid.Row="9" 
+            Grid.Row="5" 
             Orientation="Horizontal"
-            Margin="0 25 0 0">
-            <Button 
+            Margin="0 30 0 0">
+                    
+            <Button
                 Content="Submit"
-                Command="{Binding SubmitCommand}"/>
+                Style="{StaticResource MaterialDesignPaperButton}"
+                Command="{Binding SubmitCommand}"
+                CommandParameter="{Binding}"/>
             <Button 
-                Margin="10 0 0 0" 
+                Margin="10 0 0 0"
                 Content="Cancel"
-                Command="{Binding CancelCommand}"/>
-
+                Style="{StaticResource MaterialDesignPaperLightButton}"
+                Command="{ Binding CancelCommand}"/>
+                    
         </StackPanel>
 
 
     </Grid>
+
 
 </UserControl>

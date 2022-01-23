@@ -38,8 +38,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             LoadOrdersCommand = new RelayCommand(LoadOrders);
             NavigateToCreateOrderCommand = new RelayCommand<OrderViewModel>(NavigateToCreateOrder);
-            RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
-            NavigateToEditOrderCommand = new RelayCommand<OrderViewModel>(NavigateToEditOrder);
+            //RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
+            //NavigateToEditOrderCommand = new RelayCommand<OrderViewModel>(NavigateToEditOrder);
 
         }
 
@@ -51,20 +51,20 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orders.Remove(orderViewModel);
         }
 
-        private void NavigateToEditOrder(OrderViewModel orderViewModel)
-        {
-            _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
-        }
+        //private void NavigateToEditOrder(OrderViewModel orderViewModel)
+        //{
+        //    _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
+        //}
 
         private void NavigateToCreateOrder(OrderViewModel orderViewModel)
         {
-            _navigationStore.CurrentViewModel = CreateOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
+            _navigationStore.CurrentViewModel = CreateOrderViewModel.LoadViewModel(_navigationStore);
         }
 
         private void LoadOrders()
         {
             _orders.Clear();
-            foreach (Order o in _unitOfWork.OrderRepository.Get(includeProperties: "User"))
+            foreach (Order o in _unitOfWork.OrderRepository.Get(includeProperties: "Customer"))
             {
                 _orders.Add(new OrderViewModel(o));
             }

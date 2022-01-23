@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateOrderDetailView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,9 +8,10 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
-    <Grid>
+
+    <Grid
+        Margin="50 50 50 50">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -21,73 +23,98 @@
 
         <TextBlock
             Grid.Row="0"
-            Style="{StaticResource Header}"
-            Text="Add Order Detail"/>
+            Margin="0 0 0 30"
+            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+            Text="Add Product Order"/>
 
         <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             
-            <TextBlock Grid.Row="0" Text="Product"/>
+            <Grid Grid.Column="0"
+                    Margin="30 0 30 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
             
-            <ComboBox Grid.Row="1" SelectedIndex="{ Binding ProductIndex }"  ItemsSource="{Binding Products}">
-                <ComboBox.ItemTemplate>
-                    <ItemContainerTemplate>
-                        <TextBlock Text="{Binding ProductName}"/>
-                    </ItemContainerTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Product"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+
+                <ComboBox 
+                    Grid.Row="1"
+                    MinWidth="300"
+                    SelectedValuePath="ProductID"
+                    SelectedValue="{Binding ProductID}"
+                    ItemsSource="{Binding Products}"
+                    Style="{StaticResource MaterialDesignComboBox}"
+                    DisplayMemberPath="ProductName">
+                </ComboBox>
+            </Grid>
+
+            <Grid 
+                Grid.Column="1"
+                Margin="30 0 30 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Quantity"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                <TextBox 
+                    Grid.Row="1"
+                    Margin="0 10 0 0"
+                    Text="{Binding OrderDetailQuantity, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBox}"/>
+            </Grid>
+
+            <Grid 
+                Grid.Column="2"
+                Margin="30 0 30 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Amount"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+
+                <TextBlock 
+                    Grid.Row="1"
+                    Margin="0 10 0 0"
+                    Text="{Binding OrderDetailAmount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBlock}"/>
+            </Grid>
         </Grid>
 
-        <Grid 
-            Grid.Row="2"
-            Margin="0 25 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Quantity"/>
-            <TextBox 
-                Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding OrderDetailQuantity, UpdateSourceTrigger=PropertyChanged}"/>
-        </Grid>
+            <StackPanel 
+                Grid.Row="3" 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="0 25 25 0">
+                <Button 
+                    Content="Submit"
+                    Command="{Binding SubmitCommand }"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignPaperButton}"/>
+                <Button 
+                    Margin="25 0 0 0" 
+                    Content="Cancel"
+                    Command="{ Binding CancelCommand }"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"/>
 
-        <Grid 
-            Grid.Row="3"
-            Margin="0 25 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Amount"/>
-            <TextBlock 
-                Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding OrderDetailAmount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                />
-        </Grid>
-        
-
-        <StackPanel 
-            Grid.Row="4" 
-            Orientation="Horizontal"
-            Margin="0 25 0 0">
-            <Button 
-                Content="Submit"
-                Command="{Binding SubmitCommand }"
-                CommandParameter="{Binding}"/>
-            <Button 
-                Margin="10 0 0 0" 
-                Content="Cancel"
-                Command="{ Binding CancelCommand }"/>
-
-        </StackPanel>
-
-
+            </StackPanel>
     </Grid>
+    
 </UserControl>

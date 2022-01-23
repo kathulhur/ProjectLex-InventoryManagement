@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateCategoryView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,11 +7,12 @@
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             xmlns:utilities="clr-namespace:ProjectLex.InventoryManagement.Desktop.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
-    <Grid>
 
+    <Grid Margin="50 50 50 50" Width="300">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -21,57 +23,91 @@
 
         <TextBlock
             Grid.Row="0"
-            Style="{StaticResource Header}"
-            Text="Create Category"/>
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            Text="New Category"/>
         
         <Grid 
             Grid.Row="1"
-            Margin="0 25 0 0">
+            Margin="0 30 0 0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="CategoryName"/>
+            <TextBlock Grid.Row="0" 
+                       Text="CategoryName" 
+                       Style="{StaticResource MaterialDesignTextBlock}"
+                       FontWeight="DemiBold"/>
+
             <TextBox 
                 Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                Padding="10"
+                />
         </Grid>
 
-        <Grid 
-            Grid.Row="2"
-            Margin="0 25 0 0">
+        <Grid Grid.Row="2"
+            Margin="0 30 0 0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Status"/>
+            <TextBlock 
+                Grid.Row="0" 
+                Text="Description" 
+                Style="{StaticResource MaterialDesignTextBlock}"
+                FontWeight="DemiBold"/>
+
             <TextBox 
                 Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding CategoryStatus, UpdateSourceTrigger=PropertyChanged}"
-                />
+                Text="{ Binding CategoryDescription, UpdateSourceTrigger=PropertyChanged }"
+                Style="{StaticResource MaterialDesignTextBox}"
+                MaxHeight="100"
+                Padding="10"
+                TextWrapping="Wrap"/>
+        </Grid>
+
+        <Grid Grid.Row="3"
+              Margin="0 30 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock 
+                Grid.Row="0" 
+                Text="Status" 
+                Style="{StaticResource MaterialDesignTextBlock}"
+                FontWeight="DemiBold"/>
+
+            <ComboBox 
+                Grid.Row="1"
+                Padding="10"
+                Style="{ StaticResource MaterialDesignComboBox }"
+                ItemsSource="{ Binding Source={x:Static utilities:Constants.Statuses}, Mode=OneWay}"
+                SelectedItem="{ Binding CategoryStatus }"/>
         </Grid>
 
         <StackPanel 
             Grid.Row="4" 
             Orientation="Horizontal"
-            Margin="0 25 0 0">
+            Margin="0 30 0 0">
             <Button 
                 Content="Submit"
                 Command="{Binding SubmitCommand}"
+                Style="{StaticResource MaterialDesignPaperButton}"
                 CommandParameter="{Binding}"/>
+
             <Button 
                 Margin="10 0 0 0" 
                 Content="Cancel"
-                Command=
-                "{
-                    Binding DataContext.NavigateToCategoryListCommand,
-                    RelativeSource={RelativeSource AncestorType={x:Type Window}}
-                }"/>
-
+                Command="{ Binding CancelCommand }"
+                Style="{StaticResource MaterialDesignPaperButton}"/>
         </StackPanel>
 
 

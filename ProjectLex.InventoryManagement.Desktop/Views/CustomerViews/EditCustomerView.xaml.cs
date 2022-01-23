@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ProjectLex.InventoryManagement.Desktop.Views
 {
     /// <summary>
-    /// Interaction logic for EditUserView.xaml
+    /// Interaction logic for EditCustomerView.xaml
     /// </summary>
-    public partial class EditUserView : UserControl
+    public partial class EditCustomerView : UserControl
     {
-        public EditUserView()
+        public EditCustomerView()
         {
             InitializeComponent();
         }

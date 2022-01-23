@@ -13,7 +13,8 @@ namespace ProjectLex.InventoryManagement.Database.Models
         public Guid RoleID { get; set; }
         public string RoleName { get; set; }
         public string RoleStatus { get; set; }
+        public string RoleDescription { get; set; }
 
-        public ICollection<User> Users { get; set; }
+        public ICollection<Staff> Staffs { get; set; }
     }
 }

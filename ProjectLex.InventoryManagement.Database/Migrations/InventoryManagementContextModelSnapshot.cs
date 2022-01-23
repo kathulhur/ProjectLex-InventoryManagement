@@ -19,46 +19,14 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.AttributeDTO", b =>
-                {
-                    b.Property<Guid>("AttributeID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AttributeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AttributeID");
-
-                    b.ToTable("Attributes");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.AttributeValueDTO", b =>
-                {
-                    b.Property<Guid>("AttributeValueID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AttributeID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AttributeValueName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AttributeValueStatus")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("AttributeValueID", "AttributeID");
-
-                    b.HasIndex("AttributeID");
-
-                    b.ToTable("AttributeValues");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.CategoryDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Category", b =>
                 {
                     b.Property<Guid>("CategoryID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoryDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
@@ -71,51 +39,88 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.CompanyDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Customer", b =>
                 {
-                    b.Property<Guid>("CompanyID")
+                    b.Property<Guid>("CustomerID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("CustomerAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("CompanyVAT")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("CustomerEmail")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CompanyID");
+                    b.Property<string>("CustomerFirstname")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Companies");
+                    b.Property<string>("CustomerLastname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("StaffID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CustomerID");
+
+                    b.HasIndex("StaffID");
+
+                    b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.OrderDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Location", b =>
+                {
+                    b.Property<Guid>("LocationID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LocationAisle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationBay")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationRow")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LocationZone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LocationID");
+
+                    b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Order", b =>
                 {
                     b.Property<Guid>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CustomerID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("OrderTotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("UserID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("OrderID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("CustomerID");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.OrderDetailDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.OrderDetail", b =>
                 {
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StoreID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("OrderID")
@@ -127,58 +132,23 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.Property<int>("OrderDetailQuantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ProductID", "StoreID", "OrderID");
+                    b.HasKey("ProductID", "OrderID");
 
                     b.HasIndex("OrderID");
 
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductAttributeValueDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Product", b =>
                 {
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StoreID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AttributeValueID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AttributeID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductID", "StoreID", "AttributeValueID", "AttributeID");
-
-                    b.HasIndex("AttributeValueID", "AttributeID");
-
-                    b.ToTable("ProductAttributeValues");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductCategoryDTO", b =>
-                {
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StoreID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoryID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ProductID", "StoreID", "CategoryID");
-
-                    b.HasIndex("CategoryID");
-
-                    b.ToTable("ProductCategories");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductDTO", b =>
-                {
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StoreID")
+                    b.Property<Guid>("LocationID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ProductAvailability")
@@ -196,23 +166,31 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.Property<string>("ProductSKU")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProductUnit")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("SupplierID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("ProductID", "StoreID");
+                    b.HasKey("ProductID");
 
-                    b.HasIndex("StoreID");
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("LocationID");
 
                     b.HasIndex("SupplierID");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.RoleDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Role", b =>
                 {
                     b.Property<Guid>("RoleID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RoleDescription")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleName")
                         .HasColumnType("nvarchar(max)");
@@ -225,30 +203,59 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.StoreDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Staff", b =>
                 {
-                    b.Property<Guid>("StoreID")
+                    b.Property<Guid>("StaffID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("StoreName")
+                    b.Property<Guid>("RoleID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StaffAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StoreStatus")
+                    b.Property<string>("StaffEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StoreID");
+                    b.Property<string>("StaffFirstName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Stores");
+                    b.Property<string>("StaffLastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffUsername")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StaffID");
+
+                    b.HasIndex("RoleID");
+
+                    b.ToTable("Staffs");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.SupplierDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Supplier", b =>
                 {
                     b.Property<Guid>("SupplierID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("SupplierAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SupplierEmail")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SupplierName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SupplierPhone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupplierStatus")
@@ -259,61 +266,65 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.ToTable("Suppliers");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.UserDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Warehouse", b =>
                 {
-                    b.Property<Guid>("UserID")
+                    b.Property<Guid>("WarehouseID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserPassword")
+                    b.Property<string>("WarehouseAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserUsername")
+                    b.Property<string>("WarehouseEmail")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserID");
+                    b.Property<string>("WarehouseName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("RoleID");
+                    b.Property<string>("WarehousePhone")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Users");
+                    b.Property<decimal>("WarehouseVat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("WarehouseID");
+
+                    b.ToTable("Warehouses");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.AttributeValueDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Customer", b =>
                 {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.AttributeDTO", "Attribute")
-                        .WithMany("AttributeValues")
-                        .HasForeignKey("AttributeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Attribute");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.OrderDTO", b =>
-                {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.UserDTO", "User")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Staff", "Staff")
                         .WithMany()
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("StaffID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Staff");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.OrderDetailDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Order", b =>
                 {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.OrderDTO", "Order")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.OrderDetail", b =>
+                {
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.ProductDTO", "Product")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Product", "Product")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductID", "StoreID")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -322,67 +333,37 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductAttributeValueDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Product", b =>
                 {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.AttributeValueDTO", "AttributeValue")
-                        .WithMany("ProductAttributeValues")
-                        .HasForeignKey("AttributeValueID", "AttributeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.ProductDTO", "Product")
-                        .WithMany("ProductAttributeValues")
-                        .HasForeignKey("ProductID", "StoreID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AttributeValue");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductCategoryDTO", b =>
-                {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.CategoryDTO", "Category")
-                        .WithMany("ProductCategories")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Category", "Category")
+                        .WithMany("Products")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.ProductDTO", "Product")
-                        .WithMany("ProductCategories")
-                        .HasForeignKey("ProductID", "StoreID")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Location", "Location")
+                        .WithMany("Products")
+                        .HasForeignKey("LocationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductDTO", b =>
-                {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.StoreDTO", "Store")
-                        .WithMany()
-                        .HasForeignKey("StoreID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.SupplierDTO", "Supplier")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Store");
+                    b.Navigation("Category");
+
+                    b.Navigation("Location");
 
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.UserDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Staff", b =>
                 {
-                    b.HasOne("ProjectLex.InventoryManagement.Database.DTOs.RoleDTO", "Role")
-                        .WithMany("Users")
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Role", "Role")
+                        .WithMany("Staffs")
                         .HasForeignKey("RoleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -390,41 +371,32 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.AttributeDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Category", b =>
                 {
-                    b.Navigation("AttributeValues");
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.AttributeValueDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Location", b =>
                 {
-                    b.Navigation("ProductAttributeValues");
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.CategoryDTO", b =>
-                {
-                    b.Navigation("ProductCategories");
-                });
-
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.OrderDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Order", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.ProductDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Product", b =>
                 {
                     b.Navigation("OrderDetails");
-
-                    b.Navigation("ProductAttributeValues");
-
-                    b.Navigation("ProductCategories");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.RoleDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Role", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("Staffs");
                 });
 
-            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.DTOs.SupplierDTO", b =>
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Supplier", b =>
                 {
                     b.Navigation("Products");
                 });

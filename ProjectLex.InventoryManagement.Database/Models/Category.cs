@@ -14,6 +14,7 @@ namespace ProjectLex.InventoryManagement.Database.Models
         public Guid CategoryID { get; set; }
         public string CategoryName { get; set; }
         public string CategoryStatus { get; set; }
-        public ICollection<ProductCategory> ProductCategories { get; set; }
+        public string CategoryDescription { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

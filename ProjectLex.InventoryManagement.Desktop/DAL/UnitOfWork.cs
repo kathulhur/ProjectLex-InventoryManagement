@@ -15,34 +15,37 @@ namespace ProjectLex.InventoryManagement.Desktop.DAL
         private InventoryManagementContext context = new InventoryManagementContext();
         private GenericRepository<Role> _roleRepository;
         private GenericRepository<Category> _categoryRepository;
-        private GenericRepository<Store> _storeRepository;
+        private GenericRepository<Warehouse> _warehouseRepository;
         private GenericRepository<Supplier> _supplierRepository;
-        private GenericRepository<User> _userRepository;
+        private GenericRepository<Staff> _staffRepository;
         private GenericRepository<Product> _productRepository;
-        private GenericRepository<ProductCategory> _productCategoryRepository;
         private GenericRepository<Order> _orderRepository;
         private GenericRepository<OrderDetail> _orderDetailRepository;
+        private GenericRepository<Location> _locationRepository;
+        private GenericRepository<Customer> _customerRepository;
 
         public GenericRepository<Role> RoleRepository => _roleRepository;
         public GenericRepository<Category> CategoryRepository => _categoryRepository;
-        public GenericRepository<Store> StoreRepository => _storeRepository;
+        public GenericRepository<Warehouse> warehouseRepository => _warehouseRepository;
         public GenericRepository<Supplier> SupplierRepository => _supplierRepository;
-        public GenericRepository<User> UserRepository => _userRepository;
+        public GenericRepository<Staff> StaffRepository => _staffRepository;
         public GenericRepository<Product> ProductRepository => _productRepository;
-        public GenericRepository<ProductCategory> ProductCategoryRepository => _productCategoryRepository;
         public GenericRepository<Order> OrderRepository => _orderRepository;
         public GenericRepository<OrderDetail> OrderDetailRepository => _orderDetailRepository;
+        public GenericRepository<Location> LocationRepository => _locationRepository;
+        public GenericRepository<Customer> CustomerRepository => _customerRepository;
         public UnitOfWork()
         {
             _roleRepository = new GenericRepository<Role>(context);
             _categoryRepository = new GenericRepository<Category>(context);
-            _storeRepository = new GenericRepository<Store>(context);
+            _warehouseRepository = new GenericRepository<Warehouse>(context);
             _supplierRepository = new GenericRepository<Supplier>(context);
-            _userRepository = new GenericRepository<User>(context);
+            _staffRepository = new GenericRepository<Staff>(context);
             _productRepository = new GenericRepository<Product>(context);
-            _productCategoryRepository = new GenericRepository<ProductCategory>(context);
             _orderRepository = new GenericRepository<Order>(context);
             _orderDetailRepository = new GenericRepository<OrderDetail>(context);
+            _locationRepository = new GenericRepository<Location>(context);
+            _customerRepository = new GenericRepository<Customer>(context);
         }
 
 

@@ -14,6 +14,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public string SupplierID => _supplier.SupplierID.ToString();
         public string SupplierName => _supplier.SupplierName;
+        public string SupplierAddress => _supplier.SupplierAddress;
+        public string SupplierPhone => _supplier.SupplierPhone;
+        public string SupplierEmail => _supplier.SupplierEmail;
         public string SupplierStatus => _supplier.SupplierStatus;
 
         public SupplierViewModel(Supplier supplier)

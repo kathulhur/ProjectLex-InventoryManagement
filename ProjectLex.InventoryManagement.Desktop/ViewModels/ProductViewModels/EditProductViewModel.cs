@@ -5,6 +5,7 @@ using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,145 +20,199 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private Product _product;
 
-        public string StoreID
-        {
-            get { return _product.StoreID.ToString(); }
-            set
-            {
-                _product.StoreID = new Guid(value);
-                OnPropertyChanged(nameof(StoreID));
-            }
-
-        }
-
-        public string SupplierID
-        {
-            get { return _product.SupplierID.ToString(); }
-            set
-            {
-                _product.SupplierID = new Guid(value);
-                OnPropertyChanged(nameof(SupplierID));
-            }
-
-        }
-
+        public string _productName;
+        [Required(ErrorMessage = "Name is Required")]
+        [MinLength(4, ErrorMessage = "Name should be at least 4 characters")]
+        [MaxLength(100, ErrorMessage = "Name should be at most 100 characters")]
         public string ProductName
         {
-            get { return _product.ProductName; }
+            get => _productName;
             set
             {
-                _product.ProductName = value;
-                OnPropertyChanged(nameof(ProductName));
+                SetProperty(ref _productName, value);
             }
         }
 
+        public string _productSKU;
+        [Required(ErrorMessage = "Name is Required")]
+        [MinLength(4, ErrorMessage = "Name should be at least 4 characters")]
+        [MaxLength(100, ErrorMessage = "Name should be at most 100 characters")]
         public string ProductSKU
         {
-            get { return _product.ProductSKU; }
+            get => _productSKU;
             set
             {
-                _product.ProductSKU = value;
-                OnPropertyChanged(nameof(ProductSKU));
+                SetProperty(ref _productSKU, value);
             }
         }
 
-        public string ProductPrice
-        {
-            get { return _product.ProductPrice.ToString(); }
-            set
-            {
-                _product.ProductPrice = Convert.ToDecimal(value);
-                OnPropertyChanged(nameof(ProductPrice));
-            }
-        }
-
+        public string _productQuantity;
+        [Required(ErrorMessage = "Quantity is Required")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Input")]
         public string ProductQuantity
         {
-            get { return _product.ProductPrice.ToString(); }
+            get => _productQuantity;
             set
             {
-                _product.ProductPrice = Convert.ToInt32(value);
-                OnPropertyChanged(nameof(ProductQuantity));
+                SetProperty(ref _productQuantity, value);
             }
         }
 
+
+        public string _productUnit;
+        [Required(ErrorMessage = "Unit is Required")]
+        public string ProductUnit
+        {
+            get => _productUnit;
+            set
+            {
+                SetProperty(ref _productUnit, value);
+            }
+        }
+
+        public string _productPrice;
+        [Required(ErrorMessage = "Name is Required")]
+        [RegularExpression("^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)$", ErrorMessage = "Invalid Input, only decimals are allowed")]
+        public string ProductPrice
+        {
+            get => _productPrice;
+            set
+            {
+                SetProperty(ref _productPrice, value);
+            }
+        }
+
+        public string _productAvailability;
+        [Required(ErrorMessage = "Availability is Required")]
         public string ProductAvailability
         {
-            get { return _product.ProductAvailability; }
+            get => _productAvailability;
             set
             {
-                _product.ProductAvailability = value;
-                OnPropertyChanged(nameof(ProductAvailability));
+                SetProperty(ref _productAvailability, value);
             }
         }
 
-        public IEnumerable<CategoryViewModel> Categories
+        public string _supplierID;
+        [Required(ErrorMessage = "Supplier is Required")]
+        public string SupplierID
         {
-            get { return _productCategories.Select(pc => new CategoryViewModel(pc.Category)); }
+            get => _supplierID;
+            set
+            {
+                SetProperty(ref _supplierID, value);
+            }
         }
 
+        public string _categoryID;
+        [Required(ErrorMessage = "Category is Required")]
+        public string CategoryID
+        {
+            get => _categoryID;
+            set
+            {
+                SetProperty(ref _categoryID, value);
+            }
+        }
+
+        public string _locationID;
+        [Required(ErrorMessage = "Location is Required")]
+        public string LocationID
+        {
+            get => _locationID;
+            set
+            {
+                SetProperty(ref _locationID, value);
+            }
+        }
 
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
+        private readonly Action _closeDialogCallback;
 
-        private readonly ObservableCollection<ProductCategory> _productCategories;
+        private readonly ObservableCollection<CategoryViewModel> _categories;
         private readonly ObservableCollection<SupplierViewModel> _suppliers;
-        private readonly ObservableCollection<StoreViewModel> _stores;
+        private readonly ObservableCollection<LocationViewModel> _locations;
 
         public IEnumerable<SupplierViewModel> Suppliers => _suppliers;
-        public IEnumerable<StoreViewModel> Stores => _stores;
+        public IEnumerable<LocationViewModel> Locations => _locations;
+        public IEnumerable<CategoryViewModel> Categories => _categories;
 
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
         public RelayCommand LoadSuppliersCommand { get; }
-        public RelayCommand LoadStoresCommand { get; }
-        public RelayCommand LoadProductCategoriesCommand { get; }
+        public RelayCommand LoadLocationsCommand { get; }
+        public RelayCommand LoadCategoriesCommand { get; }
 
 
-        public EditProductViewModel(NavigationStore navigationStore, Product product)
+        public EditProductViewModel(NavigationStore navigationStore, Product product, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
+            _closeDialogCallback = closeDialogCallback;
             _product = product;
 
-            _suppliers = new ObservableCollection<SupplierViewModel>();
-            _productCategories = new ObservableCollection<ProductCategory>();
-            _stores = new ObservableCollection<StoreViewModel>();
+            SetInitialValues(_product);
 
-            SubmitCommand = new RelayCommand(EditProduct);
-            CancelCommand = new RelayCommand(NavigateToProductList);
+            _suppliers = new ObservableCollection<SupplierViewModel>();
+            _categories = new ObservableCollection<CategoryViewModel>();
+            _locations = new ObservableCollection<LocationViewModel>();
+
+            SubmitCommand = new RelayCommand(Submit);
+            CancelCommand = new RelayCommand(Cancel);
             LoadSuppliersCommand = new RelayCommand(LoadSuppliers);
-            LoadStoresCommand = new RelayCommand(LoadStores);
-            LoadProductCategoriesCommand = new RelayCommand(LoadProductCategories);
+            LoadLocationsCommand = new RelayCommand(LoadLocations);
+            LoadCategoriesCommand = new RelayCommand(LoadCategories);
         }
 
-        private void EditProduct()
+        private void Submit()
         {
+            ValidateAllProperties();
+
+            if (HasErrors)
+            {
+                return;
+            }
+
+            _product.ProductName = _productName;
+            _product.ProductSKU = _productSKU;
+            _product.ProductQuantity = Convert.ToInt32(_productQuantity);
+            _product.ProductUnit = _productUnit;
+            _product.ProductPrice = Convert.ToDecimal(_productPrice);
+            _product.ProductAvailability = _productAvailability;
+            _product.CategoryID = new Guid(_categoryID);
+            _product.SupplierID = new Guid(_supplierID);
+            _product.LocationID = new Guid(_locationID);
+            _product.Category = null;
+            _product.Location = null;
+            _product.Supplier = null;
+
             _unitOfWork.ProductRepository.Update(_product);
             _unitOfWork.Save();
-            MessageBox.Show("Successful");
+
+            _closeDialogCallback();
         }
 
-        private void NavigateToProductList()
+        private void Cancel()
         {
-            _navigationStore.CurrentViewModel = ProductListViewModel.LoadViewModel(_navigationStore);
+            _closeDialogCallback();
         }
 
-        private void LoadProductCategories()
+        private void LoadCategories()
         {
-            _productCategories.Clear();
-            foreach (ProductCategory pc in _unitOfWork.ProductCategoryRepository.Get())
+            _categories.Clear();
+            foreach (Category c in _unitOfWork.CategoryRepository.Get())
             {
-                _productCategories.Add(pc);
+                _categories.Add(new CategoryViewModel(c));
             }
         }
 
-        private void LoadStores()
+        private void LoadLocations()
         {
-            _stores.Clear();
-            foreach (Store s in _unitOfWork.StoreRepository.Get())
+            _locations.Clear();
+            foreach (Location l in _unitOfWork.LocationRepository.Get())
             {
-                _stores.Add(new StoreViewModel(s));
+                _locations.Add(new LocationViewModel(l));
             }
         }
 
@@ -170,14 +225,27 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
-        public static EditProductViewModel LoadViewModel(NavigationStore navigationStore, Product product)
+        public static EditProductViewModel LoadViewModel(NavigationStore navigationStore, Product product, Action closeDialogCallback)
         {
-            EditProductViewModel viewModel = new EditProductViewModel(navigationStore, product);
+            EditProductViewModel viewModel = new EditProductViewModel(navigationStore, product, closeDialogCallback);
+            viewModel.LoadLocationsCommand.Execute(null);
             viewModel.LoadSuppliersCommand.Execute(null);
-            viewModel.LoadStoresCommand.Execute(null);
-            viewModel.LoadProductCategoriesCommand.Execute(null);
+            viewModel.LoadCategoriesCommand.Execute(null);
             return viewModel;
             
+        }
+
+        private void SetInitialValues(Product product)
+        {
+            _productName = product.ProductName;
+            _productSKU = product.ProductSKU;
+            _productQuantity = product.ProductQuantity.ToString();
+            _productUnit = product.ProductUnit.ToString();
+            _productPrice = product.ProductPrice.ToString();
+            _productAvailability = product.ProductAvailability;
+            _supplierID = product.SupplierID.ToString();
+            _locationID = product.LocationID.ToString();
+            _categoryID = product.CategoryID.ToString();
         }
 
 

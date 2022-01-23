@@ -19,15 +19,22 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private bool _isDisposed = false;
 
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen => _isDialogOpen;
+
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
+
+
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
         private readonly ObservableCollection<ProductViewModel> _products;
         public IEnumerable<ProductViewModel> Products => _products;
-        public RelayCommand ToCreateProductCommand { get; }
+        public RelayCommand CreateProductCommand { get; }
         public RelayCommand LoadProductsCommand { get; }
         public RelayCommand<ProductViewModel> RemoveProductCommand { get; }
-        public RelayCommand<ProductViewModel> NavigateToModifyProductCommand { get; }
+        public RelayCommand<ProductViewModel> EditProductCommand { get; }
         public RelayCommand NavigateToCreateProductCommand { get; }
 
         public ProductListViewModel(NavigationStore navigationStore)
@@ -39,8 +46,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             LoadProductsCommand = new RelayCommand(LoadProducts);
 
             RemoveProductCommand = new RelayCommand<ProductViewModel>(RemoveProduct);
-            NavigateToModifyProductCommand = new RelayCommand<ProductViewModel>(NavigateToModifyProduct);
-            NavigateToCreateProductCommand = new RelayCommand(NavigateToCreateProduct);
+            EditProductCommand = new RelayCommand<ProductViewModel>(EditProduct);
+            CreateProductCommand = new RelayCommand(CreateProduct);
 
         }
 
@@ -54,20 +61,38 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         }
 
-        private void NavigateToModifyProduct(ProductViewModel productViewModel)
+        private void EditProduct(ProductViewModel productViewModel)
         {
-            _navigationStore.CurrentViewModel = EditProductViewModel.LoadViewModel(_navigationStore, productViewModel.Product);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = EditProductViewModel.LoadViewModel(_navigationStore, productViewModel.Product, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
-        private void NavigateToCreateProduct()
+        private void CreateProduct()
         {
-            _navigationStore.CurrentViewModel = CreateProductViewModel.LoadViewModel(_navigationStore);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = CreateProductViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
+        }
+
+        private void CloseDialogCallback()
+        {
+            LoadProductsCommand.Execute(null);
+
+            _isDialogOpen = false;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
         private void LoadProducts()
         {
             _products.Clear();
-            foreach (Product p in _unitOfWork.ProductRepository.Get(includeProperties: "Store,Supplier,ProductCategories.Category"))
+            foreach (Product p in _unitOfWork.ProductRepository.Get(includeProperties: "Location,Supplier,Category"))
             {
                 _products.Add(new ProductViewModel(p));
             }
@@ -92,6 +117,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
+                    _dialogViewModel?.Dispose();
                 }
 
             }

@@ -12,6 +12,9 @@ namespace ProjectLex.InventoryManagement.Database.Models
         [Key]
         public Guid SupplierID { get; set; }
         public string SupplierName { get; set; }
+        public string SupplierAddress { get; set; }
+        public string SupplierPhone { get; set; }
+        public string SupplierEmail { get; set; }
         public string SupplierStatus { get; set; }
         public ICollection<Product> Products { get; set; }
     }

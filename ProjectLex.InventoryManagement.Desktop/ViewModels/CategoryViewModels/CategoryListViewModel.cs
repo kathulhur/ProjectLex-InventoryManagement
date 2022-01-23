@@ -17,6 +17,16 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
         private bool _isDisposed = false;
 
+        private bool _isDialogOpen = false;
+
+        public bool IsDialogOpen
+        {
+            get { return _isDialogOpen; }
+        }
+
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
+
         private readonly ObservableCollection<CategoryViewModel> _categories;
         public IEnumerable<CategoryViewModel> Categories => _categories;
 
@@ -24,18 +34,21 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         public RelayCommand LoadCategoriesCommand { get; }
         public RelayCommand<CategoryViewModel> RemoveCategoryCommand { get; }
-        public RelayCommand<CategoryViewModel> NavigateToModifyCategoryCommand { get; }
-        public RelayCommand NavigateToCreateCategoryCommand { get; }
+        public RelayCommand<CategoryViewModel> EditCategoryCommand { get; }
+        public RelayCommand CreateCategoryCommand { get; }
+
 
         public CategoryListViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
             _categories = new ObservableCollection<CategoryViewModel>();
+
+
             LoadCategoriesCommand = new RelayCommand(LoadCategories);
             RemoveCategoryCommand = new RelayCommand<CategoryViewModel>(RemoveCategory);
-            NavigateToModifyCategoryCommand = new RelayCommand<CategoryViewModel>(NavigateToModifyCategory);
-            NavigateToCreateCategoryCommand = new RelayCommand(NavigateToCreateCategory);
+            EditCategoryCommand = new RelayCommand<CategoryViewModel>(EditCategory);
+            CreateCategoryCommand = new RelayCommand(CreateCategory);
         }
 
         public void RemoveCategory(CategoryViewModel categoryViewModel)
@@ -46,19 +59,31 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             MessageBox.Show("Category Removed Successfully");
         }
 
-        public void NavigateToModifyCategory(CategoryViewModel categoryViewModel)
+
+        public void EditCategory(CategoryViewModel categoryViewModel)
         {
-            _navigationStore.CurrentViewModel = EditCategoryViewModel.LoadViewModel(_navigationStore, categoryViewModel.Category);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = EditCategoryViewModel.LoadViewModel(_navigationStore, categoryViewModel.Category, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
-        public void NavigateToCreateCategory()
+        public void CreateCategory()
         {
-            _navigationStore.CurrentViewModel = CreateCategoryViewModel.LoadViewModel(_navigationStore);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = CreateCategoryViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
 
         }
 
         public void LoadCategories()
         {
+            _categories.Clear();
             foreach(Category c in _unitOfWork.CategoryRepository.Get())
             {
                 _categories.Add(new CategoryViewModel(c));
@@ -74,6 +99,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             return viewModel;
         }
 
+        public void CloseDialogCallback()
+        {
+            LoadCategoriesCommand.Execute(null);
+
+            _isDialogOpen = false;
+            OnPropertyChanged(nameof(IsDialogOpen));
+        }
+
       
 
 
@@ -87,6 +120,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
+                    _dialogViewModel?.Dispose();
                 }
 
             }

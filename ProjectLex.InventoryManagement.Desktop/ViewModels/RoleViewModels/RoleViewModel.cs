@@ -13,6 +13,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public Role Role => _role;
         public string RoleID => _role.RoleID.ToString();
         public string RoleName => _role.RoleName;
+        public string RoleDescription => _role.RoleDescription;
         public string RoleStatus => _role.RoleStatus;
 
         public RoleViewModel(Role role)

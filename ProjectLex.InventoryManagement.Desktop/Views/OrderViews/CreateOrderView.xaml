@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateOrderView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,88 +10,186 @@
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
-    <Grid>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock
-            Grid.Row="0"
-            Style="{StaticResource Header}"
-            Text="Add User"/>
-
-
-        <Grid Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Role"/>
-
-            <ComboBox Grid.Row="1" SelectedValue="{Binding UserID}" SelectedValuePath="UserID" ItemsSource="{Binding Users}">
-                <ComboBox.ItemTemplate>
-                    <ItemContainerTemplate>
-                        <TextBlock Text="{Binding UserUsername}"/>
-                    </ItemContainerTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </Grid>
+    <materialDesign:DialogHost IsOpen="{Binding IsDialogOpen, Mode=OneWay}">
         
-        <Grid 
-            Grid.Row="2"
-            Margin="0 25 0 0">
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card UniformCornerRadius="10">
+                <ContentControl Content="{ Binding DialogViewModel }"/>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
+        
+        <Grid Margin="50 50 50 50">
             <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Customer Name"/>
-            <TextBox 
+            <TextBlock
+                Grid.Row="0"
+                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+                Text="New Order"/>
+
+
+            <Grid 
                 Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding CustomerName, UpdateSourceTrigger=PropertyChanged}"/>
+                Margin="0 30 0 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0" 
+                    Text="Customer"
+                    Style="{StaticResource MaterialDesignTextBlock}"
+                    FontWeight="DemiBold"/>
+
+                <ComboBox 
+                    Grid.Row="1"
+                    Style="{StaticResource MaterialDesignComboBox}"
+                    Padding="10"
+                    SelectedValue="{Binding CustomerID}" 
+                    SelectedValuePath="CustomerID" 
+                    ItemsSource="{Binding Customers}">
+                    <ComboBox.ItemTemplate>
+                        <ItemContainerTemplate>
+                            <TextBlock Text="{Binding CustomerFullname}"/>
+                        </ItemContainerTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </Grid>
+
+
+            <Grid 
+                Grid.Row="2"
+                Margin="0 30 0 0">
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock
+                        Margin="0 0 30 0"
+                        Text="Add Product"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource MaterialDesignTextBlock}"
+                        FontWeight="DemiBold"/>
+                    
+                    <Button 
+                        Command="{ Binding CreateOrderDetailCommand }"
+                        Style="{StaticResource MaterialDesignPaperButton}"
+                        Width="60">
+                        <materialDesign:PackIcon Kind="Add"/>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+
+
+            <Grid 
+                Grid.Row="3"
+                Margin="0 30 0 0">
+                <DataGrid
+                        ItemsSource="{Binding OrderDetails}"
+                        Style="{StaticResource MaterialDesignDataGrid}"
+                        BorderBrush="Black"
+                        BorderThickness="2"
+                        IsReadOnly="True"
+                        AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                                Header="Product"
+                                HeaderStyle="{ StaticResource MaterialDesignDataGridColumnHeader }"
+                                CellStyle="{ StaticResource MaterialDesignDataGridCell }"
+                                Binding="{ Binding Product.ProductName }"
+                                Width="auto"
+                                MinWidth="100"/>
+
+                        <DataGridTextColumn
+                                Header="Quantity"
+                                HeaderStyle="{ StaticResource MaterialDesignDataGridColumnHeader }"
+                                CellStyle="{ StaticResource MaterialDesignDataGridCell }"
+                                Binding="{ Binding OrderDetailQuantity }"
+                                Width="auto"
+                                MinWidth="100"/>
+
+                        <DataGridTextColumn
+                                Header="Amount"
+                                HeaderStyle="{ StaticResource MaterialDesignDataGridColumnHeader }"
+                                CellStyle="{ StaticResource MaterialDesignDataGridCell }"
+                                Binding="{ Binding OrderDetailAmount }"
+                                Width="auto"
+                                MinWidth="100"/>
+
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button 
+                                            Content="Edit" 
+                                            Grid.Column="0"
+                                            BorderBrush="Orange"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.EditOrderDetailCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CreateOrderView}}"
+                                            CommandParameter="{Binding}"/>
+
+                                        <Button 
+                                            Content="Remove" 
+                                            Grid.Column="1"
+                                            BorderBrush="OrangeRed"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.RemoveOrderDetailCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CreateOrderView}}"
+                                            CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+
+            <Grid 
+                Grid.Row="4"
+                Margin="0 30 0 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock 
+                        Text="Total"
+                        Margin="0 0 30 0"
+                        Style="{StaticResource MaterialDesignTextBlock}"
+                        FontWeight="DemiBold"/>
+                    
+                    <TextBlock 
+                        MinWidth="300"
+                        Text="{Binding OrderTotal, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource MaterialDesignTextBlock}"/>
+                </StackPanel>
+            </Grid>
+
+
+            <StackPanel 
+                Grid.Row="5" 
+                Orientation="Horizontal"
+                Margin="0 30 0 0"
+                HorizontalAlignment="Right">
+                <Button 
+                    Content="Submit"
+                    Command="{Binding SubmitCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignPaperButton}"/>
+                <Button 
+                    Margin="10 0 0 0" 
+                    Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"/>
+
+            </StackPanel>
         </Grid>
-            
+    </materialDesign:DialogHost>
 
-        <Grid 
-            Grid.Row="3"
-            Margin="0 25 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Total"/>
-            <TextBox 
-                Grid.Row="1"
-                Margin="0 10 0 0"
-                Text="{Binding OrderTotal, UpdateSourceTrigger=PropertyChanged}"
-                />
-        </Grid>
-
-        <ContentControl Grid.Row="3" Margin="0 10 0 10" Content="{ Binding OrderDetailListViewModel }"/>
-
-        <StackPanel 
-            Grid.Row="4" 
-            Orientation="Horizontal"
-            Margin="0 25 0 0">
-            <Button 
-                Content="Submit"
-                Command="{Binding SubmitCommand}"
-                CommandParameter="{Binding}"/>
-            <Button 
-                Margin="10 0 0 0" 
-                Content="Cancel"
-                Command="{Binding CancelCommand}"/>
-
-        </StackPanel>
-
-
-    </Grid>
 </UserControl>

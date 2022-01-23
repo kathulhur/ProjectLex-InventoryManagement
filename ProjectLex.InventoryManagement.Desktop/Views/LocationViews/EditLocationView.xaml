@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.EditLocationView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <materialDesign:Card 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            UniformCornerRadius="25"
+            
+            Width="auto" 
+            Height="auto"
+            Padding="50 50 50 50">
+
+            <Grid HorizontalAlignment="Left" MinWidth="400">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                Grid.Row="0"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Text="New Location"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="5 0 5 0">
+                        <TextBlock 
+                            Text="Zone"
+                            Style="{StaticResource MaterialDesignTextBlock}"/>
+                        <TextBox 
+                            Text="{ Binding LocationZone }" 
+                            Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="5 0 5 0">
+                        <TextBlock 
+                            Text="Aisle"
+                            Style="{StaticResource MaterialDesignTextBlock}"/>
+                        <TextBox Text="{ Binding LocationAisle }" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Margin="5 0 5 0">
+                        <TextBlock 
+                            Text="Bay"
+                            Style="{StaticResource MaterialDesignTextBlock}"/>
+                        <TextBox Text="{ Binding LocationBay }" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="3" Margin="5 0 5 0">
+                        <TextBlock 
+                            Text="Row"
+                            Style="{StaticResource MaterialDesignTextBlock}"/>
+                        <TextBox Text="{ Binding LocationRow }" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="4" Margin="5 0 5 0">
+                        <TextBlock 
+                            Text="SubLocation"
+                            Style="{StaticResource MaterialDesignTextBlock}"/>
+                        <TextBox Text="{ Binding SubLocation }" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel 
+                    Grid.Row="3" 
+                    Orientation="Horizontal"
+                    Margin="0 45 0 0">
+                    <Button 
+                        Content="Submit"
+                        Style="{StaticResource MaterialDesignPaperButton}"
+                        Command="{Binding SubmitCommand}"
+                        CommandParameter="{Binding}"/>
+                    <Button 
+                        Margin="10 0 0 0" 
+                        Style="{StaticResource MaterialDesignPaperLightButton}"
+                        Content="Cancel"
+                        Command="{ Binding CancelCommand}"/>
+                </StackPanel>
+
+
+            </Grid>
+
+        </materialDesign:Card>
+    </Grid>
+</UserControl>
