@@ -100,13 +100,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
 
-        public EditSupplierViewModel(NavigationStore navigationStore, Supplier supplier, Action closeDialogCallback)
+        public EditSupplierViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Supplier supplier, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
-            _unitOfWork = new UnitOfWork();
-            _supplier = supplier;
+            _unitOfWork = unitOfWork;
             _closeDialogCallback = closeDialogCallback;
 
+            _supplier = supplier;
             SetInitialValues(_supplier);
 
 
@@ -134,11 +134,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            _supplier.SupplierName = SupplierName;
-            _supplier.SupplierAddress = SupplierAddress;
-            _supplier.SupplierEmail = SupplierEmail;
-            _supplier.SupplierPhone = SupplierPhone;
-            _supplier.SupplierStatus = SupplierStatus;
+            _supplier.SupplierName = _supplierName;
+            _supplier.SupplierAddress = _supplierAddress;
+            _supplier.SupplierEmail = _supplierEmail;
+            _supplier.SupplierPhone = _supplierPhone;
+            _supplier.SupplierStatus = _supplierStatus;
 
             _unitOfWork.SupplierRepository.Update(_supplier);
             _unitOfWork.Save();
@@ -151,9 +151,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _closeDialogCallback();
         }
 
-        public static EditSupplierViewModel LoadViewModel(NavigationStore navigationStore, Supplier supplier, Action closeDialogCallback)
+        public static EditSupplierViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Supplier supplier, Action closeDialogCallback)
         {
-            EditSupplierViewModel viewModel = new EditSupplierViewModel(navigationStore, supplier, closeDialogCallback);
+            EditSupplierViewModel viewModel = new EditSupplierViewModel(navigationStore, unitOfWork, supplier, closeDialogCallback);
             return viewModel;
         }
 
@@ -166,7 +166,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

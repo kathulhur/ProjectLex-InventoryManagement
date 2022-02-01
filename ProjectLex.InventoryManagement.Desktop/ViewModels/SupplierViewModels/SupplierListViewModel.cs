@@ -60,7 +60,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void CreateSupplier()
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = CreateSupplierViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            _dialogViewModel = CreateSupplierViewModel.LoadViewModel(_navigationStore, _unitOfWork, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -71,7 +71,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void EditSupplier(SupplierViewModel supplierViewModel)
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = EditSupplierViewModel.LoadViewModel(_navigationStore, supplierViewModel.Supplier, CloseDialogCallback);
+            _dialogViewModel = EditSupplierViewModel.LoadViewModel(_navigationStore, _unitOfWork, supplierViewModel.Supplier, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;

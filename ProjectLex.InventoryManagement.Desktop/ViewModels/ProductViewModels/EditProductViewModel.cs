@@ -115,16 +115,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
-        public string _locationID;
-        [Required(ErrorMessage = "Location is Required")]
-        public string LocationID
-        {
-            get => _locationID;
-            set
-            {
-                SetProperty(ref _locationID, value);
-            }
-        }
 
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
@@ -145,10 +135,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand LoadCategoriesCommand { get; }
 
 
-        public EditProductViewModel(NavigationStore navigationStore, Product product, Action closeDialogCallback)
+        public EditProductViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Product product, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _closeDialogCallback = closeDialogCallback;
             _product = product;
 
@@ -182,10 +172,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _product.ProductAvailability = _productAvailability;
             _product.CategoryID = new Guid(_categoryID);
             _product.SupplierID = new Guid(_supplierID);
-            _product.LocationID = new Guid(_locationID);
-            _product.Category = null;
-            _product.Location = null;
-            _product.Supplier = null;
 
             _unitOfWork.ProductRepository.Update(_product);
             _unitOfWork.Save();
@@ -225,9 +211,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
-        public static EditProductViewModel LoadViewModel(NavigationStore navigationStore, Product product, Action closeDialogCallback)
+        public static EditProductViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Product product, Action closeDialogCallback)
         {
-            EditProductViewModel viewModel = new EditProductViewModel(navigationStore, product, closeDialogCallback);
+            EditProductViewModel viewModel = new EditProductViewModel(navigationStore, unitOfWork, product, closeDialogCallback);
             viewModel.LoadLocationsCommand.Execute(null);
             viewModel.LoadSuppliersCommand.Execute(null);
             viewModel.LoadCategoriesCommand.Execute(null);
@@ -244,7 +230,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _productPrice = product.ProductPrice.ToString();
             _productAvailability = product.ProductAvailability;
             _supplierID = product.SupplierID.ToString();
-            _locationID = product.LocationID.ToString();
             _categoryID = product.CategoryID.ToString();
         }
 
@@ -256,7 +241,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

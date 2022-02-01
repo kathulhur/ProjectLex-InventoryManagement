@@ -1,4 +1,5 @@
 ﻿using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,24 +8,28 @@ using System.Threading.Tasks;
 
 namespace ProjectLex.InventoryManagement.Desktop.Services
 {
-    class AuthenticationService
+
+    public class AuthenticationService : IAuthenticationService
     {
         private Staff _staff;
         public Staff Staff => _staff;
 
-        public bool IsAuthenticated { get; private set; }
 
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthenticationService()
+        public AuthenticationService(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
 
-        public static void Authenticate(string staffname, string password)
+
+        public Staff Login(string username, string password)
         {
+            Staff storedStaff = _unitOfWork.StaffRepository.Get(s => s.StaffUsername == username && s.StaffPassword == password).SingleOrDefault();
 
+            return storedStaff;
         }
-
 
     }
+
 }

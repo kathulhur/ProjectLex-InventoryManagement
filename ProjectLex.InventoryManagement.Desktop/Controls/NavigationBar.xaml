@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Controls.NavigationBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid HorizontalAlignment="Center" Margin="0 20 0 30">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="/Assets/logo.png" Width="44"/>
+                        <TextBlock Text="PLEX" FontFamily="Bebas Neue" FontSize="36" VerticalAlignment="center"/>
+                    </StackPanel>
+                </Grid>
+
+
+                <Grid>
+                    <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Dashboard" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid>
+                    <Button Command="{Binding NavigateToOrderListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="CartCheck" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Orders" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid>
+                    <Button Command="{Binding NavigateToCustomerListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="BusinessCardOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Customers" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid Margin="0 30 0 0">
+                    <Button Command="{Binding NavigateToProductListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="BoxOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Products" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid>
+                    <Button Command="{Binding NavigateToStorageListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="Storage" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Storages" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <Grid>
+                    <Button Command="{Binding NavigateToDefectiveListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="GlassBroken" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Defectives" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+
+
+                <Grid Margin="0 30 0 0">
+                    <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="CategoryOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Categories" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid>
+                    <Button Command="{Binding NavigateToLocationListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="LocationOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Locations" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid>
+                    <Button Command="{Binding NavigateToSupplierListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="ClipboardListOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Suppliers" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid Margin="0 30 0 0">
+                    <Button Command="{Binding NavigateToRoleListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="PersonOutline" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Roles" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid>
+                    <Button Command="{Binding NavigateToStaffListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Staffs" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid Margin="0 30 0 0">
+                    <Button Command="{Binding LogOutCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center"/>
+                            <Label Margin="20 0 0 0" Content="Logout" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </StackPanel>
+
+        </ScrollViewer>
+    </Grid>
+</UserControl>

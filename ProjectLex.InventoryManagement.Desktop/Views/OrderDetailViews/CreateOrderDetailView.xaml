@@ -53,6 +53,8 @@
                     SelectedValue="{Binding ProductID}"
                     ItemsSource="{Binding Products}"
                     Style="{StaticResource MaterialDesignComboBox}"
+                    IsTextSearchEnabled="True"
+                    IsEditable="True"
                     DisplayMemberPath="ProductName">
                 </ComboBox>
             </Grid>

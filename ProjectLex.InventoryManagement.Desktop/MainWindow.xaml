@@ -5,8 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop"
-        xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-        xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+        xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
         mc:Ignorable="d"
         d:Width="1920"
         d:Height="1080"
@@ -20,126 +19,25 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}" VerticalScrollBarVisibility="Auto">
-                <StackPanel>
-                    <Grid HorizontalAlignment="Center" Margin="0 20 0 30">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Image Source="Assets/logo.png" Width="44"/>
-                            <TextBlock Text="PLEX" FontFamily="Bebas Neue" FontSize="36" VerticalAlignment="center"/>
-                        </StackPanel>
-                    </Grid>
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Dashboard" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToOrderListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="CartCheck" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Orders" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToCustomerListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="BusinessCardOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Customers" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid Margin="0 30 0 0">
-                        <Button Command="{Binding NavigateToProductListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="BoxOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Products" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="CategoryOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Categories" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToLocationListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="LocationOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Locations" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToSupplierListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="ClipboardListOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Suppliers" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid Margin="0 30 0 0">
-                        <Button Command="{Binding NavigateToRoleListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="PersonOutline" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Roles" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid>
-                        <Button Command="{Binding NavigateToStaffListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Staffs" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-
-
-                    <Grid Margin="0 30 0 0">
-                        <Button Command="{Binding LogOutCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                                <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center"/>
-                                <Label Margin="20 0 0 0" Content="Logout" FontSize="14" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Button>
-                    </Grid>
-                </StackPanel>
-
-            </ScrollViewer>
+        <Grid Grid.Column="0" Width="200">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            
+            <controls:NavigationBar/>
+            
         </Grid>
-        
+
         <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Background="Gray"/>
         
     </Grid>

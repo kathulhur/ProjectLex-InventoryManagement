@@ -28,7 +28,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _staffID;
             set
             {
-                SetProperty(ref _staffID, value);
+                SetProperty(ref _staffID, value, true);
             }
         }
 
@@ -36,13 +36,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private string _customerFirstName;
 
         [Required(ErrorMessage = "Firstname is Required")]
-        [MinLength(2, ErrorMessage = "Staff must be at least 2 characters")]
+        [MinLength(2, ErrorMessage = "Firstname should be longer than 2 characters")]
+        [MaxLength(50, ErrorMessage = "Firstname longer than 50 characters is Not Allowed")]
         public string CustomerFirstName
         {
             get => _customerFirstName;
             set
             {
-                SetProperty(ref _customerFirstName, value);
+                SetProperty(ref _customerFirstName, value, true);
             }
         }
 
@@ -50,48 +51,55 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private string _customerLastName;
 
         [Required(ErrorMessage = "Lastname is Required")]
+        [MinLength(2, ErrorMessage = "Lastname should be longer than 2 characters")]
+        [MaxLength(50, ErrorMessage = "Lastname longer than 50 characters is Not Allowed")]
         public string CustomerLastName
         {
             get => _customerLastName;
             set
             {
-                SetProperty(ref _customerLastName, value);
+                SetProperty(ref _customerLastName, value, true);
             }
         }
 
         private string _customerAddress;
 
         [Required(ErrorMessage = "Address is Required")]
+        [MinLength(20, ErrorMessage = "Address should be at least 20 characters long")]
+        [MaxLength(300, ErrorMessage = "Address longer than 300 characters is not Allowed")]
         public string CustomerAddress
         {
             get => _customerAddress;
             set
             {
-                SetProperty(ref _customerAddress, value);
+                SetProperty(ref _customerAddress, value, true);
             }
         }
 
         private string _customerPhone;
 
         [Required(ErrorMessage = "Phone number is Required")]
+        [StringLength(11, ErrorMessage = "Phone number should be 11 characters long")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Phone should only contain numbers")]
         public string CustomerPhone
         {
             get => _customerPhone;
             set
             {
-                SetProperty(ref _customerPhone, value);
+                SetProperty(ref _customerPhone, value, true);
             }
         }
 
         private string _customerEmail;
 
         [Required(ErrorMessage = "Email is Required")]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Invalid Email Format")]
         public string CustomerEmail
         {
             get => _customerEmail;
             set
             {
-                SetProperty(ref _customerEmail, value);
+                SetProperty(ref _customerEmail, value, true);
             }
         }
 
@@ -107,11 +115,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand CancelCommand { get; }
         public RelayCommand LoadStaffsCommand { get; }
 
-        public EditCustomerViewModel(NavigationStore navigationStore, Customer customer, Action closeDialogCallback)
+        public EditCustomerViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Customer customer, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
             _customer = customer;
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _staffs = new ObservableCollection<StaffViewModel>();
             _closeDialogCallback = closeDialogCallback;
 
@@ -130,7 +138,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 return;
             }
-            _customer.StaffID = new Guid(this.StaffID);
+            _customer.StaffID = new Guid(_staffID);
             _customer.CustomerFirstname = CustomerFirstName;
             _customer.CustomerLastname = CustomerLastName;
             _customer.CustomerAddress = CustomerAddress;
@@ -159,9 +167,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         }
 
-        public static EditCustomerViewModel LoadViewModel(NavigationStore navigationStore, Customer customer, Action closeDialogCallback)
+        public static EditCustomerViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Customer customer, Action closeDialogCallback)
         {
-            EditCustomerViewModel viewModel = new EditCustomerViewModel(navigationStore, customer, closeDialogCallback);
+            EditCustomerViewModel viewModel = new EditCustomerViewModel(navigationStore, unitOfWork, customer, closeDialogCallback);
             viewModel.LoadStaffsCommand.Execute(null);
             return viewModel;
 
@@ -185,7 +193,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

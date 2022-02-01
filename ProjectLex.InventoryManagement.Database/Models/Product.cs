@@ -12,7 +12,6 @@ namespace ProjectLex.InventoryManagement.Database.Models
         [Key]
         public Guid ProductID { get; set; }
         public Guid SupplierID { get; set; }
-        public Guid LocationID { get; set; }
         public Guid CategoryID { get; set; }
         public string ProductName { get; set; }
         public string ProductSKU { get; set; }
@@ -22,7 +21,7 @@ namespace ProjectLex.InventoryManagement.Database.Models
         public string ProductAvailability { get; set; }
         public Supplier Supplier { get; set; }
         public Category Category { get; set; }
-        public Location Location { get; set; }
+        public ICollection<ProductLocation> ProductLocations { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
     }

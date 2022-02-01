@@ -63,7 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public void EditCategory(CategoryViewModel categoryViewModel)
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = EditCategoryViewModel.LoadViewModel(_navigationStore, categoryViewModel.Category, CloseDialogCallback);
+            _dialogViewModel = EditCategoryViewModel.LoadViewModel(_navigationStore, _unitOfWork, categoryViewModel.Category, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -73,7 +73,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public void CreateCategory()
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = CreateCategoryViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            _dialogViewModel = CreateCategoryViewModel.LoadViewModel(_navigationStore, _unitOfWork, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;

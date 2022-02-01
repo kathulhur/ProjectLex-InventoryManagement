@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Compile Remove="PopulateDatabase.cs" />
-    <Compile Remove="Program.cs" />
   </ItemGroup>
 
   <ItemGroup>

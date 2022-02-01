@@ -9,7 +9,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="LoginWindow.xaml.cs">
+    <Compile Update="Controls\NavigationBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CategoryViews\CategoryListView.xaml.cs">
@@ -18,10 +18,34 @@
     <Compile Update="Views\CategoryViews\CreateCategoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CreateProductLocationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageViews\MoveProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageViews\DeclareDefectiveProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageViews\GetProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageViews\DisposeProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\LocationViews\CreateLocationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProductViews\CreateProductView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageViews\StorageDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageViews\StorageListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SupplierViews\SupplierListView.xaml.cs">
@@ -29,7 +53,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="LoginWindow.xaml">
+    <Page Update="Controls\NavigationBar.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
@@ -53,10 +77,37 @@
     <Page Update="Views\CategoryViews\EditCategoryView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\CreateProductLocationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DefectiveViews\CreateDefectiveView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DefectiveViews\DefectiveListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DefectiveViews\EditDefectiveView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StorageViews\MoveProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StorageViews\DeclareDefectiveProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StorageViews\GetProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StorageViews\DisposeProductView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\LocationViews\EditLocationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LocationViews\CreateLocationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LoginView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProductViews\ProductListView.xaml">
@@ -72,6 +123,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CustomerViews\CreateCustomerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StorageViews\StorageDetailView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StorageViews\StorageListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StoreViews\CreateStoreView.xaml">

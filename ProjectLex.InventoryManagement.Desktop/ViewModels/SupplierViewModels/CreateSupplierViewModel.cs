@@ -27,7 +27,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _supplierName;
             set
             {
-                SetProperty(ref _supplierName, value);
+                SetProperty(ref _supplierName, value, true);
             }
 
         }
@@ -42,21 +42,21 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _supplierAddress;
             set
             {
-                SetProperty(ref _supplierAddress, value);
+                SetProperty(ref _supplierAddress, value, true);
             }
         }
 
         private string _supplierPhone;
 
         [Required(ErrorMessage = "Phone number is Required")]
-        [MinLength(11, ErrorMessage = "Phone number should be 11 characters long")]
+        [StringLength(11, ErrorMessage = "Phone number should be 11 characters long")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Phone should only contain numbers")]
         public string SupplierPhone
         {
             get => _supplierPhone;
             set
             {
-                SetProperty(ref _supplierPhone, value);
+                SetProperty(ref _supplierPhone, value, true);
             }
         }
 
@@ -70,7 +70,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _supplierEmail;
             set
             {
-                SetProperty(ref _supplierEmail, value);
+                SetProperty(ref _supplierEmail, value, true);
             }
         }
 
@@ -83,7 +83,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get { return _supplierStatus; }
             set
             {
-                SetProperty(ref _supplierStatus, value);
+                SetProperty(ref _supplierStatus, value, true);
             }
         }
 
@@ -95,10 +95,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
 
-        public CreateSupplierViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public CreateSupplierViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _closeDialogCallback = closeDialogCallback;
 
 
@@ -139,9 +139,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
 
 
-        public static CreateSupplierViewModel LoadViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public static CreateSupplierViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
-            return new CreateSupplierViewModel(navigationStore, closeDialogCallback);
+            return new CreateSupplierViewModel(navigationStore, unitOfWork, closeDialogCallback);
         }
 
         protected override void Dispose(bool disposing)
@@ -151,7 +151,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

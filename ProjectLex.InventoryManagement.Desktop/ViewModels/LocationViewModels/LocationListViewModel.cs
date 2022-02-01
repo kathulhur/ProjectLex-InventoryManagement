@@ -16,6 +16,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
     {
         private bool _isDisposed = false;
 
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen => _isDialogOpen;
+
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
+
         private UnitOfWork _unitOfWork;
 
         private readonly NavigationStore _navigationStore;
@@ -23,8 +29,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public IEnumerable<LocationViewModel> Locations => _locations;
 
         public RelayCommand LoadLocationsCommand { get; }
-        public RelayCommand NavigateToCreateLocationCommand { get; }
-        public RelayCommand<LocationViewModel> NavigateToEditLocationCommand { get; }
+        public RelayCommand CreateLocationCommand { get; }
+        public RelayCommand<LocationViewModel> EditLocationCommand { get; }
         public RelayCommand<LocationViewModel> RemoveLocationCommand { get; }
 
         public LocationListViewModel(NavigationStore navigationStore)
@@ -35,19 +41,27 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             LoadLocationsCommand = new RelayCommand(LoadData);
             RemoveLocationCommand = new RelayCommand<LocationViewModel>(RemoveLocation);
-            NavigateToCreateLocationCommand = new RelayCommand(NavigateToCreateLocation);
-            NavigateToEditLocationCommand = new RelayCommand<LocationViewModel>(NavigateToEditLocation);
+            CreateLocationCommand = new RelayCommand(CreateLocation);
+            EditLocationCommand = new RelayCommand<LocationViewModel>(EditLocation);
         }
 
-        public void NavigateToEditLocation(LocationViewModel locationViewModel)
+        public void EditLocation(LocationViewModel locationViewModel)
         {
-            _navigationStore.CurrentViewModel = EditLocationViewModel.LoadViewModel(_navigationStore, locationViewModel.Location);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = EditLocationViewModel.LoadViewModel(_navigationStore, _unitOfWork, locationViewModel.Location, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            SetProperty(ref _isDialogOpen, true, nameof(IsDialogOpen));
         }
 
 
-        public void NavigateToCreateLocation()
+        public void CreateLocation()
         {
-            _navigationStore.CurrentViewModel = CreateLocationViewModel.LoadViewModel(_navigationStore);
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = CreateLocationViewModel.LoadViewModel(_navigationStore, _unitOfWork, CloseDialogCallback);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            SetProperty(ref _isDialogOpen, true, nameof(IsDialogOpen));
         }
 
         public void RemoveLocation(LocationViewModel locationViewModel)
@@ -58,8 +72,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             MessageBox.Show("Successful");
         }
 
+        public void CloseDialogCallback()
+        {
+            LoadLocationsCommand.Execute(null);
+            SetProperty(ref _isDialogOpen, false, nameof(IsDialogOpen));
+        }
+
         public void LoadData()
         {
+            _locations.Clear();
             foreach (Location r in _unitOfWork.LocationRepository.Get())
             {
                 _locations.Add(new LocationViewModel(r));

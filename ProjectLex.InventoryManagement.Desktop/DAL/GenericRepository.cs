@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectLex.InventoryManagement.Desktop.DAL
 {
-    class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> where TEntity : class
     {
         internal InventoryManagementContext context;
         internal DbSet<TEntity> dbSet;
@@ -40,11 +40,11 @@ namespace ProjectLex.InventoryManagement.Desktop.DAL
 
             if (orderBy != null)
             {
-                return orderBy(query).AsNoTracking().ToList();
+                return orderBy(query).ToList();
             }
             else
             {
-                return query.AsNoTracking().ToList();
+                return query.ToList();
             }
         }
 
@@ -78,5 +78,6 @@ namespace ProjectLex.InventoryManagement.Desktop.DAL
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
         }
+
     }
 }

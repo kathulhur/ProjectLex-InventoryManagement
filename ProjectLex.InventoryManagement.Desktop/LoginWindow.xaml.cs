@@ -68,12 +68,12 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         private void LoginUser(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.DataContext = new MainViewModel(mainWindow, _navigationStore);
-            Application.Current.MainWindow = mainWindow;
-            Application.Current.MainWindow.Show();
-            e.Handled = true;
-            this.Close();
+            //MainWindow mainWindow = new MainWindow();
+            //mainWindow.DataContext = new MainViewModel(_navigationStore);
+            //Application.Current.MainWindow = mainWindow;
+            //Application.Current.MainWindow.Show();
+            //e.Handled = true;
+            //this.Close();
         }
     }
 }

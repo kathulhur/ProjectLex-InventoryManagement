@@ -51,7 +51,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public void EditRole(RoleViewModel roleViewModel)
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = EditRoleViewModel.LoadViewModel(_navigationStore, roleViewModel.Role, CloseDialogCallback);
+            _dialogViewModel = EditRoleViewModel.LoadViewModel(_navigationStore, _unitOfWork, roleViewModel.Role, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
 
@@ -63,7 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public void CreateRole()
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = CreateRoleViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            _dialogViewModel = CreateRoleViewModel.LoadViewModel(_navigationStore,_unitOfWork, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;

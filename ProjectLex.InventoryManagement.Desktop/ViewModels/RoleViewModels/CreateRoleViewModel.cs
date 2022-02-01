@@ -28,7 +28,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _roleName;
             set
             {
-                SetProperty(ref _roleName, value);
+                SetProperty(ref _roleName, value, true);
             }
 
         }
@@ -37,14 +37,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private string _roleDescription;
 
         [Required(ErrorMessage = "Description is Required")]
-        [MinLength(10, ErrorMessage = "Description should be longer than 2 characters")]
-        [MaxLength(50, ErrorMessage = "Description longer than 50 characters is Not Allowed")]
+        [MinLength(10, ErrorMessage = "Description should be at least 10 characters long")]
+        [MaxLength(100, ErrorMessage = "Description longer than 100 characters is Not Allowed")]
         public string RoleDescription
         {
             get => _roleDescription;
             set
             {
-                SetProperty(ref _roleDescription, value);
+                SetProperty(ref _roleDescription, value, true);
             }
         }
 
@@ -57,7 +57,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get { return _roleStatus; }
             set
             {
-                SetProperty(ref _roleStatus, value);
+                SetProperty(ref _roleStatus, value, true);
             }
         }
 
@@ -69,10 +69,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
 
-        public CreateRoleViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public CreateRoleViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _closeDialogCallback = closeDialogCallback;
             SubmitCommand = new RelayCommand(Submit);
             CancelCommand = new RelayCommand(Cancel);
@@ -108,9 +108,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
 
 
-        public static CreateRoleViewModel LoadViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public static CreateRoleViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
-            return new CreateRoleViewModel(navigationStore, closeDialogCallback);
+            return new CreateRoleViewModel(navigationStore,unitOfWork, closeDialogCallback);
         }
 
         protected override void Dispose(bool disposing)
@@ -120,7 +120,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }
@@ -129,9 +128,5 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             base.Dispose(disposing);
         }
 
-        public bool CanCreateRole(object obj)
-        {
-            return true;
-        }
     }
 }

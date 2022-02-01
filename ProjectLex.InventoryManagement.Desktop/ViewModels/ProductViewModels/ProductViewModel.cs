@@ -13,7 +13,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly Product _product;
         public Product Product => _product;
         public string ProductID => _product.ProductID.ToString();
-        public string LocationID => _product.LocationID.ToString();
         public string SupplierID => _product.SupplierID.ToString();
         public string CategoryID => _product.CategoryID.ToString();
         public string ProductName => _product.ProductName;
@@ -22,18 +21,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public string ProductPrice => _product.ProductPrice.ToString();
         public string ProductQuantity => _product.ProductQuantity.ToString();
         public string ProductAvailability => _product.ProductAvailability;
-
-        public LocationViewModel Location
-        {
-            get
-            {
-                if (_product.Location != null)
-                {
-                    return new LocationViewModel(_product.Location);
-                }
-                return null;
-            }
-        }
 
         public SupplierViewModel Supplier
         {

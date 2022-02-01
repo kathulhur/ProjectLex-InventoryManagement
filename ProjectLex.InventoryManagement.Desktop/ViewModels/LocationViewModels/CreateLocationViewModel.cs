@@ -18,70 +18,17 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private bool _isDisposed = false;
 
 
-        public string _locationZone;
-        [Required(ErrorMessage = "Zone is Required")]
-        public string LocationZone
+        public string _locationName;
+        [Required(ErrorMessage = "Name is Required")]
+        public string LocationName
         {
-            get => _locationZone;
+            get => _locationName;
             set
             {
-                SetProperty(ref _locationZone, value);
+                SetProperty(ref _locationName, value);
             }
 
         }
-
-
-        public string _locationAisle;
-        [Required(ErrorMessage = "Aisle is Required")]
-        public string LocationAisle
-        {
-            get => _locationAisle;
-            set
-            {
-                SetProperty(ref _locationAisle, value);
-            }
-        }
-
-
-
-        public string _locationBay;
-        [Required(ErrorMessage = "Bay is Required")]
-        public string LocationBay
-        {
-            get => _locationBay;
-            set
-            {
-                SetProperty(ref _locationBay, value);
-            }
-        }
-
-
-        public string _locationRow;
-
-        [Required(ErrorMessage = "Row is Required")]
-        public string LocationRow
-        {
-            get => _locationRow;
-            set
-            {
-                SetProperty(ref _locationRow, value);
-            }
-        }
-
-
-        public string _subLocation;
-
-        [Required(ErrorMessage = "SubLocation is Required")]
-        public string SubLocation
-        {
-            get => _subLocation;
-            set
-            {
-                SetProperty(ref _subLocation, value);
-            }
-        }
-
-        
 
         private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
@@ -103,26 +50,24 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public ICommand SubmitCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        private readonly Action _closeDialogCallback;
 
-        public CreateLocationViewModel(NavigationStore navigationStore)
+        public CreateLocationViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _navigationStore = navigationStore;
-            SubmitCommand = new RelayCommand(CreateLocation);
-            CancelCommand = new RelayCommand(CancelCreateLocation);
+            _closeDialogCallback = closeDialogCallback;
+            SubmitCommand = new RelayCommand(Submit);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
-        public static CreateLocationViewModel LoadViewModel(NavigationStore navigationStore)
-        {
-            return new CreateLocationViewModel(navigationStore);
-        }
 
         public void NavigateToLocationList()
         {
             _navigationStore.CurrentViewModel = LocationListViewModel.LoadViewModel(_navigationStore);
         }
 
-        public void CreateLocation()
+        public void Submit()
         {
             ValidateAllProperties();
 
@@ -134,40 +79,27 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             Location location = new Location()
             {
                 LocationID = Guid.NewGuid(),
-                LocationZone = this.LocationZone,
-                LocationAisle = this.LocationAisle,
-                LocationBay = this.LocationBay,
-                LocationRow = this.LocationRow,
-                SubLocation = this.SubLocation
+                LocationName = _locationName
             };
 
             _unitOfWork.LocationRepository.Insert(location);
             _unitOfWork.Save();
             MessageBox.Show("Success");
 
-            _navigationStore.CurrentViewModel = LocationListViewModel.LoadViewModel(_navigationStore);
+            _closeDialogCallback();
         }
 
-        private void CancelCreateLocation()
+        private void Cancel()
         {
-            _navigationStore.CurrentViewModel = LocationListViewModel.LoadViewModel(_navigationStore);
+            _closeDialogCallback();
         }
 
-        private void ResetView()
+
+        public static CreateLocationViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
-            LocationZone = "";
-            LocationAisle = "";
-            LocationBay = "";
-            LocationRow = "";
-            SubLocation = "";
-
-            ClearErrors();
+            return new CreateLocationViewModel(navigationStore, unitOfWork, closeDialogCallback);
         }
 
-        private bool CanCreateLocation(object obj)
-        {
-            return true;
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -176,7 +108,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

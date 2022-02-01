@@ -31,6 +31,16 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             set
             {
                 SetProperty(ref _customerID, value);
+                _customer = _customers.Where(c => c.CustomerID == _customerID).SingleOrDefault();
+            }
+        }
+
+        private CustomerViewModel _customer;
+        public CustomerViewModel Customer
+        {
+            set
+            {
+                SetProperty(ref _customer, value);
             }
         }
 
@@ -69,7 +79,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand NavigateToCreateOrderDetailCommand { get; }
         private RelayCommand LoadCustomersCommand { get; }
 
-        public RelayCommand LoadOrderDetailsCommand { get; }
         public RelayCommand<OrderDetailViewModel> RemoveOrderDetailCommand { get; }
         public RelayCommand<OrderDetailViewModel> EditOrderDetailCommand { get; }
         public RelayCommand CreateOrderDetailCommand { get; }
@@ -78,7 +87,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
+
             _customers = new ObservableCollection<CustomerViewModel>();
+            LoadCustomers(_customers);
 
             _order = new Order
             {
@@ -86,18 +97,16 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 OrderDetails = new List<OrderDetail>()
             };
 
+            _unitOfWork.OrderRepository.Insert(_order);
             _orderDetails = new ObservableCollection<OrderDetailViewModel>();
             
             SubmitCommand = new RelayCommand(Submit);
             CancelCommand = new RelayCommand(Cancel);
-            LoadCustomersCommand = new RelayCommand(LoadCustomers);
-            CreateOrderDetailCommand = new RelayCommand(CreateOrderDetail);
 
             RemoveOrderDetailCommand = new RelayCommand<OrderDetailViewModel>(RemoveOrderDetail);
             EditOrderDetailCommand = new RelayCommand<OrderDetailViewModel>(EditOrderDetail);
             CreateOrderDetailCommand = new RelayCommand(CreateOrderDetail);
         }
-
 
 
         private void Submit()
@@ -118,6 +127,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             _unitOfWork.OrderRepository.Insert(_order);
             _unitOfWork.Save();
+
             MessageBox.Show("Successful");
             CancelCommand.Execute(null);
         }
@@ -147,11 +157,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orderDetails.Clear();
             foreach(OrderDetail od in _order.OrderDetails)
             {
-                od.Product = _unitOfWork.ProductRepository.GetByID(od.ProductID);
                 _orderDetails.Add(new OrderDetailViewModel(od));
             }
 
-            _orderTotal = _order.OrderDetails.Sum(od => od.OrderDetailAmount).ToString();
+            _orderTotal = _orderDetails.Sum(od => od.OrderDetail.OrderDetailAmount).ToString();
             OnPropertyChanged(nameof(OrderTotal));
 
 
@@ -171,12 +180,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             OnPropertyChanged(nameof(IsDialogOpen));
         }
 
-        private void LoadCustomers()
+
+        private void LoadCustomers(ObservableCollection<CustomerViewModel> customers)
         {
-            _customers.Clear();
+            customers.Clear();
             foreach(Customer u in _unitOfWork.CustomerRepository.Get())
             {
-                _customers.Add(new CustomerViewModel(u));
+                customers.Add(new CustomerViewModel(u));
             }
         }
 
@@ -184,7 +194,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public static CreateOrderViewModel LoadViewModel(NavigationStore navigationStore)
         {
             CreateOrderViewModel viewModel = new CreateOrderViewModel(navigationStore);
-            viewModel.LoadCustomersCommand.Execute(null);
             return viewModel;
         }
 

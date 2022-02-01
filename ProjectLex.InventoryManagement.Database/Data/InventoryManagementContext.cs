@@ -20,11 +20,13 @@ namespace ProjectLex.InventoryManagement.Database.Data
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Location> Locations { get; set; }
-
+        public DbSet<Defective> Defectives { get; set; }
+        public DbSet<ProductLocation> ProductLocations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost;Database=InventoryA;Trusted_Connection=True;");
+            optionsBuilder.EnableSensitiveDataLogging(true);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +35,10 @@ namespace ProjectLex.InventoryManagement.Database.Data
             modelBuilder
                 .Entity<OrderDetail>()
                 .HasKey(od => new { od.ProductID, od.OrderID });
+
+            modelBuilder
+                .Entity<ProductLocation>()
+                .HasKey(pl => new { pl.ProductID, pl.LocationID });
 
         }
 

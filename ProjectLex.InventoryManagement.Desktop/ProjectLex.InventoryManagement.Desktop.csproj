@@ -44,18 +44,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="LoginWindow.xaml.cs" />
     <Compile Remove="Services\DatabaseServiceBase.cs" />
     <Compile Remove="Stores\CollectionStore.cs" />
     <Compile Remove="Stores\ProductStore.cs" />
     <Compile Remove="ViewModels\CommandViewModel.cs" />
     <Compile Remove="ViewModels\CreateProductViewModel.cs" />
-    <Compile Remove="ViewModels\OrderViewModels\EditOrderViewModel.cs" />
+    <Compile Remove="ViewModels\OrderDetailViewModels\OrderDetailListViewModel.cs" />
     <Compile Remove="ViewModels\ProductListViewModel.cs" />
     <Compile Remove="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Assets\logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="LoginWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -89,6 +94,15 @@
     <Compile Update="Views\CategoryViews\EditCategoryView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\DefectiveViews\CreateDefectiveView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DefectiveViews\DefectiveListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DefectiveViews\EditDefectiveView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CustomerViews\EditCustomerView - Copy %282%29.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>EditCustomerView.xaml.cs</DependentUpon>
@@ -118,6 +132,22 @@
     </Compile>
     <Compile Update="Views\CustomerViews\CreateCustomerView.xaml.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StorageListView - Copy %282%29.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StorageListView.xaml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StorageListView - Copy - Copy.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StorageListView - Copy.xaml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StorageListView - Copy.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StorageListView.xaml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StorageViews\DisposeProductView - Copy.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>DisposeProductView.xaml.cs</DependentUpon>
     </Compile>
     <Compile Update="Views\StoreViews\CreateStoreView.xaml.cs">
       <SubType>Code</SubType>
@@ -195,6 +225,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CategoryViews\EditCategoryView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DefectiveViews\CreateDefectiveView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DefectiveViews\DefectiveListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DefectiveViews\EditDefectiveView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

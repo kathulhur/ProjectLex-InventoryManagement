@@ -128,24 +128,26 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Button 
-                                            Content="Edit" 
                                             Grid.Column="0"
                                             BorderBrush="Orange"
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditOrderDetailCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CreateOrderView}}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Edit"/>
+                                        </Button>
 
                                         <Button 
-                                            Content="Remove" 
                                             Grid.Column="1"
                                             BorderBrush="OrangeRed"
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.RemoveOrderDetailCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CreateOrderView}}"
-                                            CommandParameter="{Binding}"/>
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Remove"/>
+                                        </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

@@ -223,29 +223,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid 
-                Grid.Column="0"
-                Margin="5 0 0 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock 
-                    Grid.Row="0" 
-                    Text="Location" 
-                    Style="{ StaticResource MaterialDesignTextBlock }"
-                    FontWeight="DemiBold"/>
-
-                <ComboBox 
-                    Grid.Row="1"
-                    Padding="10"
-                    Style="{ StaticResource MaterialDesignComboBox }"
-                    ItemsSource="{ Binding Locations }"
-                    SelectedValue="{ Binding LocationID }"
-                    SelectedValuePath="LocationID"
-                    DisplayMemberPath="LocationString"/>
-            </Grid>
+            
 
             <Grid 
                 Grid.Column="1"

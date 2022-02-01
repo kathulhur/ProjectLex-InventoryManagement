@@ -22,14 +22,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public string _categoryName;
 
         [Required(ErrorMessage = "Name is Required")]
-        [MinLength(2, ErrorMessage = "Name should be longer than 2 characters")]
+        [MinLength(2, ErrorMessage = "Name should be at least 2 characters long")]
         [MaxLength(50, ErrorMessage = "Name longer than 50 characters is Not Allowed")]
         public string CategoryName
         {
             get => _categoryName;
             set
             {
-                SetProperty(ref _categoryName, value);
+                SetProperty(ref _categoryName, value, true);
             }
         }
 
@@ -38,14 +38,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private string _categoryDescription;
 
         [Required(ErrorMessage = "Description is Required")]
-        [MinLength(10, ErrorMessage = "Description should be longer than 2 characters")]
+        [MinLength(10, ErrorMessage = "Description should be at least 10 characters long")]
         [MaxLength(50, ErrorMessage = "Description longer than 50 characters is Not Allowed")]
         public string CategoryDescription
         {
             get => _categoryDescription;
             set
             {
-                SetProperty(ref _categoryDescription, value);
+                SetProperty(ref _categoryDescription, value, true);
             }
         }
 
@@ -60,7 +60,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get { return _categoryStatus; }
             set
             {
-                SetProperty(ref _categoryStatus, value);
+                SetProperty(ref _categoryStatus, value, true);
             }
         }
 
@@ -72,26 +72,17 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ICommand SubmitCommand { get; set; }
         public ICommand CancelCommand { get; set; }
 
-        public CreateCategoryViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public CreateCategoryViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _navigationStore = navigationStore;
             _closeDialogCallback = closeDialogCallback;
-            SubmitCommand = new RelayCommand(CreateCategory);
-            CancelCommand = new RelayCommand(CancelCreateCategory);
+            SubmitCommand = new RelayCommand(Submit);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
-        public static CreateCategoryViewModel LoadViewModel(NavigationStore navigationStore, Action closeDialogCallback)
-        {
-            return new CreateCategoryViewModel(navigationStore, closeDialogCallback);
-        }
 
-        public void NavigateToCategoryList()
-        {
-            _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(_navigationStore);
-        }
-
-        public void CreateCategory()
+        public void Submit()
         {
             ValidateAllProperties();
 
@@ -113,10 +104,17 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _closeDialogCallback();
         }
 
-        private void CancelCreateCategory()
+        private void Cancel()
         {
             _closeDialogCallback();
         }
+
+
+        public static CreateCategoryViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
+        {
+            return new CreateCategoryViewModel(navigationStore, unitOfWork, closeDialogCallback);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
@@ -125,7 +123,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

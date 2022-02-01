@@ -19,6 +19,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private OrderDetail _orderDetail;
 
+
+
         private ProductViewModel _product;
 
         public ProductViewModel Product
@@ -27,7 +29,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
 
 
-        private string _orderDetailQuantity;
+        private string _orderDetailQuantity = "0";
 
         [Required(ErrorMessage = "Quantity is Required")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Input")]
@@ -36,17 +38,17 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get { return _orderDetailQuantity; }
             set
             {
-                _orderDetailQuantity = value;
-                _orderDetailAmount = "NaN";
-                OnPropertyChanged(nameof(OrderDetailQuantity));
-                OnPropertyChanged(nameof(OrderDetailAmount));
+                SetProperty(ref _orderDetailQuantity, value, true);
 
                 int tempQuantity;
                 if (int.TryParse(_orderDetailQuantity, out tempQuantity))
                 {
-                    _orderDetailAmount = (_product.Product.ProductPrice * Convert.ToInt32(OrderDetailQuantity)).ToString();
-                    OnPropertyChanged(nameof(OrderDetailQuantity));
-                    OnPropertyChanged(nameof(OrderDetailAmount));
+                    var newAmount = (_product.Product.ProductPrice * Convert.ToInt32(_orderDetailQuantity)).ToString();
+                    SetProperty(ref _orderDetailAmount, newAmount, true, nameof(OrderDetailAmount));
+                }
+                else
+                {
+                    SetProperty(ref _orderDetailAmount, "NaN", true, nameof(OrderDetailAmount));
                 }
 
             }
@@ -54,6 +56,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private string _orderDetailAmount;
 
+        [Required(ErrorMessage = "Amount is Required")]
+        [RegularExpression("^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)$", ErrorMessage = "Invalid Input, only decimals are allowed")]
         public string OrderDetailAmount
         {
             get { return _orderDetailAmount; }
@@ -72,15 +76,21 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
-            _orderDetail = orderDetail;
             _closeDialogCallback = closeDialogCallback;
 
-            _orderDetailQuantity = orderDetail.OrderDetailQuantity.ToString();
-            _orderDetailAmount = orderDetail.OrderDetailAmount.ToString();
-            _product = new ProductViewModel(_unitOfWork.ProductRepository.GetByID(orderDetail.ProductID));
+            SetInitialValues(orderDetail);
+            
             
             SubmitCommand = new RelayCommand(Submit);
             CancelCommand = new RelayCommand(Cancel);
+        }
+
+        private void SetInitialValues(OrderDetail orderDetail)
+        {
+            _orderDetail = orderDetail;
+            _orderDetailQuantity = orderDetail.OrderDetailQuantity.ToString();
+            _orderDetailAmount = orderDetail.OrderDetailAmount.ToString();
+            _product = new ProductViewModel(_unitOfWork.ProductRepository.GetByID(orderDetail.ProductID));
         }
 
         private void Submit()

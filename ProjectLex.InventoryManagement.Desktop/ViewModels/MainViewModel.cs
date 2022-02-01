@@ -13,9 +13,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
     class MainViewModel : ViewModelBase
     {
+
         private readonly NavigationStore _navigationStore;
+        private readonly AuthenticationStore _authenticationStore;
+
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        private readonly MainWindow _mainWindow;
+        public bool IsLoggedIn => _authenticationStore.IsLoggedIn;
 
         public RelayCommand NavigateToRoleListCommand { get; }
         public RelayCommand NavigateToCategoryListCommand { get; }
@@ -25,14 +28,20 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand NavigateToOrderListCommand { get; }
         public RelayCommand NavigateToLocationListCommand { get; }
         public RelayCommand NavigateToCustomerListCommand { get; }
+        public RelayCommand NavigateToDefectiveListCommand { get; }
+        public RelayCommand NavigateToStorageListCommand { get; }
 
         public RelayCommand LogOutCommand { get; }
-        public MainViewModel(MainWindow mainWindow, NavigationStore navigationStore)
+        public MainViewModel(NavigationStore navigationStore, AuthenticationStore authenticationStore)
         {
             _navigationStore = navigationStore;
-            _mainWindow = mainWindow;
-            _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(_navigationStore);
+            _authenticationStore = authenticationStore;
+
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+            _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _authenticationStore);
+
+            _authenticationStore.IsLoggedIn = false;
+            _authenticationStore.IsLoggedInChanged += OnIsLoggedInChanged;
 
             NavigateToCategoryListCommand = new RelayCommand(NavigateToCategoryList);
             NavigateToRoleListCommand = new RelayCommand(NavigateToRoleList);
@@ -42,25 +51,23 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             NavigateToOrderListCommand = new RelayCommand(NavigateToOrderList);
             NavigateToLocationListCommand = new RelayCommand(NavigateToLocationList);
             NavigateToCustomerListCommand = new RelayCommand(NavigateToCustomerList);
+            NavigateToDefectiveListCommand = new RelayCommand(NavigateToDefectiveList);
+            NavigateToStorageListCommand = new RelayCommand(NavigateToStorageList);
             LogOutCommand = new RelayCommand(LogOut);
 
-            mainWindow.Closing += OnClosing;
         }
 
         private void LogOut()
         {
-            _mainWindow.Close();
+            _authenticationStore.CurrentStaff = null;
+            _authenticationStore.IsLoggedIn = false;
+            _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _authenticationStore);
         }
 
-
-        private void OnClosing(Object obj, EventArgs e)
+        public void NavigateToStorageList()
         {
-            Application.Current.MainWindow = new LoginWindow(_navigationStore);
-            Application.Current.MainWindow.Show();
-            this.Dispose();
+            _navigationStore.CurrentViewModel = StorageListViewModel.LoadViewModel(_navigationStore);
         }
-
-
 
         public void NavigateToRoleList()
         {
@@ -104,9 +111,22 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore.CurrentViewModel = OrderListViewModel.LoadViewModel(_navigationStore);
         }
 
+
+        public void NavigateToDefectiveList()
+        {
+            _navigationStore.CurrentViewModel = DefectiveListViewModel.LoadViewModel(_navigationStore);
+        }
+
+
+
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentViewModel));
+        }
+
+        private void OnIsLoggedInChanged()
+        {
+            OnPropertyChanged(nameof(IsLoggedIn));
         }
 
 

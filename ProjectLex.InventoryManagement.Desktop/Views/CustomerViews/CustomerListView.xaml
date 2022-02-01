@@ -60,6 +60,14 @@
                         AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn
+                                Header="Staff"
+                                HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                                CellStyle="{StaticResource MaterialDesignDataGridCell}"
+                                Binding="{Binding Staff.StaffFullname}"
+                                Width="auto"
+                                MinWidth="100"/>
+                        
+                        <DataGridTextColumn
                                 Header="Firstname"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"

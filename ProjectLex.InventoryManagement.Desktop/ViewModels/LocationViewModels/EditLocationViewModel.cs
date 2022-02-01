@@ -19,67 +19,19 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private Location _location;
 
-        public string _locationZone;
-        [Required(ErrorMessage = "Zone is Required")]
-        public string LocationZone
+        public string _locationName;
+        [Required(ErrorMessage = "Location name is Required")]
+        public string LocationName
         {
-            get => _locationZone;
+            get => _locationName;
             set
             {
-                SetProperty(ref _locationZone, value);
+                SetProperty(ref _locationName, value);
             }
 
         }
 
 
-        public string _locationAisle;
-        [Required(ErrorMessage = "Aisle is Required")]
-        public string LocationAisle
-        {
-            get => _locationAisle;
-            set
-            {
-                SetProperty(ref _locationAisle, value);
-            }
-        }
-
-
-        public string _locationBay;
-        [Required(ErrorMessage = "Bay is Required")]
-        public string LocationBay
-        {
-            get => _locationBay;
-            set
-            {
-                SetProperty(ref _locationBay, value);
-            }
-        }
-
-
-        public string _locationRow;
-
-        [Required(ErrorMessage = "Row is Required")]
-        public string LocationRow
-        {
-            get => _locationRow;
-            set
-            {
-                SetProperty(ref _locationRow, value);
-            }
-        }
-
-
-        public string _subLocation;
-
-        [Required(ErrorMessage = "SubLocation is Required")]
-        public string SubLocation
-        {
-            get => _subLocation;
-            set
-            {
-                SetProperty(ref _subLocation, value);
-            }
-        }
 
 
         private readonly UnitOfWork _unitOfWork;
@@ -102,34 +54,28 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public ICommand SubmitCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        private readonly Action _closeDialogCallback;
 
-        public EditLocationViewModel(NavigationStore navigationStore, Location location)
+        public EditLocationViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Location location, Action closeDialogCallback)
         {
             _unitOfWork = new UnitOfWork();
             _navigationStore = navigationStore;
             _location = location;
+            _closeDialogCallback = closeDialogCallback;
 
-            LocationZone = _location.LocationZone;
-            LocationAisle = _location.LocationAisle;
-            LocationBay = _location.LocationBay;
-            LocationRow = _location.LocationRow;
-            SubLocation = _location.SubLocation;
+            SetInitialValues(_location);
 
-            SubmitCommand = new RelayCommand(EditLocation);
-            CancelCommand = new RelayCommand(CancelEditLocation);
+            SubmitCommand = new RelayCommand(Submit);
+            CancelCommand = new RelayCommand(Cancel);
         }
 
-        public static EditLocationViewModel LoadViewModel(NavigationStore navigationStore, Location location)
+        private void SetInitialValues(Location location)
         {
-            return new EditLocationViewModel(navigationStore, location);
+            _locationName = location.LocationName;
         }
 
-        public void NavigateToLocationList()
-        {
-            _navigationStore.CurrentViewModel = LocationListViewModel.LoadViewModel(_navigationStore);
-        }
 
-        public void EditLocation()
+        public void Submit()
         {
             ValidateAllProperties();
 
@@ -138,39 +84,25 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            _location.LocationZone = this.LocationZone;
-            _location.LocationAisle = this.LocationAisle;
-            _location.LocationBay = this.LocationBay;
-            _location.LocationRow = this.LocationRow;
-            _location.SubLocation = this.SubLocation;
+            _location.LocationName = _locationName;
 
             _unitOfWork.LocationRepository.Update(_location);
             _unitOfWork.Save();
 
             MessageBox.Show("Success");
-            _navigationStore.CurrentViewModel = LocationListViewModel.LoadViewModel(_navigationStore);
+            _closeDialogCallback();
         }
 
-        private void CancelEditLocation()
+        private void Cancel()
         {
-            _navigationStore.CurrentViewModel = LocationListViewModel.LoadViewModel(_navigationStore);
+            _closeDialogCallback();
         }
 
-        private void ResetView()
+        public static EditLocationViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Location location, Action closeDialogCallback)
         {
-            LocationZone = "";
-            LocationAisle = "";
-            LocationBay = "";
-            LocationRow = "";
-            SubLocation = "";
-
-            ClearErrors();
+            return new EditLocationViewModel(navigationStore, unitOfWork, location, closeDialogCallback);
         }
 
-        private bool CanEditLocation(object obj)
-        {
-            return true;
-        }
 
         protected override void Dispose(bool disposing)
         {
@@ -179,7 +111,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

@@ -59,7 +59,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void EditCustomer(CustomerViewModel customerViewModel)
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = EditCustomerViewModel.LoadViewModel(_navigationStore, customerViewModel.Customer, CloseDialogCallback);
+            _dialogViewModel = EditCustomerViewModel.LoadViewModel(_navigationStore, _unitOfWork, customerViewModel.Customer, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -69,7 +69,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void CreateCustomer()
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = CreateCustomerViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            _dialogViewModel = CreateCustomerViewModel.LoadViewModel(_navigationStore, _unitOfWork, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;

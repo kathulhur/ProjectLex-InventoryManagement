@@ -4,6 +4,11 @@
                     xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels">
 
 
+    <DataTemplate DataType="{x:Type view_models:LoginViewModel}">
+        <views:LoginView />
+    </DataTemplate>
+    
+
     <DataTemplate DataType="{x:Type view_models:CategoryListViewModel}">
         <views:CategoryListView />
     </DataTemplate>
@@ -131,16 +136,59 @@
         <views:CreateOrderView />
     </DataTemplate>
 
-    <!--<DataTemplate DataType="{x:Type view_models:EditOrderViewModel}">
+    <DataTemplate DataType="{x:Type view_models:EditOrderViewModel}">
         <views:EditOrderView />
-    </DataTemplate>-->
-
-
-
-
-    <DataTemplate DataType="{x:Type view_models:OrderDetailListViewModel}">
-        <views:OrderDetailListView />
     </DataTemplate>
+    
+    
+
+    <DataTemplate DataType="{x:Type view_models:DefectiveListViewModel}">
+        <views:DefectiveListView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:CreateDefectiveViewModel}">
+        <views:CreateDefectiveView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:EditDefectiveViewModel}">
+        <views:EditDefectiveView />
+    </DataTemplate>
+
+
+    
+    
+    <DataTemplate DataType="{x:Type view_models:StorageListViewModel}">
+        <views:StorageListView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:StorageDetailViewModel}">
+        <views:StorageDetailView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:DisposeProductViewModel}">
+        <views:DisposeProductView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:CreateProductLocationViewModel}">
+        <views:CreateProductLocationView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:GetProductViewModel}">
+        <views:GetProductView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:DeclareDefectiveProductViewModel}">
+        <views:DeclareDefectiveProductView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:MoveProductViewModel}">
+        <views:MoveProductView />
+    </DataTemplate>
+
+
+    <!--<DataTemplate DataType="{x:Type view_models:OrderDetailListViewModel}">
+        <views:OrderDetailListView />
+    </DataTemplate>-->
 
     <DataTemplate DataType="{x:Type view_models:CreateOrderDetailViewModel}">
         <views:CreateOrderDetailView />

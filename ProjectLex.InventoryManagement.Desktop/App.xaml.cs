@@ -1,4 +1,9 @@
-﻿using ProjectLex.InventoryManagement.Database.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ProjectLex.InventoryManagement.Database.Data;
+using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Database.Services;
+using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
@@ -18,22 +23,36 @@ namespace ProjectLex.InventoryManagement.Desktop
     {
 
         private readonly NavigationStore _navigationStore;
+        private readonly AuthenticationStore _authenticationStore;
         
 
         public App()
         {
             _navigationStore = new NavigationStore();
+            _authenticationStore = new AuthenticationStore();
+            
 
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new LoginWindow(_navigationStore)
+            MainWindow = new MainWindow()
             {
+                DataContext = new MainViewModel(_navigationStore,_authenticationStore)
             };
+
             MainWindow.Show();
 
             base.OnStartup(e);
+        }
+
+        IServiceProvider CreateServiceProvider()
+        {
+            IServiceCollection services = new ServiceCollection();
+            
+
+
+            return services.BuildServiceProvider();
         }
 
         

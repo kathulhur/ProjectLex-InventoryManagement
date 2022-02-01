@@ -5,60 +5,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace ProjectLex.InventoryManagement.Desktop.DAL
 {
-    class UnitOfWork : IDisposable
+    public class UnitOfWork : IDisposable
     {
         private bool disposed = false;
 
-        private InventoryManagementContext context = new InventoryManagementContext();
-        private GenericRepository<Role> _roleRepository;
-        private GenericRepository<Category> _categoryRepository;
-        private GenericRepository<Warehouse> _warehouseRepository;
-        private GenericRepository<Supplier> _supplierRepository;
-        private GenericRepository<Staff> _staffRepository;
-        private GenericRepository<Product> _productRepository;
-        private GenericRepository<Order> _orderRepository;
-        private GenericRepository<OrderDetail> _orderDetailRepository;
-        private GenericRepository<Location> _locationRepository;
-        private GenericRepository<Customer> _customerRepository;
+        private InventoryManagementContext _context;
+        private IDbContextTransaction _transaction;
 
-        public GenericRepository<Role> RoleRepository => _roleRepository;
-        public GenericRepository<Category> CategoryRepository => _categoryRepository;
-        public GenericRepository<Warehouse> warehouseRepository => _warehouseRepository;
-        public GenericRepository<Supplier> SupplierRepository => _supplierRepository;
-        public GenericRepository<Staff> StaffRepository => _staffRepository;
-        public GenericRepository<Product> ProductRepository => _productRepository;
-        public GenericRepository<Order> OrderRepository => _orderRepository;
-        public GenericRepository<OrderDetail> OrderDetailRepository => _orderDetailRepository;
-        public GenericRepository<Location> LocationRepository => _locationRepository;
-        public GenericRepository<Customer> CustomerRepository => _customerRepository;
+
+        public GenericRepository<Role> RoleRepository { get; }
+        public GenericRepository<Category> CategoryRepository { get; }
+        public GenericRepository<Warehouse> WarehouseRepository { get; }
+        public GenericRepository<Supplier> SupplierRepository { get; }
+        public GenericRepository<Staff> StaffRepository { get; }
+        public GenericRepository<Product> ProductRepository { get; }
+        public GenericRepository<Order> OrderRepository { get; }
+        public GenericRepository<OrderDetail> OrderDetailRepository { get; }
+        public GenericRepository<Location> LocationRepository { get; }
+        public GenericRepository<Customer> CustomerRepository { get; }
+        public GenericRepository<Defective> DefectiveRepository { get; }
+        public GenericRepository<ProductLocation> ProductLocationRepository { get; }
+
         public UnitOfWork()
         {
-            _roleRepository = new GenericRepository<Role>(context);
-            _categoryRepository = new GenericRepository<Category>(context);
-            _warehouseRepository = new GenericRepository<Warehouse>(context);
-            _supplierRepository = new GenericRepository<Supplier>(context);
-            _staffRepository = new GenericRepository<Staff>(context);
-            _productRepository = new GenericRepository<Product>(context);
-            _orderRepository = new GenericRepository<Order>(context);
-            _orderDetailRepository = new GenericRepository<OrderDetail>(context);
-            _locationRepository = new GenericRepository<Location>(context);
-            _customerRepository = new GenericRepository<Customer>(context);
+            _context = new InventoryManagementContext();
+
+            RoleRepository = new GenericRepository<Role>(_context);
+            CategoryRepository = new GenericRepository<Category>(_context);
+            WarehouseRepository = new GenericRepository<Warehouse>(_context);
+            SupplierRepository = new GenericRepository<Supplier>(_context);
+            StaffRepository = new GenericRepository<Staff>(_context);
+            ProductRepository = new GenericRepository<Product>(_context);
+            OrderRepository = new GenericRepository<Order>(_context);
+            OrderDetailRepository = new GenericRepository<OrderDetail>(_context);
+            LocationRepository = new GenericRepository<Location>(_context);
+            CustomerRepository = new GenericRepository<Customer>(_context);
+            DefectiveRepository = new GenericRepository<Defective>(_context);
+            ProductLocationRepository = new GenericRepository<ProductLocation>(_context);
         }
 
+        public void Begin()
+        {
+            _transaction = _context.Database.BeginTransaction();
+        }
+
+        public void Rollback()
+        {
+            _transaction.Rollback();
+        }
+
+        public void Commit()
+        {
+            _transaction.Commit();
+        }
 
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if(!this.disposed)
             {
-                context.Dispose();
+                _transaction?.Dispose();
+                _context.Dispose();
             }
         }
 

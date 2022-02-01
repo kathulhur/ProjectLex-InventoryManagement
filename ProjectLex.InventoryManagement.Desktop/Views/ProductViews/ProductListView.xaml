@@ -102,12 +102,6 @@
                                 Width="auto"
                                 MinWidth="100"/>
 
-                        <DataGridTextColumn
-                                Header="Location"
-                                HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                                Binding="{Binding Location.LocationString}"
-                                Width="auto"
-                                MinWidth="100"/>
 
                         <DataGridTextColumn
                                 Header="Category"

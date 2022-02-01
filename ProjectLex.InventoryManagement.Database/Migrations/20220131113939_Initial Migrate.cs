@@ -26,11 +26,7 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                 columns: table => new
                 {
                     LocationID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocationZone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationAisle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationBay = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LocationRow = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubLocation = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LocationName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,7 +110,6 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                 {
                     ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SupplierID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LocationID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProductSKU = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -131,12 +126,6 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                         column: x => x.CategoryID,
                         principalTable: "Categories",
                         principalColumn: "CategoryID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Locations_LocationID",
-                        column: x => x.LocationID,
-                        principalTable: "Locations",
-                        principalColumn: "LocationID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_Suppliers_SupplierID",
@@ -166,6 +155,51 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                         column: x => x.StaffID,
                         principalTable: "Staffs",
                         principalColumn: "StaffID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Defectives",
+                columns: table => new
+                {
+                    DefectiveID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    DateDeclared = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Defectives", x => x.DefectiveID);
+                    table.ForeignKey(
+                        name: "FK_Defectives_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ProductID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductLocations",
+                columns: table => new
+                {
+                    LocationID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductQuantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductLocations", x => new { x.ProductID, x.LocationID });
+                    table.ForeignKey(
+                        name: "FK_ProductLocations_Locations_LocationID",
+                        column: x => x.LocationID,
+                        principalTable: "Locations",
+                        principalColumn: "LocationID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductLocations_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ProductID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -221,6 +255,11 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                 column: "StaffID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Defectives_ProductID",
+                table: "Defectives",
+                column: "ProductID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderDetails_OrderID",
                 table: "OrderDetails",
                 column: "OrderID");
@@ -231,14 +270,14 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                 column: "CustomerID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductLocations_LocationID",
+                table: "ProductLocations",
+                column: "LocationID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryID",
                 table: "Products",
                 column: "CategoryID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_LocationID",
-                table: "Products",
-                column: "LocationID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SupplierID",
@@ -254,13 +293,22 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Defectives");
+
+            migrationBuilder.DropTable(
                 name: "OrderDetails");
+
+            migrationBuilder.DropTable(
+                name: "ProductLocations");
 
             migrationBuilder.DropTable(
                 name: "Warehouses");
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -270,9 +318,6 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");

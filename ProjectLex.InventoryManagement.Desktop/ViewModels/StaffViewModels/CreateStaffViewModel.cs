@@ -28,102 +28,113 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _roleID;
             set
             {
-                SetProperty(ref _roleID, value);
+                SetProperty(ref _roleID, value, true);
             }
         }
 
         private string _staffFirstName;
 
-        [Required(ErrorMessage = "Role is Required")]
-        [MinLength(2, ErrorMessage = "Role must be at least 2 characters")]
+        [Required(ErrorMessage = "Firstname is Required")]
+        [MinLength(2, ErrorMessage = "Firstname should be longer than 2 characters")]
+        [MaxLength(50, ErrorMessage = "Firstname longer than 50 characters is Not Allowed")]
         public string StaffFirstName
         {
             get => _staffFirstName;
             set
             {
-                SetProperty(ref _staffFirstName, value);
+                SetProperty(ref _staffFirstName, value, true);
             }
         }
 
 
         private string _staffLastName;
 
-        [Required(ErrorMessage = "Role is Required")]
+        [Required(ErrorMessage = "Lastname is Required")]
+        [MinLength(2, ErrorMessage = "Lastname should be longer than 2 characters")]
+        [MaxLength(50, ErrorMessage = "Lastname longer than 50 characters is Not Allowed")]
         public string StaffLastName
         {
             get => _staffLastName;
             set
             {
-                SetProperty(ref _staffLastName, value);
+                SetProperty(ref _staffLastName, value, true);
             }
         }
 
         private string _staffAddress;
 
-        [Required(ErrorMessage = "Role is Required")]
+        [Required(ErrorMessage = "Address is Required")]
+        [MinLength(20, ErrorMessage = "Address should be at least 20 characters long")]
+        [MaxLength(300, ErrorMessage = "Address longer than 300 characters is not Allowed")]
         public string StaffAddress
         {
             get => _staffAddress;
             set
             {
-                SetProperty(ref _staffAddress, value);
+                SetProperty(ref _staffAddress, value, true);
             }
         }
 
         private string _staffPhone;
 
-        [Required(ErrorMessage = "Role is Required")]
+        [Required(ErrorMessage = "Phone number is Required")]
+        [StringLength(11, ErrorMessage = "Phone number should be 11 characters long")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "Phone should only contain numbers")]
         public string StaffPhone
         {
             get => _staffPhone;
             set
             {
-                SetProperty(ref _staffPhone, value);
+                SetProperty(ref _staffPhone, value, true);
             }
         }
 
         private string _staffEmail;
 
-        [Required(ErrorMessage = "Role is Required")]
+        [Required(ErrorMessage = "Email is Required")]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", ErrorMessage = "Invalid Email Format")]
         public string StaffEmail
         {
             get => _staffEmail;
             set
             {
-                SetProperty(ref _staffEmail, value);
+                SetProperty(ref _staffEmail, value, true);
             }
         }
 
 
         private string _staffUsername;
 
-        [Required(ErrorMessage = "Role is Required")]
+        [Required(ErrorMessage = "Username is Required")]
+        [MinLength(2, ErrorMessage = "Username should be at least 2 characters long")]
+        [MaxLength(50, ErrorMessage = "Username longer than 50 characters is Not Allowed")]
         public string StaffUsername
         {
             get => _staffUsername;
             set
             {
-                SetProperty(ref _staffUsername, value);
+                SetProperty(ref _staffUsername, value, true);
             }
         }
 
 
         private string _staffPassword;
 
-        [Required(ErrorMessage = "Role is Required")]
+        [Required(ErrorMessage = "Password is Required")]
+        [MinLength(5, ErrorMessage = "Password should be at least 5 characters long")]
+        [MaxLength(50, ErrorMessage = "Password longer than 50 characters is Not Allowed")]
         public string StaffPassword
         {
             get => _staffPassword;
             set
             {
-                SetProperty(ref _staffPassword, value);
+                SetProperty(ref _staffPassword, value, true);
             }
         }
 
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
         private readonly Action _closeDialogCallback;
-
 
         private readonly ObservableCollection<RoleViewModel> _roles;
         public IEnumerable<RoleViewModel> Roles => _roles;
@@ -132,10 +143,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand CancelCommand { get; }
         private RelayCommand LoadRolesCommand { get; }
 
-        public CreateStaffViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public CreateStaffViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
             _navigationStore = navigationStore;
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _closeDialogCallback = closeDialogCallback;
             _roles = new ObservableCollection<RoleViewModel>();
 
@@ -189,9 +200,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
-        public static CreateStaffViewModel LoadViewModel(NavigationStore navigationStore, Action closeDialogCallback)
+        public static CreateStaffViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
-            CreateStaffViewModel viewModel = new CreateStaffViewModel(navigationStore, closeDialogCallback);
+            CreateStaffViewModel viewModel = new CreateStaffViewModel(navigationStore, unitOfWork, closeDialogCallback);
             viewModel.LoadRolesCommand.Execute(null);
             return viewModel;
         }
@@ -204,7 +215,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

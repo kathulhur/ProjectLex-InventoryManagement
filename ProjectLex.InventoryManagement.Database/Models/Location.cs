@@ -11,11 +11,7 @@ namespace ProjectLex.InventoryManagement.Database.Models
     {
         [Key]
         public Guid LocationID { get; set; }
-        public string LocationZone { get; set; }
-        public string LocationAisle { get; set; }
-        public string LocationBay { get; set; }
-        public string LocationRow { get; set; }
-        public string SubLocation { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public string LocationName { get; set; }
+        public ICollection<ProductLocation> ProductLocations { get; set; }
     }
 }

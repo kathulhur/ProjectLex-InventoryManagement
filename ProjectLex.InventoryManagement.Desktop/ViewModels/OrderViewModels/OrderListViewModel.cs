@@ -25,10 +25,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ObservableCollection<OrderViewModel> _orders;
         public IEnumerable<OrderViewModel> Orders => _orders;
 
-        public RelayCommand<OrderViewModel> NavigateToCreateOrderCommand { get; }
+        public RelayCommand<OrderViewModel> CreateOrderCommand { get; }
         public RelayCommand LoadOrdersCommand { get; }
         public RelayCommand<OrderViewModel> RemoveOrderCommand { get; }
-        public RelayCommand<OrderViewModel> NavigateToEditOrderCommand { get; }
+        public RelayCommand<OrderViewModel> EditOrderCommand { get; }
 
         public OrderListViewModel(NavigationStore navigationStore)
         {
@@ -37,9 +37,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orders = new ObservableCollection<OrderViewModel>();
 
             LoadOrdersCommand = new RelayCommand(LoadOrders);
-            NavigateToCreateOrderCommand = new RelayCommand<OrderViewModel>(NavigateToCreateOrder);
-            //RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
-            //NavigateToEditOrderCommand = new RelayCommand<OrderViewModel>(NavigateToEditOrder);
+            CreateOrderCommand = new RelayCommand<OrderViewModel>(CreateOrder);
+            RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
+            EditOrderCommand = new RelayCommand<OrderViewModel>(EditOrder);
 
         }
 
@@ -51,12 +51,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orders.Remove(orderViewModel);
         }
 
-        //private void NavigateToEditOrder(OrderViewModel orderViewModel)
-        //{
-        //    _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
-        //}
+        private void EditOrder(OrderViewModel orderViewModel)
+        {
+            _navigationStore.CurrentViewModel = EditOrderViewModel.LoadViewModel(_navigationStore, orderViewModel.Order);
+        }
 
-        private void NavigateToCreateOrder(OrderViewModel orderViewModel)
+        private void CreateOrder(OrderViewModel orderViewModel)
         {
             _navigationStore.CurrentViewModel = CreateOrderViewModel.LoadViewModel(_navigationStore);
         }

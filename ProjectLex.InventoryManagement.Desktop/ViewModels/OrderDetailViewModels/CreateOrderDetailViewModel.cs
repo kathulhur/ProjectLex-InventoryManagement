@@ -28,11 +28,23 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             set
             {
                 SetProperty(ref _productID, value, true);
-                if(!(GetErrors(nameof(OrderDetailQuantity)).Any()))
+                if(_productID != null && !GetErrors(nameof(OrderDetailQuantity)).Any())
                 {
-                    var newAmount = (_products.Where(p => p.ProductID.ToString() == _productID).SingleOrDefault().Product.ProductPrice * Convert.ToInt32(OrderDetailQuantity)).ToString();
+                    _product = Products.Where(p => p.ProductID == _productID).SingleOrDefault();
+
+                    string newAmount = (_product.Product.ProductPrice * Convert.ToInt32(OrderDetailQuantity)).ToString();
                     SetProperty(ref _orderDetailAmount, newAmount, true, nameof(OrderDetailAmount));
                 }
+            }
+        }
+
+        private ProductViewModel _product;
+        public ProductViewModel Product
+        {
+            get { return _product; }
+            set
+            {
+                SetProperty(ref _product, value);
             }
         }
 
@@ -51,7 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 int tempQuantity;
                 if(int.TryParse(_orderDetailQuantity, out tempQuantity) && _productID!= null)
                 {
-                    var newAmount = (_products.Where(p => p.ProductID.ToString() == _productID).SingleOrDefault().Product.ProductPrice * Convert.ToInt32(OrderDetailQuantity)).ToString();
+                    var newAmount = (_product.Product.ProductPrice * Convert.ToInt32(_orderDetailQuantity)).ToString();
                     SetProperty(ref _orderDetailAmount, newAmount, true, nameof(OrderDetailAmount));
                 } else
                 {
@@ -74,8 +86,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
-        private static readonly ObservableCollection<ProductViewModel> _products;
-        public static IEnumerable<ProductViewModel> Products => _products;
+        private readonly ObservableCollection<ProductViewModel> _products;
+        public IEnumerable<ProductViewModel> Products => _products;
 
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
@@ -89,11 +101,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _order = order;
             _closeDialogCallback = closeDialogCallback;
             _products = new ObservableCollection<ProductViewModel>();
-
+            LoadProducts(_products);
 
             SubmitCommand = new RelayCommand(Submit);
             CancelCommand = new RelayCommand(Cancel);
-            LoadProductsCommand = new RelayCommand(LoadProducts);
         }
 
         private void Submit()
@@ -104,15 +115,24 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            OrderDetail newOrderDetail = new OrderDetail()
+            OrderDetail orderDetail = _order.OrderDetails.SingleOrDefault(od => od.ProductID == this._product.Product.ProductID);
+            if (orderDetail == null)
             {
-                OrderID = _order.OrderID,
-                ProductID = new Guid(this.ProductID),
-                OrderDetailQuantity = Convert.ToInt32(this.OrderDetailQuantity),
-                OrderDetailAmount = Convert.ToDecimal(this.OrderDetailAmount)
-            };
+                OrderDetail newOrderDetail = new OrderDetail()
+                {
+                    OrderID = this._order.OrderID,
+                    Product = this._product.Product,
+                    ProductID = new Guid(this._productID),
+                    OrderDetailQuantity = Convert.ToInt32(this._orderDetailQuantity),
+                    OrderDetailAmount = Convert.ToDecimal(this._orderDetailAmount)
+                };
+                _order.OrderDetails.Add(newOrderDetail);
+            } else
+            {
+                orderDetail.OrderDetailQuantity += Convert.ToInt32(_orderDetailQuantity);
+                orderDetail.OrderDetailAmount = orderDetail.OrderDetailQuantity * orderDetail.Product.ProductPrice;
+            }
 
-            _order.OrderDetails.Add(newOrderDetail);
             MessageBox.Show("Successful");
             _closeDialogCallback();
         }
@@ -122,12 +142,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _closeDialogCallback();
         }
 
-        private void LoadProducts()
+        private void LoadProducts(ObservableCollection<ProductViewModel> products)
         {
-            _products.Clear();
+            products.Clear();
             foreach(Product p in _unitOfWork.ProductRepository.Get())
             {
-                _products.Add(new ProductViewModel(p));
+                products.Add(new ProductViewModel(p));
             }
         }
 
@@ -135,7 +155,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public static CreateOrderDetailViewModel LoadViewModel(NavigationStore navigationStore, Order order, Action closeDialogCallback)
         {
             CreateOrderDetailViewModel viewModel = new CreateOrderDetailViewModel(navigationStore, order, closeDialogCallback);
-            viewModel.LoadProductsCommand.Execute(null);
             return viewModel;
         }
 

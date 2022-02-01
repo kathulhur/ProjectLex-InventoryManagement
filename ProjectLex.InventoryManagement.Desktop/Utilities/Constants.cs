@@ -10,7 +10,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
     {
         public static IEnumerable<string> _statuses = new List<string>()
         {
-            "",
             "Active",
             "Inactive"
         };

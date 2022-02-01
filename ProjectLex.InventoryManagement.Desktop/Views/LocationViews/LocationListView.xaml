@@ -8,113 +8,103 @@
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              mc:Ignorable="d" 
              Background="{StaticResource MaterialDesignLightBackground}"
-             Foreground="{StaticResource MaterialDesignLightForeground}"
-             Padding="30 30 30 30">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+             Foreground="{StaticResource MaterialDesignLightForeground}">
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+    <materialDesign:DialogHost 
+        CloseOnClickAway="true" 
+        IsOpen="{ Binding IsDialogOpen, Mode=OneWay}" 
+        DialogBackground="Transparent">
 
-            <TextBlock 
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card UniformCornerRadius="10">
+                <ContentControl Content="{ Binding DialogViewModel }"/>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid Margin="30 30 30 30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock 
                 Grid.Column="0" 
                 Text="Locations"
                 Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
 
-            <Button
+                <Button
                 Grid.Column="1"
                 Margin="0 0 10 0"
                 Style="{StaticResource MaterialDesignPaperButton}"
-                Command="{ Binding NavigateToCreateLocationCommand }"
-                Content="Add Location"/>
-        </Grid>
+                Command="{ Binding CreateLocationCommand }">
+                    <materialDesign:PackIcon Kind="Add"/>
+                </Button>
+            </Grid>
 
-        <Grid 
+            <Grid 
             Grid.Row="1">
-            <DataGrid
+                <DataGrid
                 ItemsSource="{Binding Locations}"
                 Style="{StaticResource MaterialDesignDataGrid}"
                 BorderBrush="Black"
                 BorderThickness="2"
                 IsReadOnly="True"
                 AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
-                            Header="Zone"
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Header="Location"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Binding="{Binding LocationZone}"
-                            Width="auto"
-                            MinWidth="100"/>
-
-                    <DataGridTextColumn
-                            Header="Aisle"
-                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Binding="{Binding LocationAisle}"
-                            Width="auto"
-                            MinWidth="100"/>
-
-                    <DataGridTextColumn
-                            Header="Bay"
-                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Binding="{Binding LocationBay}"
-                            Width="auto"
-                            MinWidth="100"/>
-
-                    <DataGridTextColumn
-                            Header="Row"
-                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Binding="{Binding LocationRow}"
-                            Width="auto"
-                            MinWidth="100"/>
-
-                    <DataGridTextColumn
-                            Header="Sub-Location"
-                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Binding="{Binding SubLocation}"
-                            Width="auto"
+                            Binding="{Binding LocationName}"
+                            Width="*"
                             MinWidth="100"/>
 
 
-                    <DataGridTemplateColumn 
+                        <DataGridTemplateColumn 
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Width="auto"
                             MinWidth="200">
 
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Edit" 
-                                                    Grid.Column="0"
-                                                    BorderBrush="Orange"
-                                                    Style="{StaticResource MaterialDesignPaperButton}"
-                                                    Command="{
-                                                        Binding DataContext.NavigateToEditLocationCommand, 
-                                                        RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:LocationListView}}"
-                                                    CommandParameter="{Binding}"/>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button
+                                            Grid.Column="0"
+                                            BorderBrush="Orange"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.EditLocationCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:LocationListView}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Edit"/>
+                                        </Button>
 
-                                    <Button Content="Remove" 
-                                                    Grid.Column="1"
-                                                    BorderBrush="OrangeRed"
-                                                    Style="{StaticResource MaterialDesignPaperButton}"
-                                                    Command="{
-                                                        Binding DataContext.RemoveLocationCommand, 
-                                                        RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:LocationListView}}"
-                                                    CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                                        <Button 
+                                            Grid.Column="1"
+                                            BorderBrush="OrangeRed"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.RemoveLocationCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:LocationListView}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Remove"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                </DataGrid.Columns>
-            </DataGrid>
+                    </DataGrid.Columns>
+                </DataGrid>
 
+            </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
+        
 </UserControl>

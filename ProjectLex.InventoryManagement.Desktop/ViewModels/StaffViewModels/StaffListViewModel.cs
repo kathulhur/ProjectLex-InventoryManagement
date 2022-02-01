@@ -63,7 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void EditStaff(StaffViewModel staffViewModel)
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = EditStaffViewModel.LoadViewModel(_navigationStore, staffViewModel.Staff, CloseDialogCallback);
+            _dialogViewModel = EditStaffViewModel.LoadViewModel(_navigationStore, _unitOfWork, staffViewModel.Staff, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -73,7 +73,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void CreateStaff()
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = CreateStaffViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            _dialogViewModel = CreateStaffViewModel.LoadViewModel(_navigationStore, _unitOfWork, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -82,7 +82,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void CloseDialogCallback()
         {
-            LoadStaffsCommand.Execute(null);
+            LoadStaffs();
 
             _isDialogOpen = false;
             OnPropertyChanged(nameof(IsDialogOpen));

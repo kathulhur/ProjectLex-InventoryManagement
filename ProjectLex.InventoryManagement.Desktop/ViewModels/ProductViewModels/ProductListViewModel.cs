@@ -64,7 +64,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void EditProduct(ProductViewModel productViewModel)
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = EditProductViewModel.LoadViewModel(_navigationStore, productViewModel.Product, CloseDialogCallback);
+            _dialogViewModel = EditProductViewModel.LoadViewModel(_navigationStore, _unitOfWork, productViewModel.Product, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -74,7 +74,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void CreateProduct()
         {
             _dialogViewModel?.Dispose();
-            _dialogViewModel = CreateProductViewModel.LoadViewModel(_navigationStore, CloseDialogCallback);
+            _dialogViewModel = CreateProductViewModel.LoadViewModel(_navigationStore, _unitOfWork, CloseDialogCallback);
             OnPropertyChanged(nameof(DialogViewModel));
 
             _isDialogOpen = true;
@@ -92,7 +92,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void LoadProducts()
         {
             _products.Clear();
-            foreach (Product p in _unitOfWork.ProductRepository.Get(includeProperties: "Location,Supplier,Category"))
+            foreach (Product p in _unitOfWork.ProductRepository.Get(includeProperties: "Supplier,Category"))
             {
                 _products.Add(new ProductViewModel(p));
             }

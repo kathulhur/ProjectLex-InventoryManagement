@@ -13,12 +13,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public Location Location => _location;
 
         public string LocationID => _location.LocationID.ToString();
-        public string LocationZone => _location.LocationZone;
-        public string LocationAisle => _location.LocationAisle;
-        public string LocationBay => _location.LocationBay;
-        public string LocationRow => _location.LocationRow;
-        public string SubLocation => _location.SubLocation;
-        public string LocationString => LocationZone + LocationAisle + "-" + LocationBay + "-" + LocationRow + SubLocation;
+        public string LocationName => _location.LocationName;
 
         public LocationViewModel(Location location)
         {

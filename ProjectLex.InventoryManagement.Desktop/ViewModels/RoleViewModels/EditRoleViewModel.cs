@@ -19,11 +19,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private Role _role;
 
-        public string RoleNameError
-        {
-            get { return string.Join('\n', GetErrors(nameof(RoleName)).Select(s => s.ErrorMessage)); }
-        }
-
         public string _roleName;
 
         [Required(ErrorMessage = "Name is Required")]
@@ -34,34 +29,25 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _roleName;
             set
             {
-                SetProperty(ref _roleName, value);
+                SetProperty(ref _roleName, value, true);
             }
 
-        }
-
-        public string RoleDescriptionError
-        {
-            get { return string.Join('\n', GetErrors(nameof(RoleDescription)).Select(s => s.ErrorMessage)); }
         }
 
         private string _roleDescription;
 
         [Required(ErrorMessage = "Description is Required")]
-        [MinLength(10, ErrorMessage = "Description should be longer than 2 characters")]
+        [MinLength(10, ErrorMessage = "Description should be at least 10 characters long")]
         [MaxLength(50, ErrorMessage = "Description longer than 50 characters is Not Allowed")]
         public string RoleDescription
         {
             get => _roleDescription;
             set
             {
-                SetProperty(ref _roleDescription, value);
+                SetProperty(ref _roleDescription, value, true);
             }
         }
 
-        public string RoleStatusError
-        {
-            get { return string.Join('\n', GetErrors(nameof(RoleStatus)).Select(s => s.ErrorMessage)); }
-        }
 
         private string _roleStatus;
 
@@ -71,7 +57,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get { return _roleStatus; }
             set
             {
-                SetProperty(ref _roleStatus, value);
+                SetProperty(ref _roleStatus, value, true);
             }
         }
 
@@ -82,9 +68,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
 
-        public EditRoleViewModel(NavigationStore navigationStore, Role role, Action closeDialogCallback)
+        public EditRoleViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Role role, Action closeDialogCallback)
         {
-            _unitOfWork = new UnitOfWork();
+            _unitOfWork = unitOfWork;
             _navigationStore = navigationStore;
             _closeDialogCallback = closeDialogCallback;
             _role = role;
@@ -103,9 +89,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             if (HasErrors)
             {
-                OnPropertyChanged(nameof(RoleNameError));
-                OnPropertyChanged(nameof(RoleDescriptionError));
-                OnPropertyChanged(nameof(RoleStatusError));
                 return;
             }
 
@@ -119,9 +102,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _closeDialogCallback();
         }
 
-        public static EditRoleViewModel LoadViewModel(NavigationStore navigationStore, Role role, Action closeDialogCallback)
+        public static EditRoleViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Role role, Action closeDialogCallback)
         {
-            EditRoleViewModel viewModel = new EditRoleViewModel(navigationStore, role, closeDialogCallback);
+            EditRoleViewModel viewModel = new EditRoleViewModel(navigationStore, unitOfWork, role, closeDialogCallback);
             return viewModel;
         }
 
@@ -139,7 +122,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
-                    _unitOfWork.Dispose();
                 }
                 // dispose unmanaged resources
             }

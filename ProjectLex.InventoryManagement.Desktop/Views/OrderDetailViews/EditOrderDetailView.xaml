@@ -8,112 +8,110 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
-    <materialDesign:Card UniformCornerRadius="10">
-        <Grid
-            Margin="50 50 50 50">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+    <Grid
+        Margin="50 50 50 50">
 
-            <TextBlock
-                Grid.Row="0"
-                Margin="0 0 0 30"
-                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                Text="Add Product Order"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Margin="0 0 0 30"
+            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+            Text="Add Product Order"/>
 
-                <Grid Grid.Column="0"
-                      Margin="30 0 30 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                    <TextBlock 
-                        Grid.Row="0" 
-                        Text="Product"
-                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
-
-                    <TextBlock 
-                        Grid.Row="1"
-                        MinWidth="300"
-                        Text="{Binding Product.ProductName}"
-                        Style="{StaticResource MaterialDesignTextBlock}">
-                    </TextBlock>
-                    
-                </Grid>
-
-                <Grid 
-                    Grid.Column="1"
+            <Grid Grid.Column="0"
                     Margin="30 0 30 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <TextBlock 
-                        Grid.Row="0" 
-                        Text="Quantity"
-                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
-                    <TextBox 
-                        Grid.Row="1"
-                        Margin="0 10 0 0"
-                        Text="{Binding OrderDetailQuantity, UpdateSourceTrigger=PropertyChanged}"
-                        Style="{StaticResource MaterialDesignTextBox}"/>
-                </Grid>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Product"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
 
-                <Grid 
-                    Grid.Column="2"
-                    Margin="30 0 30 0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock 
-                        Grid.Row="0" 
-                        Text="Amount"
-                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
-
-                    <TextBlock 
-                        Grid.Row="1"
-                        Margin="0 10 0 0"
-                        Text="{Binding OrderDetailAmount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                        Style="{StaticResource MaterialDesignTextBlock}"/>
-                </Grid>
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="0 10 0 0"
+                    Text="{Binding Product.ProductName, Mode=OneTime}"
+                    Style="{StaticResource MaterialDesignTextBlock}"
+                    MinWidth="200"/>
             </Grid>
 
+            <Grid 
+                Grid.Column="1"
+                Margin="30 0 30 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <StackPanel 
-                    Grid.Row="3" 
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0 25 25 0">
-                <Button 
-                        Content="Submit"
-                        Command="{Binding SubmitCommand }"
-                        CommandParameter="{Binding}"
-                        Style="{StaticResource MaterialDesignPaperButton}"/>
-                <Button 
-                        Margin="25 0 0 0" 
-                        Content="Cancel"
-                        Command="{ Binding CancelCommand }"
-                        Style="{StaticResource MaterialDesignPaperLightButton}"/>
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Quantity"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+                <TextBox 
+                    Grid.Row="1"
+                    Margin="0 10 0 0"
+                    Text="{Binding OrderDetailQuantity, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBox}"/>
+            </Grid>
 
-            </StackPanel>
+            <Grid 
+                Grid.Column="2"
+                Margin="30 0 30 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0" 
+                    Text="Amount"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
+
+                <TextBlock 
+                    Grid.Row="1"
+                    Margin="0 10 0 0"
+                    Text="{Binding OrderDetailAmount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignTextBlock}"/>
+            </Grid>
         </Grid>
-    </materialDesign:Card>
+
+
+        <StackPanel 
+                Grid.Row="3" 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="0 25 25 0">
+            <Button 
+                    Content="Submit"
+                    Command="{Binding SubmitCommand }"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignPaperButton}"/>
+            <Button 
+                    Margin="25 0 0 0" 
+                    Content="Cancel"
+                    Command="{ Binding CancelCommand }"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"/>
+
+        </StackPanel>
+    </Grid>
+
 </UserControl>

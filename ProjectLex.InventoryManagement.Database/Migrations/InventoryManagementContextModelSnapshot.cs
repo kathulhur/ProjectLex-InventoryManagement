@@ -70,25 +70,35 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Defective", b =>
+                {
+                    b.Property<Guid>("DefectiveID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateDeclared")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("DefectiveID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("Defectives");
+                });
+
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Location", b =>
                 {
                     b.Property<Guid>("LocationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LocationAisle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocationBay")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocationRow")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LocationZone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SubLocation")
+                    b.Property<string>("LocationName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LocationID");
@@ -148,9 +158,6 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.Property<Guid>("CategoryID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("LocationID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ProductAvailability")
                         .HasColumnType("nvarchar(max)");
 
@@ -176,11 +183,27 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
 
                     b.HasIndex("CategoryID");
 
-                    b.HasIndex("LocationID");
-
                     b.HasIndex("SupplierID");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.ProductLocation", b =>
+                {
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LocationID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProductQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductID", "LocationID");
+
+                    b.HasIndex("LocationID");
+
+                    b.ToTable("ProductLocations");
                 });
 
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Role", b =>
@@ -303,6 +326,17 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     b.Navigation("Staff");
                 });
 
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Defective", b =>
+                {
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Order", b =>
                 {
                     b.HasOne("ProjectLex.InventoryManagement.Database.Models.Customer", "Customer")
@@ -341,12 +375,6 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Location", "Location")
-                        .WithMany("Products")
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProjectLex.InventoryManagement.Database.Models.Supplier", "Supplier")
                         .WithMany("Products")
                         .HasForeignKey("SupplierID")
@@ -355,9 +383,26 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
 
                     b.Navigation("Category");
 
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.ProductLocation", b =>
+                {
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Location", "Location")
+                        .WithMany("ProductLocations")
+                        .HasForeignKey("LocationID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjectLex.InventoryManagement.Database.Models.Product", "Product")
+                        .WithMany("ProductLocations")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Location");
 
-                    b.Navigation("Supplier");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Staff", b =>
@@ -378,7 +423,7 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
 
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Location", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductLocations");
                 });
 
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Order", b =>
@@ -389,6 +434,8 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Product", b =>
                 {
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("ProductLocations");
                 });
 
             modelBuilder.Entity("ProjectLex.InventoryManagement.Database.Models.Role", b =>

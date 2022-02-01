@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.EditDefectiveView"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
+             xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
+             xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             mc:Ignorable="d" 
+             d:Background="White">
+    
+    <Grid 
+        Width="600"
+        Margin="50 50 50 50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid
+            Grid.Row="0">
+            <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    Height="auto"
+                    Text="New Defective"/>
+        </Grid>
+
+
+
+        <Grid 
+            Grid.Row="1"
+            Margin="0 30 0 0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.Column="0"
+                Margin="0 0 30 0">
+                <StackPanel>
+                    <TextBlock 
+                        Text="Product" 
+                        Style="{ StaticResource MaterialDesignTextBlock }"
+                        FontWeight="DemiBold"/>
+
+                    <TextBlock 
+                        Text="{ Binding Product.ProductName}"
+                        Style="{ StaticResource MaterialDesignTextBlock }"/>
+                    
+                </StackPanel>
+            </Grid>
+
+            <Grid
+                Grid.Column="1">
+                <StackPanel>
+                    <TextBlock 
+                        Text="Quantity" 
+                        Style="{ StaticResource MaterialDesignTextBlock }"
+                        FontWeight="DemiBold"/>
+
+                    <TextBox 
+                        Text="{ Binding Quantity, UpdateSourceTrigger=PropertyChanged }"
+                        Style="{ StaticResource MaterialDesignTextBox }"
+                        Padding="10"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+
+
+        <StackPanel 
+                Grid.Row="2" 
+                Orientation="Horizontal"
+                Margin="0 30 0 0">
+            <Button 
+                    Content="Submit"
+                    Command="{Binding SubmitCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignPaperButton}"/>
+            <Button 
+                    Margin="10 0 0 0" 
+                    Content="Cancel"
+                    Command="{ Binding CancelCommand}"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"/>
+        </StackPanel>
+    </Grid>
+
+</UserControl>
