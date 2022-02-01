@@ -65,6 +65,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
 
             _productLocation.ProductQuantity -= Convert.ToInt32(_productQuantity);
+            _productLocation.Product.ProductQuantity -= Convert.ToInt32(_productQuantity);
             _unitOfWork.Save();
 
             MessageBox.Show("Successful");

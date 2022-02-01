@@ -85,12 +85,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     ProductQuantity = Convert.ToInt32(_productQuantity)
                 };
                 _location.ProductLocations.Add(newProductLocation);
-                _products.SingleOrDefault(p => p.ProductID == _productID).Product.ProductQuantity += Convert.ToInt32(_productQuantity);
             }
             else
             {
                 productLocation.ProductQuantity += Convert.ToInt32(_productQuantity);
             }
+
+            _products.SingleOrDefault(p => p.ProductID == _productID).Product.ProductQuantity += Convert.ToInt32(_productQuantity);
             _unitOfWork.Save();
 
             MessageBox.Show("Successful");

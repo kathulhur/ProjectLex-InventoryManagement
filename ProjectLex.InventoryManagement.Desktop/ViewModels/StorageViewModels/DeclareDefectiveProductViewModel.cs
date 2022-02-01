@@ -90,6 +90,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             _unitOfWork.DefectiveRepository.Insert(newDefective);
             _productLocation.ProductQuantity -= Convert.ToInt32(_quantity);
+            _productLocation.Product.ProductQuantity -= Convert.ToInt32(_quantity);
             _unitOfWork.Save();
 
             _closeDialogCallback();

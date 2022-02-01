@@ -48,7 +48,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             LoadProductLocationsCommand = new RelayCommand(LoadProductLocations);
             AddProductCommand = new RelayCommand(AddProduct);
-            DisposeProductCommand = new RelayCommand<ProductLocationViewModel>(DeclareDefectiveProduct);
+            DisposeProductCommand = new RelayCommand<ProductLocationViewModel>(DisposeProduct);
             GetProductCommand = new RelayCommand<ProductLocationViewModel>(GetProduct);
             DeclareDefectiveProductCommand = new RelayCommand<ProductLocationViewModel>(DeclareDefectiveProduct);
             MoveProductCommand = new RelayCommand<ProductLocationViewModel>(MoveProduct);
