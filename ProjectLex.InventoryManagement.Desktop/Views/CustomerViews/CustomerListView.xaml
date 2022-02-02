@@ -6,9 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-             mc:Ignorable="d" 
-             Background="{StaticResource MaterialDesignLightBackground}"
-             Foreground="{StaticResource MaterialDesignLightForeground}">
+             mc:Ignorable="d">
     
     
     <materialDesign:DialogHost 

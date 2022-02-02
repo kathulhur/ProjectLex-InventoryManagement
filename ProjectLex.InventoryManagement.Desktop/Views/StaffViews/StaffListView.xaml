@@ -8,9 +8,7 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920"
-             d:Background="White"
-             Background="{StaticResource MaterialDesignLightBackground}"
-             Foreground="{StaticResource MaterialDesignLightForeground}">
+             d:Background="White">
 
     <materialDesign:DialogHost 
         CloseOnClickAway="true" 

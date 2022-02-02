@@ -8,8 +8,7 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
-             d:Background="White">
+             d:DesignHeight="1080" d:DesignWidth="1920">
 
     <materialDesign:DialogHost IsOpen="{Binding IsDialogOpen, Mode=OneWay}">
         

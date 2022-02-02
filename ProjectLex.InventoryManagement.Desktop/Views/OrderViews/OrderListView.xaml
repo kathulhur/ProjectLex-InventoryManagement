@@ -79,6 +79,14 @@
                             Width="auto"
                             MinWidth="100"/>
 
+                    <DataGridTextColumn
+                            Header="Total"
+                            HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                            CellStyle="{StaticResource MaterialDesignDataGridCell}"
+                            Binding="{Binding DeliveryStatus}"
+                            Width="auto"
+                            MinWidth="100"/>
+
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

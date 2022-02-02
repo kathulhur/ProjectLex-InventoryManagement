@@ -94,7 +94,7 @@
 
             <ComboBox Grid.Row="1"
                         Style="{ StaticResource MaterialDesignComboBox }"
-                        ItemsSource="{ Binding Source={x:Static utilities:Constants._statuses}, Mode=OneWay}"
+                        ItemsSource="{ Binding Source={x:Static utilities:Constants.Statuses}, Mode=OneWay}"
                         SelectedItem="{ Binding RoleStatus }"
                         Padding="10"/>
         </Grid>

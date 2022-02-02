@@ -210,6 +210,7 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
                     OrderID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CustomerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeliveryStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>

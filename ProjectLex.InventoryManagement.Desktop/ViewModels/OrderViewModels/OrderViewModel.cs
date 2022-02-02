@@ -15,6 +15,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public string CustomerID => _order.OrderID.ToString();
         public string OrderDate => _order.OrderDate.ToString();
         public string OrderTotal => _order.OrderTotal.ToString();
+        public string DeliveryStatus => _order.DeliveryStatus;
 
         public CustomerViewModel Customer
         {

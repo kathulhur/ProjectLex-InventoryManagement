@@ -15,13 +15,25 @@
     <Compile Update="Controls\CurrentMonthRevenue.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\DeliveredOrderCountControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\InTransitOrderCountControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\MonthlyRevenue.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\NavigationBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\ProcessingOrderCountControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\ProductsInStockControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\ShippedOrderCountControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CategoryViews\CategoryListView.xaml.cs">
@@ -74,13 +86,25 @@
     <Page Update="Controls\CurrentMonthRevenue.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\DeliveredOrderCountControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\InTransitOrderCountControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\MonthlyRevenue.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\NavigationBar.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\ProcessingOrderCountControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\ProductsInStockControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ShippedOrderCountControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

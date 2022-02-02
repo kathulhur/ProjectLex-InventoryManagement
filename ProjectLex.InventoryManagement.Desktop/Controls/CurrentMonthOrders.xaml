@@ -11,7 +11,7 @@
         <Label FontFamily="Sogoe UI" FontWeight="Bold" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="ORDERS" FontSize="18"/>
+                    <TextBlock Text="ORDERS" FontSize="18" Foreground="#2d89ef"/>
                     <TextBlock Text="FOR THIS MONTH" FontSize="8" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <TextBlock Text="{Binding CurrentMonthOrders}" Style="{StaticResource MaterialDesignTextBlock}" Margin="20 0 0 0" FontSize="24" VerticalAlignment="Center"/>

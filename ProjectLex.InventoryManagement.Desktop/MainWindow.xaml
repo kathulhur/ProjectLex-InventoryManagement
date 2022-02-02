@@ -13,32 +13,46 @@
         WindowState="Maximized"
         Icon="/Assets/logo.png"
         WindowStyle="None"
-        Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignBackground}"
-        FontFamily="{DynamicResource MaterialDesignFont}">
+        Foreground="{DynamicResource MaterialDesignBody}"
+        FontFamily="Sogoe UI">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0" Width="200">
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Width="200">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
             
-            <controls:NavigationBar/>
+                <controls:NavigationBar BorderBrush="{StaticResource MaterialDesignBody}" BorderThickness="1"/>
             
+            </Grid>
+
+            <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Background="Gray"/>
         </Grid>
-
-        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Background="Gray"/>
         
+        
+        <Label Grid.Row="1" HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Powered By: ProjectLex" HorizontalAlignment="Center"/>
+                <TextBlock Text="© ProjectLex Inc. All rights reserved." HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Label>
     </Grid>
 </Window>

@@ -9,9 +9,7 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="{StaticResource MaterialDesignLightBackground}"
-             Foreground="{StaticResource MaterialDesignLightForeground}">
+             d:DesignHeight="450" d:DesignWidth="800">
     
     
     <materialDesign:DialogHost 

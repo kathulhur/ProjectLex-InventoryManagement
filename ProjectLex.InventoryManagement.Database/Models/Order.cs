@@ -13,6 +13,7 @@ namespace ProjectLex.InventoryManagement.Database.Models
         public Guid OrderID { get; set; }
         public Guid CustomerID { get; set; }
         public DateTime OrderDate { get; set; }
+        public string DeliveryStatus { get; set; }
         public decimal OrderTotal { get; set; }
         public Customer Customer { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }

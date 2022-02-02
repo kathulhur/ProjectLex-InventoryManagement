@@ -31,16 +31,18 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             set
             {
                 SetProperty(ref _customerID, value);
-                _customer = _customers.Where(c => c.CustomerID == _customerID).SingleOrDefault();
             }
         }
 
-        private CustomerViewModel _customer;
-        public CustomerViewModel Customer
+        private string _deliveryStatus;
+
+        [Required(ErrorMessage = "Delivery Status is Required")]
+        public string DeliveryStatus
         {
+            get { return _deliveryStatus; }
             set
             {
-                SetProperty(ref _customer, value);
+                SetProperty(ref _deliveryStatus, value, true);
             }
         }
 
@@ -109,7 +111,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void SetInitialValues(Order order)
         {
             _customerID = order.CustomerID.ToString();
-            _customer = new CustomerViewModel(order.Customer);
+            _deliveryStatus = order.DeliveryStatus;
             _orderTotal = order.OrderTotal.ToString();
             _orderDetails.Clear();
             foreach (OrderDetail od in _order.OrderDetails)
@@ -133,7 +135,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
 
             _order.CustomerID = new Guid(_customerID);
-            _order.Customer = _customer.Customer;
+            _order.DeliveryStatus = _deliveryStatus;
             _order.OrderTotal = _orderDetails.Sum(od => od.OrderDetail.OrderDetailAmount);
 
             _unitOfWork.Save();

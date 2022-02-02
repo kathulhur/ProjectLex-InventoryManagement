@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -122,6 +123,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
 
             _order.CustomerID = new Guid(CustomerID);
+            _order.DeliveryStatus = "Processing";
             _order.OrderTotal = _orderDetails.Sum(od => Convert.ToDecimal(od.OrderDetailAmount));
             _order.OrderDate = DateTime.Now;
 

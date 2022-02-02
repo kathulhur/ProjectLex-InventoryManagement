@@ -10,7 +10,7 @@ using ProjectLex.InventoryManagement.Database.Data;
 namespace ProjectLex.InventoryManagement.Database.Migrations
 {
     [DbContext(typeof(InventoryManagementContext))]
-    [Migration("20220131113939_Initial Migrate")]
+    [Migration("20220202095340_Initial Migrate")]
     partial class InitialMigrate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,6 +116,9 @@ namespace ProjectLex.InventoryManagement.Database.Migrations
 
                     b.Property<Guid>("CustomerID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeliveryStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");

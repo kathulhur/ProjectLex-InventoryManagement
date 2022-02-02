@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:converters="clr-namespace:ProjectLex.InventoryManagement.Desktop.Converters"
-             mc:Ignorable="d" >
+             xmlns:converters="clr-namespace:ProjectLex.InventoryManagement.Desktop.Converters">
     
     <materialDesign:Card
         Height="512"
@@ -29,8 +28,8 @@
                     </StackPanel>
                 </materialDesign:PopupBox>
 
-                <Image Source="/Assets/logo.png" Height="80"/>
-                <TextBlock Margin="0 20 0 5" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Text="Welcome Back"/>
+                <Image Source="/Assets/IMSLogo.png" Height="80"/>
+                <TextBlock Margin="0 20 0 0" HorizontalAlignment="Center" FontSize="28" FontWeight="Bold" Text="Welcome Back" Style="{StaticResource MaterialDesignTextBlock}"/>
 
                 <StackPanel Margin="50 0 50 0">
                     <TextBox 

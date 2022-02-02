@@ -10,10 +10,10 @@
     <Grid>
         <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <Grid HorizontalAlignment="Center" Margin="0 20 0 30">
+                <Grid HorizontalAlignment="Center" Margin="0 10 0 10">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Image Source="/Assets/logo.png" Width="44"/>
-                        <TextBlock Text="PLEX" FontFamily="Bebas Neue" FontSize="36" VerticalAlignment="center"/>
+                        <Image Source="/Assets/IMSLogo.png" Width="44" VerticalAlignment="Center"/>
+                        <TextBlock Text="IMS" FontFamily="Bebas Neue" FontSize="60" VerticalAlignment="center"/>
                     </StackPanel>
                 </Grid>
 
@@ -21,7 +21,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToDashboardCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Dashboard" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -31,7 +31,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToOrderListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="CartCheck" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="CartCheck" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Orders" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -41,7 +41,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToCustomerListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="BusinessCardOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="BusinessCardOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Customers" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -51,7 +51,7 @@
                 <Grid Margin="0 30 0 0">
                     <Button Command="{Binding NavigateToProductListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="BoxOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="BoxOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Products" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -60,7 +60,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToStorageListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="Storage" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Storage" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Storages" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -69,7 +69,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToDefectiveListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="GlassBroken" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="GlassBroken" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Defectives" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -81,7 +81,7 @@
                 <Grid Margin="0 30 0 0">
                     <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="CategoryOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="CategoryOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Categories" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -91,7 +91,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToLocationListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="LocationOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="LocationOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Locations" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -101,7 +101,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToSupplierListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="ClipboardListOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="ClipboardListOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Suppliers" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -111,7 +111,7 @@
                 <Grid Margin="0 30 0 0">
                     <Button Command="{Binding NavigateToRoleListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="PersonOutline" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="PersonOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Roles" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -121,7 +121,7 @@
                 <Grid>
                     <Button Command="{Binding NavigateToStaffListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Staffs" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
@@ -131,7 +131,7 @@
                 <Grid Margin="0 30 0 0">
                     <Button Command="{Binding LogOutCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Logout" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>

@@ -10,7 +10,7 @@
         <Label FontFamily="Sogoe UI" FontWeight="Bold" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="PRODUCTS" FontSize="16"/>
+                    <TextBlock Text="PRODUCTS" FontSize="16" Foreground="#2d89ef"/>
                     <TextBlock Text="CURRENTLY IN STOCK" FontSize="8" HorizontalAlignment="Center"/>
                 </StackPanel>
                 <TextBlock Text="{Binding ProductsInStock}" Style="{StaticResource MaterialDesignTextBlock}" Margin="20 0 0 0" FontSize="24" VerticalAlignment="Center"/>

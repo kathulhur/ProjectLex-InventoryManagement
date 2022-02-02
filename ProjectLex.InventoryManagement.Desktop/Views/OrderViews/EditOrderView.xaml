@@ -7,9 +7,9 @@
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             xmlns:utilities="clr-namespace:ProjectLex.InventoryManagement.Desktop.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
-             d:Background="White">
+             d:DesignHeight="1080" d:DesignWidth="1920">
 
     <materialDesign:DialogHost IsOpen="{Binding IsDialogOpen, Mode=OneWay}">
 
@@ -29,10 +29,35 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="0"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
-                Text="New Order"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock
+                    Grid.Column="0"
+                    Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+                    Text="Edit Order"/>
+                
+                <StackPanel
+                    Grid.Column="1" MinWidth="300">
+                    <TextBlock
+                        Grid.Row="0" 
+                        Text="Delivery Status"
+                        Style="{StaticResource MaterialDesignTextBlock}"
+                        FontWeight="DemiBold"/>
+
+                    <ComboBox 
+                        Grid.Row="1"
+                        Style="{StaticResource MaterialDesignComboBox}"
+                        Padding="10"
+                        ItemsSource="{ Binding Source={x:Static utilities:Constants.DeliveryStatuses}, Mode=OneWay}"
+                        SelectedValue="{Binding DeliveryStatus}">
+                    </ComboBox>
+                </StackPanel>
+
+            </Grid>
 
 
             <Grid 

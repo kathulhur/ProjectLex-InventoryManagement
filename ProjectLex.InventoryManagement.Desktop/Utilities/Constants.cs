@@ -8,7 +8,7 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
 {
     public static class Constants
     {
-        public static IEnumerable<string> _statuses = new List<string>()
+        private static IEnumerable<string> _statuses = new List<string>()
         {
             "Active",
             "Inactive"
@@ -16,7 +16,9 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
 
         public static IEnumerable<string> Statuses = _statuses;
 
-        public static IEnumerable<string> _availabilities = new List<string>()
+
+
+        private static IEnumerable<string> _availabilities = new List<string>()
         {
             "Unavailable",
             "Available",
@@ -24,6 +26,18 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
         };
 
         public static IEnumerable<string> Availabilities = _availabilities;
+
+
+
+        private static IEnumerable<string> _deliveryStatuses = new List<string>()
+        {
+            "Processing",
+            "Shipped",
+            "In Transit",
+            "Delivered"
+        };
+
+        public static IEnumerable<string> DeliveryStatuses = _deliveryStatuses;
 
 
     }

@@ -12,7 +12,7 @@
         <Label FontFamily="Sogoe UI" FontWeight="Bold" HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal">
                 <StackPanel VerticalAlignment="Center">
-                    <TextBlock Text="REVENUE" FontSize="16"/>
+                    <TextBlock Text="REVENUE" FontSize="16" Foreground="#2d89ef"/>
                     <TextBlock Text="FOR THIS MONTH" FontSize="8" HorizontalAlignment="Center"/>
                 </StackPanel>
                 
