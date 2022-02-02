@@ -30,6 +30,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand NavigateToCustomerListCommand { get; }
         public RelayCommand NavigateToDefectiveListCommand { get; }
         public RelayCommand NavigateToStorageListCommand { get; }
+        public RelayCommand NavigateToDashboardCommand { get; }
 
         public RelayCommand LogOutCommand { get; }
         public MainViewModel(NavigationStore navigationStore, AuthenticationStore authenticationStore)
@@ -53,6 +54,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             NavigateToCustomerListCommand = new RelayCommand(NavigateToCustomerList);
             NavigateToDefectiveListCommand = new RelayCommand(NavigateToDefectiveList);
             NavigateToStorageListCommand = new RelayCommand(NavigateToStorageList);
+            NavigateToDashboardCommand = new RelayCommand(NavigateToDashboard);
             LogOutCommand = new RelayCommand(LogOut);
 
         }
@@ -62,6 +64,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _authenticationStore.CurrentStaff = null;
             _authenticationStore.IsLoggedIn = false;
             _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _authenticationStore);
+        }
+
+        private void NavigateToDashboard()
+        {
+            
+            _navigationStore.CurrentViewModel = new DashboardViewModel(_navigationStore);
         }
 
         public void NavigateToStorageList()

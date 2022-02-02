@@ -7,6 +7,11 @@
     <DataTemplate DataType="{x:Type view_models:LoginViewModel}">
         <views:LoginView />
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type view_models:DashboardViewModel}">
+        <views:DashboardView />
+    </DataTemplate>
+    
     
 
     <DataTemplate DataType="{x:Type view_models:CategoryListViewModel}">

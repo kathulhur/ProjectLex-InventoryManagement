@@ -9,7 +9,19 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\CurrentMonthOrders.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\CurrentMonthRevenue.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MonthlyRevenue.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\NavigationBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\ProductsInStockControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CategoryViews\CategoryListView.xaml.cs">
@@ -19,6 +31,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CreateProductLocationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DashboardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StorageViews\MoveProductView.xaml.cs">
@@ -53,7 +68,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\CurrentMonthOrders.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\CurrentMonthRevenue.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\MonthlyRevenue.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\NavigationBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ProductsInStockControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
@@ -78,6 +105,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CreateProductLocationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DashboardView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DefectiveViews\CreateDefectiveView.xaml">

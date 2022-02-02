@@ -99,7 +99,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _authenticationStore.CurrentStaff = storedStaff;
             _authenticationStore.IsLoggedIn = true;
 
-            _navigationStore.CurrentViewModel = CategoryListViewModel.LoadViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = DashboardViewModel.LoadViewModel(_navigationStore);
         }
 
 

@@ -19,7 +19,7 @@
 
 
                 <Grid>
-                    <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                    <Button Command="{Binding NavigateToDashboardCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                             <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center"/>
                             <Label Margin="20 0 0 0" Content="Dashboard" FontSize="14" FontWeight="Bold"/>

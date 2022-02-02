@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Controls.CurrentMonthRevenue"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="20 20 20 20">
+        <Label FontFamily="Sogoe UI" FontWeight="Bold" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock Text="REVENUE" FontSize="16"/>
+                    <TextBlock Text="FOR THIS MONTH" FontSize="8" HorizontalAlignment="Center"/>
+                </StackPanel>
+                
+                <TextBlock Text="{Binding CurrentMonthRevenue}" Style="{StaticResource MaterialDesignTextBlock}" Margin="20 0 0 0" FontSize="24" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Label>
+    </Grid>
+</UserControl>
