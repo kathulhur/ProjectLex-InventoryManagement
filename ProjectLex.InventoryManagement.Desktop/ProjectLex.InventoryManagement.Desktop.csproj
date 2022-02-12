@@ -17,6 +17,7 @@
     <Compile Remove="ViewModels\ProductCategoryViewModels\**" />
     <Compile Remove="ViewModels\StoreViewsModels\**" />
     <Compile Remove="ViewModels\UserViewModels\**" />
+    <Compile Remove="Views\StoreViews\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Repositories\**" />
     <EmbeddedResource Remove="Services\Providers\**" />
@@ -25,6 +26,7 @@
     <EmbeddedResource Remove="ViewModels\ProductCategoryViewModels\**" />
     <EmbeddedResource Remove="ViewModels\StoreViewsModels\**" />
     <EmbeddedResource Remove="ViewModels\UserViewModels\**" />
+    <EmbeddedResource Remove="Views\StoreViews\**" />
     <None Remove="Models\**" />
     <None Remove="Repositories\**" />
     <None Remove="Services\Providers\**" />
@@ -33,6 +35,7 @@
     <None Remove="ViewModels\ProductCategoryViewModels\**" />
     <None Remove="ViewModels\StoreViewsModels\**" />
     <None Remove="ViewModels\UserViewModels\**" />
+    <None Remove="Views\StoreViews\**" />
     <Page Remove="Models\**" />
     <Page Remove="Repositories\**" />
     <Page Remove="Services\Providers\**" />
@@ -41,6 +44,7 @@
     <Page Remove="ViewModels\ProductCategoryViewModels\**" />
     <Page Remove="ViewModels\StoreViewsModels\**" />
     <Page Remove="ViewModels\UserViewModels\**" />
+    <Page Remove="Views\StoreViews\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -94,9 +98,6 @@
     <Compile Update="Views\AttributeViews\ModifyAttributeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CategoryViews\EditCategoryView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\DefectiveViews\CreateDefectiveView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -118,22 +119,13 @@
       <SubType>Code</SubType>
       <DependentUpon>EditCustomerView.xaml.cs</DependentUpon>
     </Compile>
-    <Compile Update="Views\LocationViews\EditLocationView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\ProductViews\ProductListView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ProductViews\EditProductView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\CustomerViews\EditCustomerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CustomerViews\CustomerListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CustomerViews\CreateCustomerView.xaml.cs">
+    <Compile Update="Views\CustomerViews\CustomerFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StorageListView - Copy %282%29.xaml.cs">
@@ -151,15 +143,6 @@
     <Compile Update="Views\StorageViews\DisposeProductView - Copy.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>DisposeProductView.xaml.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Views\StoreViews\CreateStoreView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\StoreViews\EditStoreView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\StoreViews\StoreListView.xaml.cs">
-      <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\OrderViews\CreateOrderView.xaml.cs">
       <SubType>Code</SubType>
@@ -179,10 +162,7 @@
     <Compile Update="Views\AttributeValueViews\AttributeValueListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\StaffViews\CreateStaffView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\StaffViews\EditStaffView.xaml.cs">
+    <Compile Update="Views\StaffViews\StaffFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StaffViews\StaffListView.xaml.cs">
@@ -191,13 +171,7 @@
     <Compile Update="Views\OrderDetailViews\CreateOrderDetailView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\RoleViews\CreateRoleView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\OrderDetailViews\EditOrderDetailView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\RoleViews\EditRoleView.xaml.cs">
+    <Compile Update="Views\RoleViews\RoleFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\OrderDetailViews\OrderDetailListView.xaml.cs">
@@ -206,10 +180,7 @@
     <Compile Update="Views\RoleViews\RoleListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\SupplierViews\EditSupplierView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\SupplierViews\CreateSupplierView.xaml.cs">
+    <Compile Update="Views\SupplierViews\SupplierFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -227,10 +198,6 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CategoryViews\EditCategoryView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\DefectiveViews\CreateDefectiveView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
@@ -243,19 +210,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\LocationViews\EditLocationView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\ProductViews\ProductListView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ProductViews\EditProductView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\CustomerViews\EditCustomerView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -263,19 +218,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CustomerViews\CreateCustomerView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StoreViews\CreateStoreView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StoreViews\EditStoreView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StoreViews\StoreListView.xaml">
+    <Page Update="Views\CustomerViews\CustomerFormView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -303,11 +246,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StaffViews\CreateStaffView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StaffViews\EditStaffView.xaml">
+    <Page Update="Views\StaffViews\StaffFormView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -319,15 +258,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\RoleViews\CreateRoleView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\OrderDetailViews\EditOrderDetailView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\RoleViews\EditRoleView.xaml">
+    <Page Update="Views\RoleViews\RoleFormView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -339,11 +270,7 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SupplierViews\EditSupplierView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\SupplierViews\CreateSupplierView.xaml">
+    <Page Update="Views\SupplierViews\SupplierFormView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

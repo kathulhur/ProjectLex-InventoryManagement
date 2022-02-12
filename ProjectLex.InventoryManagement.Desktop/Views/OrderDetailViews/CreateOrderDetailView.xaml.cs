@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace ProjectLex.InventoryManagement.Desktop.Views
 {
     /// <summary>
-    /// Interaction logic for CreateRoleView.xaml
+    /// Interaction logic for CreateOrderDetailView.xaml
     /// </summary>
     public partial class CreateOrderDetailView : UserControl
     {

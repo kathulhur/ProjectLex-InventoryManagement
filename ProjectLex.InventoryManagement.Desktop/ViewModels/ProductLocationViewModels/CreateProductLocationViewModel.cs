@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -92,6 +94,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
 
             _products.SingleOrDefault(p => p.ProductID == _productID).Product.ProductQuantity += Convert.ToInt32(_productQuantity);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.STORAGES, ActionType.ADD_STOCK, $"Product stocks added to location; locationID: {_location.LocationID}; ProductID: {_productID};"));
             _unitOfWork.Save();
 
             MessageBox.Show("Successful");

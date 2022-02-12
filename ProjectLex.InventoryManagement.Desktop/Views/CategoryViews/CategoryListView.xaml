@@ -70,21 +70,18 @@
                             Header="Description"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding CategoryDescription}"
-                            Width="*"
-                            MinWidth="200"/>
+                            Width="auto"/>
 
                         <DataGridTextColumn
                             Header="Status"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding CategoryStatus}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                         <DataGridTemplateColumn 
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Width="auto"
-                            MinWidth="100">
+                            Width="auto">
                             
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

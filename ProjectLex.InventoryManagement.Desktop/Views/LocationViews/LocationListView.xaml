@@ -59,15 +59,13 @@
                             Header="Location"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding LocationName}"
-                            Width="*"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
 
                         <DataGridTemplateColumn 
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Width="auto"
-                            MinWidth="200">
+                            Width="auto">
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

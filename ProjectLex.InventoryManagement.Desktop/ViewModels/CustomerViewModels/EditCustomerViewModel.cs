@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -18,19 +20,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private bool _isDisposed = false;
 
         private Customer _customer;
-
-
-        private string _staffID;
-
-        [Required(ErrorMessage = "Staff is Required")]
-        public string StaffID
-        {
-            get => _staffID;
-            set
-            {
-                SetProperty(ref _staffID, value, true);
-            }
-        }
 
 
         private string _customerFirstName;
@@ -138,7 +127,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 return;
             }
-            _customer.StaffID = new Guid(_staffID);
             _customer.CustomerFirstname = CustomerFirstName;
             _customer.CustomerLastname = CustomerLastName;
             _customer.CustomerAddress = CustomerAddress;
@@ -146,6 +134,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _customer.CustomerEmail = CustomerEmail;
 
             _unitOfWork.CustomerRepository.Update(_customer);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.CUSTOMERS, ActionType.UPDATE, $"Customer updated; CustomerID:{_customer.CustomerID};"));
             _unitOfWork.Save();
 
             _closeDialogCallback();
@@ -177,7 +166,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void SetInitialValues(Customer customer)
         {
-            StaffID = customer.StaffID.ToString();
             CustomerFirstName = customer.CustomerFirstname;
             CustomerLastName = customer.CustomerLastname;
             CustomerAddress = customer.CustomerAddress;

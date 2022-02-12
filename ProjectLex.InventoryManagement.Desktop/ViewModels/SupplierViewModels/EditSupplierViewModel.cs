@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -141,6 +142,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _supplier.SupplierStatus = _supplierStatus;
 
             _unitOfWork.SupplierRepository.Update(_supplier);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.SUPPLIERS, ActionType.UPDATE, $"Supplier updated; SupplierID: {_supplier.SupplierID};"));
             _unitOfWork.Save();
             _closeDialogCallback();
         }

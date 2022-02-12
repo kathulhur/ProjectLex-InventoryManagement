@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -97,6 +99,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _role.RoleStatus = RoleStatus;
 
             _unitOfWork.RoleRepository.Update(_role);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.ROLES, ActionType.CREATE, $"Role updated; RoleID:{_role.RoleID};"));
             _unitOfWork.Save();
 
             _closeDialogCallback();

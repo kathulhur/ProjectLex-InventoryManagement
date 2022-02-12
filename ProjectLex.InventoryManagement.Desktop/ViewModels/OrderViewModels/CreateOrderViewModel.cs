@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -128,6 +129,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _order.OrderDate = DateTime.Now;
 
             _unitOfWork.OrderRepository.Insert(_order);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.ORDERS, ActionType.CREATE, $"New order created; OrderID: {_order.OrderID};"));
             _unitOfWork.Save();
 
             MessageBox.Show("Successful");

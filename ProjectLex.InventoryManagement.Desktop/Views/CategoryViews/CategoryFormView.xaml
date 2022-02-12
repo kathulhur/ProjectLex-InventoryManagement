@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateRoleView"
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CategoryFormView"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,9 +12,8 @@
              d:DesignHeight="1080" d:DesignWidth="1920"
              d:Background="White">
 
-    <Grid Width="300" Margin="50 50 50 50">
+    <Grid Margin="50 50 50 50" Width="300">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -25,34 +24,31 @@
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-            Text="New Role"/>
-
+            Text="New Category"/>
+        
         <Grid 
             Grid.Row="1"
             Margin="0 30 0 0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" 
-                    Text="Name" 
-                    Style="{ StaticResource MaterialDesignTextBlock }"
-                    FontWeight="DemiBold"/>
-                        
-                <TextBox Grid.Row="1"
-                    Text="{ Binding RoleName, UpdateSourceTrigger=PropertyChanged }"
-                    Style="{ StaticResource MaterialDesignTextBox }"
-                    Padding="10"/>
-            </Grid>
+            <TextBlock Grid.Row="0" 
+                       Text="CategoryName" 
+                       Style="{StaticResource MaterialDesignTextBlock}"
+                       FontWeight="DemiBold"/>
 
+            <TextBox 
+                Grid.Row="1"
+                Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MaterialDesignTextBox}"
+                Padding="10"
+                />
         </Grid>
 
-
-        <Grid 
-            Grid.Row="2"
+        <Grid Grid.Row="2"
             Margin="0 30 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -65,20 +61,18 @@
                 Text="Description" 
                 Style="{StaticResource MaterialDesignTextBlock}"
                 FontWeight="DemiBold"/>
-                    
-            <TextBox Grid.Row="1"
-                Text="{Binding RoleDescription, UpdateSourceTrigger=PropertyChanged}"
+
+            <TextBox 
+                Grid.Row="1"
+                Text="{ Binding CategoryDescription, UpdateSourceTrigger=PropertyChanged }"
                 Style="{StaticResource MaterialDesignTextBox}"
                 MaxHeight="100"
                 Padding="10"
-                TextWrapping="wrap"/>
-
+                TextWrapping="Wrap"/>
         </Grid>
 
-                
-        <Grid 
-            Grid.Row="3"
-            Margin="0 30 0 0">
+        <Grid Grid.Row="3"
+              Margin="0 30 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -89,14 +83,14 @@
                 Grid.Row="0" 
                 Text="Status" 
                 Style="{StaticResource MaterialDesignTextBlock}"
-                FontWeight="DemiBold"
-                        />
+                FontWeight="DemiBold"/>
 
-            <ComboBox Grid.Row="1"
-                        Style="{ StaticResource MaterialDesignComboBox }"
-                        ItemsSource="{ Binding Source={x:Static utilities:Constants.Statuses}, Mode=OneWay}"
-                        SelectedItem="{ Binding RoleStatus }"
-                        Padding="10"/>
+            <ComboBox 
+                Grid.Row="1"
+                Padding="10"
+                Style="{ StaticResource MaterialDesignComboBox }"
+                ItemsSource="{ Binding Source={x:Static utilities:Constants.Statuses}, Mode=OneWay}"
+                SelectedItem="{ Binding CategoryStatus }"/>
         </Grid>
 
         <StackPanel 
@@ -106,17 +100,16 @@
             <Button 
                 Content="Submit"
                 Command="{Binding SubmitCommand}"
-                CommandParameter="{Binding}"
-                Style="{StaticResource MaterialDesignPaperButton}"/>
-                        
+                Style="{StaticResource MaterialDesignPaperButton}"
+                CommandParameter="{Binding}"/>
+
             <Button 
                 Margin="10 0 0 0" 
                 Content="Cancel"
-                Command="{ Binding CancelCommand}"
-                Style="{StaticResource MaterialDesignPaperLightButton}"/>
+                Command="{ Binding CancelCommand }"
+                Style="{StaticResource MaterialDesignPaperButton}"/>
         </StackPanel>
 
 
     </Grid>
-
 </UserControl>

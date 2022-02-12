@@ -38,13 +38,13 @@
                     Text="Defectives"
                     Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
 
-                <Button
+                <!--<Button
                     Grid.Column="1"
                     Command="{ Binding CreateDefectiveCommand }"
                     Style="{StaticResource MaterialDesignPaperLightButton}"
                     Margin="0 0 10 0 ">
                     <materialDesign:PackIcon Kind="Add"/>
-                </Button>
+                </Button>-->
             </Grid>
 
 
@@ -62,34 +62,30 @@
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding Product.ProductName}"
-                                Width="*"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Quantity"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding Quantity}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Date Declared"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding DateDeclared}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTemplateColumn
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Width="auto"
-                            MinWidth="150">
+                            Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button 
+                                        <!--<Button 
                                             Grid.Column="0"
                                             BorderBrush="Orange"
                                             Margin="0 0 5 0"
@@ -99,7 +95,7 @@
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:DefectiveListView}}"
                                             CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Edit"/>
-                                        </Button>
+                                        </Button>-->
 
                                         <Button 
                                             Grid.Column="1"

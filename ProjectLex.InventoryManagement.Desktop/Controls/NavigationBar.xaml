@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" >
     <Grid>
         <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}" VerticalScrollBarVisibility="Auto">
             <StackPanel>
@@ -123,6 +122,16 @@
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                             <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Staffs" FontSize="14" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+
+                <Grid Margin="0 30 0 0">
+                    <Button Command="{Binding NavigateToLogListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                            <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                            <Label Margin="20 0 0 0" Content="Activity Logs" FontSize="14" FontWeight="Bold"/>
                         </StackPanel>
                     </Button>
                 </Grid>

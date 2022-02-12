@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateCustomerView"
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CustomerFormView"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -23,42 +23,12 @@
         </Grid.RowDefinitions>
 
         <Grid
-                Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
+            Grid.Row="0">
             <TextBlock
                     Grid.Column="0"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                     Height="auto"
                     Text="New Customer"/>
-
-            <Grid 
-                    Grid.Column="1">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock 
-                    Grid.Row="0" 
-                    Text="Staff"
-                    TextAlignment="Right"
-                    Style="{StaticResource MaterialDesignTextBlock}"
-                    FontWeight="DemiBold"/>
-
-                <ComboBox Grid.Row="1"
-                        Style="{ StaticResource MaterialDesignComboBox }"
-                        Padding="10"
-                        ItemsSource="{Binding Staffs}"
-                        DisplayMemberPath="StaffFullname"
-                        SelectedValuePath="StaffID"
-                        SelectedValue="{Binding StaffID}"/>
-            </Grid>
         </Grid>
 
 

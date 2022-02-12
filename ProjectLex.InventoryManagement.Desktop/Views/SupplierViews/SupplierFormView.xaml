@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.CreateSupplierView"
+﻿<UserControl x:Class="ProjectLex.InventoryManagement.Desktop.Views.SupplierFormView"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

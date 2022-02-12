@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -120,6 +121,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
 
             _unitOfWork.CategoryRepository.Update(_category);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.CATEGORIES, ActionType.UPDATE, $"Category updated; CategoryID:{_category.CategoryID};"));
             _unitOfWork.Save();
 
             _closeDialogCallback();

@@ -69,24 +69,15 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock
-                    Grid.Row="0" 
+                    Grid.Row="0"
                     Text="Customer"
                     Style="{StaticResource MaterialDesignTextBlock}"
                     FontWeight="DemiBold"/>
 
-                <ComboBox 
+                <TextBlock
                     Grid.Row="1"
-                    Style="{StaticResource MaterialDesignComboBox}"
-                    Padding="10"
-                    SelectedValue="{Binding CustomerID}" 
-                    SelectedValuePath="CustomerID" 
-                    ItemsSource="{Binding Customers}">
-                    <ComboBox.ItemTemplate>
-                        <ItemContainerTemplate>
-                            <TextBlock Text="{Binding CustomerFullname}"/>
-                        </ItemContainerTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                    Text="{ Binding Customer.CustomerFullname }" 
+                    Style="{StaticResource MaterialDesignTextBlock}"/>
             </Grid>
 
 

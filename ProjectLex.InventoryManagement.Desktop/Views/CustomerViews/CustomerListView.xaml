@@ -62,54 +62,47 @@
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding Staff.StaffFullname}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
                         
                         <DataGridTextColumn
                                 Header="Firstname"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding CustomerFirstname}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Lastname"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding CustomerLastname}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Address"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding CustomerAddress}"
-                                Width="*"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Phone"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding CustomerPhone}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Email"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding CustomerEmail}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
                     
                         <DataGridTemplateColumn
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Width="auto"
-                            MinWidth="150">
+                            Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">

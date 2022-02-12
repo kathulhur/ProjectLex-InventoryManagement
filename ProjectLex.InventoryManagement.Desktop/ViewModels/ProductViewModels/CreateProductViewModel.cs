@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -42,18 +44,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             set
             {
                 SetProperty(ref _productSKU, value);
-            }
-        }
-
-        public string _productQuantity;
-        [Required(ErrorMessage = "Quantity is Required")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Input")]
-        public string ProductQuantity
-        {
-            get => _productQuantity;
-            set
-            {
-                SetProperty(ref _productQuantity, value);
             }
         }
 
@@ -165,12 +155,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            Product product = new Product()
+            Product newProduct = new Product()
             {
                 ProductID = Guid.NewGuid(),
                 ProductName = _productName,
                 ProductSKU = _productSKU,
-                ProductQuantity = Convert.ToInt32(_productQuantity),
+                ProductQuantity = 0,
                 ProductUnit = _productUnit,
                 ProductPrice = Convert.ToDecimal(_productPrice),
                 ProductAvailability = _productAvailability,
@@ -178,7 +168,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 CategoryID = new Guid(_categoryID)
             };
 
-            _unitOfWork.ProductRepository.Insert(product);
+            _unitOfWork.ProductRepository.Insert(newProduct);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.PRODUCTS, ActionType.CREATE, $"New product created; ProductID: {newProduct.ProductID};"));
             _unitOfWork.Save();
 
             _closeDialogCallback();

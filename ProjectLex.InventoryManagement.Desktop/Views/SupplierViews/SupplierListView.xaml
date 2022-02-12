@@ -65,42 +65,36 @@
                             Header="Name"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding SupplierName}"
-                            Width="auto"
-                            MinWidth="150"/>
+                            Width="auto"/>
 
                         <DataGridTextColumn
                             Header="Address"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding SupplierAddress}"
-                            Width="*"
-                            MinWidth="200"/>
+                            Width="auto"/>
 
                         <DataGridTextColumn
                             Header="Phone"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding SupplierPhone}"
-                            Width="auto"
-                            MinWidth="150"/>
+                            Width="auto"/>
 
                         <DataGridTextColumn
                             Header="Email"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding SupplierEmail}"
-                            Width="auto"
-                            MinWidth="150"/>
+                            Width="auto"/>
 
                         <DataGridTextColumn
                             Header="Status"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             Binding="{Binding SupplierStatus}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                         <DataGridTemplateColumn 
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                            Width="auto"
-                            MinWidth="150">
+                            Width="auto">
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

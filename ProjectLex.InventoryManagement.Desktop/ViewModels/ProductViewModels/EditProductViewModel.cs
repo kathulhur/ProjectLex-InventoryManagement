@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -43,18 +45,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             set
             {
                 SetProperty(ref _productSKU, value);
-            }
-        }
-
-        public string _productQuantity;
-        [Required(ErrorMessage = "Quantity is Required")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Invalid Input")]
-        public string ProductQuantity
-        {
-            get => _productQuantity;
-            set
-            {
-                SetProperty(ref _productQuantity, value);
             }
         }
 
@@ -166,7 +156,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             _product.ProductName = _productName;
             _product.ProductSKU = _productSKU;
-            _product.ProductQuantity = Convert.ToInt32(_productQuantity);
             _product.ProductUnit = _productUnit;
             _product.ProductPrice = Convert.ToDecimal(_productPrice);
             _product.ProductAvailability = _productAvailability;
@@ -174,6 +163,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _product.SupplierID = new Guid(_supplierID);
 
             _unitOfWork.ProductRepository.Update(_product);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.PRODUCTS, ActionType.UPDATE, $"Product updated; ProductID: {_product.ProductID};"));
             _unitOfWork.Save();
 
             _closeDialogCallback();
@@ -225,7 +215,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             _productName = product.ProductName;
             _productSKU = product.ProductSKU;
-            _productQuantity = product.ProductQuantity.ToString();
             _productUnit = product.ProductUnit.ToString();
             _productPrice = product.ProductPrice.ToString();
             _productAvailability = product.ProductAvailability;

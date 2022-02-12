@@ -22,6 +22,7 @@ namespace ProjectLex.InventoryManagement.Database.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Defective> Defectives { get; set; }
         public DbSet<ProductLocation> ProductLocations { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

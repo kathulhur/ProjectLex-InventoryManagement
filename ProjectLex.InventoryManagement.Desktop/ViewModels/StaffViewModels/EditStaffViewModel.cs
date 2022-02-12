@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,16 +12,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
     public class EditStaffViewModel : ViewModelBase
     {
         private bool _isDisposed = false;
-
-        private bool _isDialogOpen = false;
-
-
 
         private Staff _staff;
 
@@ -182,6 +180,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
 
             _unitOfWork.StaffRepository.Update(_staff);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.STAFFS, ActionType.UPDATE, $"Staff Updated; StaffID:{_staff.StaffID};"));
             _unitOfWork.Save();
             _closeDialogCallback();
         }

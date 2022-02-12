@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -76,13 +78,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            Location location = new Location()
+            Location newLocation = new Location()
             {
                 LocationID = Guid.NewGuid(),
                 LocationName = _locationName
             };
 
-            _unitOfWork.LocationRepository.Insert(location);
+            _unitOfWork.LocationRepository.Insert(newLocation);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.LOCATIONS, ActionType.CREATE, $"New location created; LocationID: {newLocation.LocationID};"));
             _unitOfWork.Save();
             MessageBox.Show("Success");
 

@@ -39,6 +39,32 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
 
         public static IEnumerable<string> DeliveryStatuses = _deliveryStatuses;
 
+        public enum LogCategory
+        {
+            ORDERS,
+            CUSTOMERS,
+            PRODUCTS,
+            STORAGES,
+            DEFECTIVES,
+            CATEGORIES,
+            LOCATIONS,
+            SUPPLIERS,
+            ROLES,
+            STAFFS,
+        }
+
+        public enum ActionType
+        {
+            CREATE,
+            UPDATE,
+            DELETE,
+            DISPOSE,
+            GET,
+            MOVE,
+            DELARE_AS_DEFECTIVE,
+            ADD_STOCK,
+            DELIVERY_STATUS_CHANGE
+        }
 
     }
 }

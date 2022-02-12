@@ -11,19 +11,23 @@
     <DataTemplate DataType="{x:Type view_models:DashboardViewModel}">
         <views:DashboardView />
     </DataTemplate>
-    
-    
+
+    <DataTemplate DataType="{x:Type view_models:LogListViewModel}">
+        <views:LogListView />
+    </DataTemplate>
+
+
 
     <DataTemplate DataType="{x:Type view_models:CategoryListViewModel}">
         <views:CategoryListView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateCategoryViewModel}">
-        <views:CreateCategoryView />
+        <views:CategoryFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditCategoryViewModel}">
-        <views:EditCategoryView />
+        <views:CategoryFormView />
     </DataTemplate>
 
     
@@ -34,11 +38,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateLocationViewModel}">
-        <views:CreateLocationView />
+        <views:LocationFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditLocationViewModel}">
-        <views:EditLocationView />
+        <views:LocationFormView />
     </DataTemplate>
 
 
@@ -49,11 +53,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateSupplierViewModel}">
-        <views:CreateSupplierView />
+        <views:SupplierFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditSupplierViewModel}">
-        <views:EditSupplierView />
+        <views:SupplierFormView />
     </DataTemplate>
 
 
@@ -64,11 +68,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateRoleViewModel}">
-        <views:CreateRoleView />
+        <views:RoleFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditRoleViewModel}">
-        <views:EditRoleView />
+        <views:RoleFormView />
     </DataTemplate>
 
 
@@ -79,11 +83,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateStaffViewModel}">
-        <views:CreateStaffView />
+        <views:StaffFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditStaffViewModel}">
-        <views:EditStaffView />
+        <views:StaffFormView />
     </DataTemplate>
 
 
@@ -108,11 +112,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateProductViewModel}">
-        <views:CreateProductView />
+        <views:ProductFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditProductViewModel}">
-        <views:EditProductView />
+        <views:ProductFormView />
     </DataTemplate>
 
     
@@ -123,11 +127,11 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:CreateCustomerViewModel}">
-        <views:CreateCustomerView />
+        <views:CustomerFormView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type view_models:EditCustomerViewModel}">
-        <views:EditCustomerView />
+        <views:CustomerFormView />
     </DataTemplate>
 
 

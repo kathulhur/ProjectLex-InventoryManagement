@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -18,17 +20,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private bool _isDisposed = false;
 
 
-        private string _staffID;
-
-        [Required(ErrorMessage = "Staff is Required")]
-        public string StaffID
-        {
-            get => _staffID;
-            set
-            {
-                SetProperty(ref _staffID, value, true);
-            }
-        }
+        private Guid _staffID = ((MainViewModel)Application.Current.MainWindow.DataContext).AuthenticationStore.CurrentStaff.StaffID;
 
         private string _customerFirstName;
 
@@ -110,7 +102,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public RelayCommand SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
-        private RelayCommand LoadStaffsCommand { get; }
 
         public CreateCustomerViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
@@ -122,7 +113,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             SubmitCommand = new RelayCommand(Submit);
             CancelCommand = new RelayCommand(Cancel);
-            LoadStaffsCommand = new RelayCommand(LoadStaffs);
         }
 
         private void Submit()
@@ -137,15 +127,16 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             Customer newCustomer = new Customer()
             {
                 CustomerID = Guid.NewGuid(),
-                StaffID = new Guid(this.StaffID),
-                CustomerFirstname = CustomerFirstName,
-                CustomerLastname = CustomerLastName,
-                CustomerAddress = CustomerAddress,
-                CustomerPhone = CustomerPhone,
-                CustomerEmail = CustomerEmail,
+                StaffID = _staffID,
+                CustomerFirstname = _customerFirstName,
+                CustomerLastname = _customerLastName,
+                CustomerAddress = _customerAddress,
+                CustomerPhone = _customerPhone,
+                CustomerEmail = _customerEmail,
             };
 
             _unitOfWork.CustomerRepository.Insert(newCustomer);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.CUSTOMERS, ActionType.CREATE, $"New customer created; CustomerID:{newCustomer.CustomerID};"));
             _unitOfWork.Save();
 
             _closeDialogCallback();
@@ -157,19 +148,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _closeDialogCallback();
         }
 
-        private void LoadStaffs()
-        {
-            _staffs.Clear();
-            foreach (Staff r in _unitOfWork.StaffRepository.Get())
-            {
-                _staffs.Add(new StaffViewModel(r));
-            }
-        }
 
         public static CreateCustomerViewModel LoadViewModel(NavigationStore navigationStore, UnitOfWork unitOfWork, Action closeDialogCallback)
         {
             CreateCustomerViewModel viewModel = new CreateCustomerViewModel(navigationStore, unitOfWork, closeDialogCallback);
-            viewModel.LoadStaffsCommand.Execute(null);
             return viewModel;
         }
 

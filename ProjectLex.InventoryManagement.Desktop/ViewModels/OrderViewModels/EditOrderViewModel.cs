@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -22,17 +24,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private Order _order;
 
 
-        private string _customerID;
+        private CustomerViewModel _customer;
 
-        [Required(ErrorMessage = "Customer is Required")]
-        public string CustomerID
+        public CustomerViewModel Customer
         {
-            get => _customerID;
-            set
-            {
-                SetProperty(ref _customerID, value);
-            }
+            get { return _customer; }
         }
+
+        private readonly string _oldDeliveryStatus;
 
         private string _deliveryStatus;
 
@@ -91,7 +90,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork = new UnitOfWork();
 
             _order = _unitOfWork.OrderRepository.Get(o => o.OrderID == orderID, includeProperties: "Customer,OrderDetails,OrderDetails.Product").Single();
-
+            _oldDeliveryStatus = _order.DeliveryStatus;
 
             _customers = new ObservableCollection<CustomerViewModel>();
             LoadCustomers(_customers);
@@ -110,7 +109,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void SetInitialValues(Order order)
         {
-            _customerID = order.CustomerID.ToString();
+            _customer = new CustomerViewModel(order.Customer);
             _deliveryStatus = order.DeliveryStatus;
             _orderTotal = order.OrderTotal.ToString();
             _orderDetails.Clear();
@@ -134,9 +133,16 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 MessageBox.Show("Product order list cannot be empty");
             }
 
-            _order.CustomerID = new Guid(_customerID);
             _order.DeliveryStatus = _deliveryStatus;
             _order.OrderTotal = _orderDetails.Sum(od => od.OrderDetail.OrderDetailAmount);
+
+            if(_deliveryStatus == _oldDeliveryStatus)
+            {
+                _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.ORDERS, ActionType.DELIVERY_STATUS_CHANGE, $"Delivery Status Changed; OrderID:{_order.OrderID}; DeliverStatus: from {_oldDeliveryStatus} to {_deliveryStatus};"));
+            } else
+            {
+                _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.ORDERS, ActionType.UPDATE, $"Order updated; OrderID: {_order.OrderID};"));
+            }
 
             _unitOfWork.Save();
 

@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -21,6 +23,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public ProductViewModel Product => new ProductViewModel(_productLocation.Product);
 
+        private string _oldLocationID;
 
         private string _locationID;
 
@@ -65,6 +68,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _closeDialogCallback = closeDialogCallback;
             _productLocation = productLocation;
             _locations = new ObservableCollection<LocationViewModel>();
+
+            _oldLocationID = _productLocation.LocationID.ToString();
 
 
             SubmitCommand = new RelayCommand(Submit);
@@ -116,6 +121,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 storedProductLocation.ProductQuantity += Convert.ToInt32(_quantity);
             }
 
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.STORAGES, ActionType.MOVE, $"Product moved; ProductID: {_productLocation.ProductID}, From LocationID {_oldLocationID} to {_locationID}; Quantity: {_quantity};"));
             _productLocation.ProductQuantity -= Convert.ToInt32(_quantity);
             _unitOfWork.Save();
 

@@ -90,7 +90,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orderDetail = orderDetail;
             _orderDetailQuantity = orderDetail.OrderDetailQuantity.ToString();
             _orderDetailAmount = orderDetail.OrderDetailAmount.ToString();
-            _product = new ProductViewModel(_unitOfWork.ProductRepository.GetByID(orderDetail.ProductID));
+            _product = new ProductViewModel(_orderDetail.Product);
         }
 
         private void Submit()

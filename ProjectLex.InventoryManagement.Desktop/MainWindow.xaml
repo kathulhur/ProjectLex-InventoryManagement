@@ -39,19 +39,18 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-            
-                <controls:NavigationBar BorderBrush="{StaticResource MaterialDesignBody}" BorderThickness="1"/>
-            
+
+                <controls:NavigationBar/>
+
             </Grid>
 
             <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Background="Gray"/>
         </Grid>
-        
-        
-        <Label Grid.Row="1" HorizontalAlignment="Center">
-            <StackPanel>
-                <TextBlock Text="Powered By: ProjectLex" HorizontalAlignment="Center"/>
-                <TextBlock Text="© ProjectLex Inc. All rights reserved." HorizontalAlignment="Center"/>
+
+        <Label Grid.Row="1" HorizontalAlignment="Center" FontWeight="Bold">
+            <StackPanel >
+                <TextBlock Text="Powered By: PROJECT LEX LABS" HorizontalAlignment="Center"/>
+                <TextBlock Text="© PROJECT LEX LABS Inc. All rights reserved." HorizontalAlignment="Center"/>
             </StackPanel>
         </Label>
     </Grid>

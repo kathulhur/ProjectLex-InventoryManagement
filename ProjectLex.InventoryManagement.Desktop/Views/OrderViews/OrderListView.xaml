@@ -52,40 +52,35 @@
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderID}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                     <DataGridTextColumn
                             Header="Customer"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding Customer.CustomerFullname}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                     <DataGridTextColumn
                             Header="Order Date"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderDate}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                     <DataGridTextColumn
                             Header="Total"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderTotal}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                     <DataGridTextColumn
                             Header="Total"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding DeliveryStatus}"
-                            Width="auto"
-                            MinWidth="100"/>
+                            Width="auto"/>
 
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

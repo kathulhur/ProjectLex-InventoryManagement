@@ -39,13 +39,16 @@
     <Compile Update="Views\CategoryViews\CategoryListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CategoryViews\CreateCategoryView.xaml.cs">
+    <Compile Update="Views\CategoryViews\CategoryFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CreateProductLocationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\LogListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StorageViews\MoveProductView.xaml.cs">
@@ -60,13 +63,13 @@
     <Compile Update="Views\StorageViews\DisposeProductView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\LocationViews\CreateLocationView.xaml.cs">
+    <Compile Update="Views\LocationViews\LocationFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ProductViews\CreateProductView.xaml.cs">
+    <Compile Update="Views\ProductViews\ProductFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StorageViews\StorageDetailView.xaml.cs">
@@ -125,9 +128,6 @@
     <Page Update="Views\AttributeViews\ModifyAttributeView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CategoryViews\EditCategoryView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\CreateProductLocationView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -143,6 +143,9 @@
     <Page Update="Views\DefectiveViews\EditDefectiveView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\LogListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\StorageViews\MoveProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -155,10 +158,7 @@
     <Page Update="Views\StorageViews\DisposeProductView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\LocationViews\EditLocationView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\LocationViews\CreateLocationView.xaml">
+    <Page Update="Views\LocationViews\LocationFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LoginView.xaml">
@@ -167,16 +167,10 @@
     <Page Update="Views\ProductViews\ProductListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ProductViews\EditProductView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\CustomerViews\EditCustomerView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\CustomerViews\CustomerListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CustomerViews\CreateCustomerView.xaml">
+    <Page Update="Views\CustomerViews\CustomerFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StorageViews\StorageDetailView.xaml">
@@ -212,10 +206,7 @@
     <Page Update="Views\AttributeValueViews\AttributeValueListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StaffViews\CreateStaffView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StaffViews\EditStaffView.xaml">
+    <Page Update="Views\StaffViews\StaffFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StaffViews\StaffListView.xaml">
@@ -224,13 +215,7 @@
     <Page Update="Views\OrderDetailViews\CreateOrderDetailView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\RoleViews\CreateRoleView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\OrderDetailViews\EditOrderDetailView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\RoleViews\EditRoleView.xaml">
+    <Page Update="Views\RoleViews\RoleFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrderDetailViews\OrderDetailListView.xaml">
@@ -242,16 +227,13 @@
     <Page Update="Views\CategoryViews\CategoryListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SupplierViews\EditSupplierView.xaml">
+    <Page Update="Views\ProductViews\ProductFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ProductViews\CreateProductView.xaml">
+    <Page Update="Views\SupplierViews\SupplierFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SupplierViews\CreateSupplierView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\CategoryViews\CreateCategoryView.xaml">
+    <Page Update="Views\CategoryViews\CategoryFormView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SupplierViews\SupplierListView.xaml">

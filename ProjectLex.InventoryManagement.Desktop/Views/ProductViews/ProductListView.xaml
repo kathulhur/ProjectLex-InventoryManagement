@@ -62,65 +62,56 @@
                                 Header="Name"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding ProductName}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="SKU"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding ProductSKU}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Unit"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding ProductUnit}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Price"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding ProductPrice}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Quantity"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding ProductQuantity}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Availability"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding ProductAvailability}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
 
                         <DataGridTextColumn
                                 Header="Category"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding Category.CategoryName}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
                         <DataGridTextColumn
                                 Header="Supplier"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 Binding="{Binding Supplier.SupplierName}"
-                                Width="auto"
-                                MinWidth="100"/>
+                                Width="auto"/>
 
 
                         <DataGridTemplateColumn 
                                 Header="Actions"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                                Width="auto"
-                                MinWidth="150">
+                                Width="auto">
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

@@ -59,28 +59,24 @@
                                     Header="Name"
                                     HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                     Binding="{Binding RoleName}"
-                                    Width="auto"
-                                    MinWidth="200"/>
+                                    Width="auto"/>
 
                         <DataGridTextColumn
                                     Header="Description"
                                     HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                     Binding="{Binding RoleDescription}"
-                                    Width="*"
-                                    MinWidth="200"/>
+                                    Width="auto"/>
 
                         <DataGridTextColumn
                                     Header="Status"
                                     HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                     Binding="{Binding RoleStatus}"
-                                    Width="auto"
-                                    MinWidth="100"/>
+                                    Width="auto"/>
 
                         <DataGridTemplateColumn 
                                     Header="Actions"
                                     HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                                    Width="auto"
-                                    MinWidth="100">
+                                    Width="auto">
 
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

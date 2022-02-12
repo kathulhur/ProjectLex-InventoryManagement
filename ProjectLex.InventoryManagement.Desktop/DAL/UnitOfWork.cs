@@ -29,6 +29,7 @@ namespace ProjectLex.InventoryManagement.Desktop.DAL
         public GenericRepository<Customer> CustomerRepository { get; }
         public GenericRepository<Defective> DefectiveRepository { get; }
         public GenericRepository<ProductLocation> ProductLocationRepository { get; }
+        public GenericRepository<Log> LogRepository { get; }
 
         public UnitOfWork()
         {
@@ -46,6 +47,7 @@ namespace ProjectLex.InventoryManagement.Desktop.DAL
             CustomerRepository = new GenericRepository<Customer>(_context);
             DefectiveRepository = new GenericRepository<Defective>(_context);
             ProductLocationRepository = new GenericRepository<ProductLocation>(_context);
+            LogRepository = new GenericRepository<Log>(_context);
         }
 
         public void Begin()

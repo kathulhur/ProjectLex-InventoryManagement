@@ -16,6 +16,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private readonly NavigationStore _navigationStore;
         private readonly AuthenticationStore _authenticationStore;
+        public AuthenticationStore AuthenticationStore => _authenticationStore;
 
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public bool IsLoggedIn => _authenticationStore.IsLoggedIn;
@@ -31,6 +32,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand NavigateToDefectiveListCommand { get; }
         public RelayCommand NavigateToStorageListCommand { get; }
         public RelayCommand NavigateToDashboardCommand { get; }
+        public RelayCommand NavigateToLogListCommand { get; }
 
         public RelayCommand LogOutCommand { get; }
         public MainViewModel(NavigationStore navigationStore, AuthenticationStore authenticationStore)
@@ -55,6 +57,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             NavigateToDefectiveListCommand = new RelayCommand(NavigateToDefectiveList);
             NavigateToStorageListCommand = new RelayCommand(NavigateToStorageList);
             NavigateToDashboardCommand = new RelayCommand(NavigateToDashboard);
+            NavigateToLogListCommand = new RelayCommand(NavigateToLogList);
             LogOutCommand = new RelayCommand(LogOut);
 
         }
@@ -70,6 +73,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             
             _navigationStore.CurrentViewModel = new DashboardViewModel(_navigationStore);
+        }
+
+        private void NavigateToLogList()
+        {
+
+            _navigationStore.CurrentViewModel = LogListViewModel.LoadViewModel(_navigationStore);
         }
 
         public void NavigateToStorageList()

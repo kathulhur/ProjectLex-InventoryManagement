@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -91,7 +93,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            Category category = new Category()
+            Category newCategory = new Category()
             {
                 CategoryID = Guid.NewGuid(),
                 CategoryName = CategoryName,
@@ -99,7 +101,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 CategoryStatus = CategoryStatus
             };
 
-            _unitOfWork.CategoryRepository.Insert(category);
+            _unitOfWork.CategoryRepository.Insert(newCategory);
+            _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.CATEGORIES, ActionType.CREATE, $"New category created; CategoryID:{newCategory.CategoryID};"));
             _unitOfWork.Save();
             _closeDialogCallback();
         }
