@@ -21,6 +21,9 @@
     <Compile Update="Controls\InTransitOrderCountControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\InvoiceDocumentControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\MonthlyRevenue.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -49,6 +52,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\LogListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PrintInvoiceView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\StorageViews\MoveProductView.xaml.cs">
@@ -93,6 +99,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\InTransitOrderCountControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\InvoiceDocumentControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\MonthlyRevenue.xaml">
@@ -144,6 +153,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LogListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PrintInvoiceView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StorageViews\MoveProductView.xaml">

@@ -19,6 +19,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private bool _isDisposed = false;
 
+        private bool _isDialogOpen = false;
+        public bool IsDialogOpen => _isDialogOpen;
+
+        private ViewModelBase _dialogViewModel;
+        public ViewModelBase DialogViewModel => _dialogViewModel;
+
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
@@ -29,6 +35,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RelayCommand LoadOrdersCommand { get; }
         public RelayCommand<OrderViewModel> RemoveOrderCommand { get; }
         public RelayCommand<OrderViewModel> EditOrderCommand { get; }
+        public RelayCommand<OrderViewModel> PrintInvoiceCommand { get; }
 
         public OrderListViewModel(NavigationStore navigationStore)
         {
@@ -40,7 +47,18 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             CreateOrderCommand = new RelayCommand<OrderViewModel>(CreateOrder);
             RemoveOrderCommand = new RelayCommand<OrderViewModel>(RemoveOrder);
             EditOrderCommand = new RelayCommand<OrderViewModel>(EditOrder);
+            PrintInvoiceCommand = new RelayCommand<OrderViewModel>(PrintInvoice);
 
+        }
+
+        private void PrintInvoice(OrderViewModel orderViewModel)
+        {
+            _dialogViewModel?.Dispose();
+            _dialogViewModel = PrintInvoiceViewModel.LoadViewModel(_navigationStore, orderViewModel.Order.OrderID);
+            OnPropertyChanged(nameof(DialogViewModel));
+
+            _isDialogOpen = true;
+            OnPropertyChanged(nameof(IsDialogOpen));
         }
 
         private void RemoveOrder(OrderViewModel orderViewModel)
@@ -90,7 +108,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _unitOfWork.Dispose();
+                    _unitOfWork?.Dispose();
+                    _dialogViewModel?.Dispose();
                 }
 
             }

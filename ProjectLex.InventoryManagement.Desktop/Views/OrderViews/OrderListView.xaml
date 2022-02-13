@@ -8,111 +8,133 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920"
-             d:Background="White"
-             Padding="30 30 30 30">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+             d:Background="White">
+    
+    <materialDesign:DialogHost 
+        CloseOnClickAway="true" 
+        IsOpen="{ Binding IsDialogOpen, Mode=OneWay}" 
+        DialogBackground="Transparent">
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+        <materialDesign:DialogHost.DialogContent>
+            <materialDesign:Card UniformCornerRadius="10">
+                <ContentControl Content="{ Binding DialogViewModel }"/>
+            </materialDesign:Card>
+        </materialDesign:DialogHost.DialogContent>
 
-            <TextBlock 
+        <Grid Margin="30 30 30 30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock 
                 Grid.Column="0" 
                 Text="Orders"
                 Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
 
-            <Button
+                <Button
                 Grid.Column="1"
                 Command="{ Binding CreateOrderCommand }"
                 Style="{StaticResource MaterialDesignPaperLightButton}"
                 Margin="0 0 10 0 ">
-                <materialDesign:PackIcon Kind="Add"/>
-            </Button>
-        </Grid>
+                    <materialDesign:PackIcon Kind="Add"/>
+                </Button>
+            </Grid>
 
 
-        <Grid Grid.Row="1">
-            <DataGrid
+            <Grid Grid.Row="1">
+                <DataGrid
                     ItemsSource="{Binding Orders}"
                     Style="{StaticResource MaterialDesignDataGrid}"
                     BorderBrush="Black"
                     BorderThickness="2"
                     IsReadOnly="True"
                     AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
                             Header="Firstname"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderID}"
                             Width="auto"/>
 
-                    <DataGridTextColumn
+                        <DataGridTextColumn
                             Header="Customer"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding Customer.CustomerFullname}"
                             Width="auto"/>
 
-                    <DataGridTextColumn
+                        <DataGridTextColumn
                             Header="Order Date"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderDate}"
                             Width="auto"/>
 
-                    <DataGridTextColumn
+                        <DataGridTextColumn
                             Header="Total"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderTotal}"
                             Width="auto"/>
 
-                    <DataGridTextColumn
+                        <DataGridTextColumn
                             Header="Total"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding DeliveryStatus}"
                             Width="auto"/>
 
-                    <DataGridTemplateColumn>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button 
-                                        Grid.Column="0"
-                                        BorderBrush="Orange"
-                                        Style="{StaticResource MaterialDesignPaperButton}"
-                                        Command="{
-                                            Binding DataContext.EditOrderCommand, 
-                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:OrderListView}}"
-                                        CommandParameter="{Binding}">
-                                        <materialDesign:PackIcon Kind="Edit"/>
-                                    </Button>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button 
+                                            Margin="0 0 5 0"
+                                            BorderBrush="Orange"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.PrintInvoiceCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:OrderListView}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Invoice"/>
+                                        </Button>
+                                        
+                                        <Button 
+                                            Margin="0 0 5 0"
+                                            BorderBrush="Orange"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.EditOrderCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:OrderListView}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Edit"/>
+                                        </Button>
 
-                                    <Button 
-                                        Grid.Column="1"
-                                        BorderBrush="OrangeRed"
-                                        Style="{StaticResource MaterialDesignPaperButton}"
-                                        Command="{
-                                            Binding DataContext.RemoveOrderCommand, 
-                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:OrderListView}}"
-                                        CommandParameter="{Binding}">
-                                        <materialDesign:PackIcon Kind="Remove"/>
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                                        <Button 
+                                            BorderBrush="OrangeRed"
+                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            Command="{
+                                                Binding DataContext.RemoveOrderCommand, 
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:OrderListView}}"
+                                            CommandParameter="{Binding}">
+                                            <materialDesign:PackIcon Kind="Remove"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </UserControl>
