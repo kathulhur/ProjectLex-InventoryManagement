@@ -131,6 +131,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             else if (_orderDetails.Count == 0)
             {
                 MessageBox.Show("Product order list cannot be empty");
+                return;
             }
 
             _order.DeliveryStatus = _deliveryStatus;
@@ -160,7 +161,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orderDetails.Remove(orderDetailViewModel);
             _order.OrderDetails.Remove(orderDetailViewModel.OrderDetail);
 
-            _order.OrderTotal = _orderDetails.Sum(od => od.OrderDetail.OrderDetailAmount);
+            _orderTotal = _orderDetails.Sum(od => od.OrderDetail.OrderDetailAmount).ToString();
+            OnPropertyChanged(nameof(OrderTotal));
         }
 
         private void EditOrderDetail(OrderDetailViewModel orderDetailViewModel)

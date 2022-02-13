@@ -121,6 +121,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             } else if (_order.OrderDetails.Count == 0)
             {
                 MessageBox.Show("Product order list cannot be empty");
+                return;
             }
 
             _order.CustomerID = new Guid(CustomerID);
@@ -143,7 +144,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void RemoveOrderDetail(OrderDetailViewModel orderDetailViewModel)
         {
+            _order.OrderDetails.Remove(orderDetailViewModel.OrderDetail);
             _orderDetails.Remove(orderDetailViewModel);
+
+            _orderTotal = _orderDetails.Sum(od => od.OrderDetail.OrderDetailAmount).ToString();
+            OnPropertyChanged(nameof(OrderTotal));
         }
 
         private void EditOrderDetail(OrderDetailViewModel orderDetailViewModel)

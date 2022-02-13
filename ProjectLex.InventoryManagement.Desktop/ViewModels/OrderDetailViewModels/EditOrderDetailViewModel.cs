@@ -100,10 +100,24 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (HasErrors)
             {
                 return;
+            } else if(Convert.ToInt32(_orderDetailQuantity) >= _orderDetail.OrderDetailQuantity)
+            {
+                int addedQuantity = Convert.ToInt32(_orderDetailQuantity) - _orderDetail.OrderDetailQuantity;
+                if (addedQuantity > _product.Product.ProductQuantity)
+                {
+                    MessageBox.Show("Not enough stock!");
+                    return;
+                } else
+                {
+                    _orderDetail.Product.ProductQuantity -= addedQuantity;
+                }
+            } else
+            {
+                _orderDetail.Product.ProductQuantity += _orderDetail.OrderDetailQuantity - Convert.ToInt32(_orderDetailQuantity);
             }
 
-            _orderDetail.OrderDetailQuantity = Convert.ToInt32(this.OrderDetailQuantity);
-            _orderDetail.OrderDetailAmount = Convert.ToDecimal(this.OrderDetailAmount);
+            _orderDetail.OrderDetailQuantity = Convert.ToInt32(_orderDetailQuantity);
+            _orderDetail.OrderDetailAmount = Convert.ToDecimal(_orderDetailAmount);
 
             MessageBox.Show("Successful");
             _closeDialogCallback();

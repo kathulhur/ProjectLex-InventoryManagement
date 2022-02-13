@@ -9,9 +9,7 @@
              Width="850"
              MinHeight="1100"
              Padding="50 50 50 50"
-             Background="{StaticResource MaterialDesignBackground}"
-             Foreground="{StaticResource MaterialDesignBody}"
-             FontFamily="SogoeUI">
+             Background="{StaticResource MaterialDesignBackground}">
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

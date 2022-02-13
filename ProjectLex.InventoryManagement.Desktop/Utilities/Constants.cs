@@ -63,7 +63,8 @@ namespace ProjectLex.InventoryManagement.Desktop.Utilities
             MOVE,
             DELARE_AS_DEFECTIVE,
             ADD_STOCK,
-            DELIVERY_STATUS_CHANGE
+            DELIVERY_STATUS_CHANGE,
+            PRINT_INVOICE
         }
 
     }

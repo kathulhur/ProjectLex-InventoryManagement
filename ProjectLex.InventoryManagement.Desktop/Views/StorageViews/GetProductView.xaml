@@ -20,11 +20,21 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            Margin="0 0 0 30"
-            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-            Text="Get Product"/>
+        <Grid 
+            Grid.Row="0" 
+            Margin="0 0 0 30">
+            <TextBlock
+                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                Text="Get Product"/>
+
+            <CheckBox IsChecked="{Binding IsForOrder}" HorizontalAlignment="Right" VerticalContentAlignment="Center">
+                <TextBlock
+                    Style="{StaticResource MaterialDesignTextBlock}"
+                    Text="For order"
+                    FontWeight="DemiBold"/>
+            </CheckBox>
+
+        </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>

@@ -87,7 +87,7 @@
                             Width="auto"/>
 
                         <DataGridTextColumn
-                            Header="Total"
+                            Header="Delivery Status"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding DeliveryStatus}"

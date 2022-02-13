@@ -1,7 +1,9 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using ProjectLex.InventoryManagement.Database.Models;
+using ProjectLex.InventoryManagement.Desktop.Controls;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using ProjectLex.InventoryManagement.Desktop.Views;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -32,7 +35,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
 
         public RelayCommand LoadOrderDetailsCommand { get; }
-        public RelayCommand<UserControl> PrintCommand { get; }
+        public RelayCommand<ContentControl> PrintCommand { get; }
 
         public PrintInvoiceViewModel(NavigationStore navigationStore, Guid orderID)
         {
@@ -45,16 +48,18 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
 
             LoadOrderDetailsCommand = new RelayCommand(LoadOrderDetails);
-            PrintCommand = new RelayCommand<UserControl>(Print);
+            PrintCommand = new RelayCommand<ContentControl>(Print);
         }
 
-        private void Print(UserControl invoiceDocument)
+        private void Print(ContentControl userControl)
         {
-
+            InvoiceDocumentControl invoiceDocument = (InvoiceDocumentControl)userControl;
             PrintDialog printDialog = new PrintDialog();
             if(printDialog.ShowDialog() == true)
             {
                 printDialog.PrintVisual(invoiceDocument, "Invoice Printing.");
+                _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.ORDERS, ActionType.PRINT_INVOICE, $"Invoice printed; OrderID: {_order.OrderID};"));
+                _unitOfWork.Save();
             }
         }
 

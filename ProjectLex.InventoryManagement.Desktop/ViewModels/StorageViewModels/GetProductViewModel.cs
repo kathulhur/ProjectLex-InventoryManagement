@@ -21,6 +21,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private ProductLocation _productLocation;
 
+        private bool _isForOrder = false;
+        public bool IsForOrder 
+        {
+            get => _isForOrder;
+            set
+            {
+                SetProperty(ref _isForOrder, value);
+            }
+        }
 
         public ProductViewModel Product => new ProductViewModel(_productLocation.Product);
 
@@ -67,10 +76,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
 
             _productLocation.ProductQuantity -= Convert.ToInt32(_productQuantity);
-            _productLocation.Product.ProductQuantity -= Convert.ToInt32(_productQuantity);
             _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.STORAGES, ActionType.GET, $"Product taken; ProductID: {_productLocation.ProductID}; Quantity: {_productQuantity};"));
-            _unitOfWork.Save();
 
+            if(!_isForOrder)
+            {
+                _productLocation.Product.ProductQuantity -= Convert.ToInt32(_productQuantity);
+            }
+
+            _unitOfWork.Save();
             MessageBox.Show("Successful");
             _closeDialogCallback();
         }

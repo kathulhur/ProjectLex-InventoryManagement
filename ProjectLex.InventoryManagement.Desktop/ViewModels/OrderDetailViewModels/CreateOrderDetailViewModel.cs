@@ -115,22 +115,41 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 return;
             }
 
-            OrderDetail orderDetail = _order.OrderDetails.SingleOrDefault(od => od.ProductID == this._product.Product.ProductID);
-            if (orderDetail == null)
+            OrderDetail storedOrderDetail = _order.OrderDetails.SingleOrDefault(od => od.ProductID == this._product.Product.ProductID);
+            if (storedOrderDetail == null)
             {
                 OrderDetail newOrderDetail = new OrderDetail()
                 {
-                    OrderID = this._order.OrderID,
-                    Product = this._product.Product,
+                    OrderID = _order.OrderID,
+                    Product = _product.Product,
                     ProductID = new Guid(this._productID),
                     OrderDetailQuantity = Convert.ToInt32(this._orderDetailQuantity),
                     OrderDetailAmount = Convert.ToDecimal(this._orderDetailAmount)
                 };
-                _order.OrderDetails.Add(newOrderDetail);
+                
+
+                Product storedProduct = _unitOfWork.ProductRepository.GetByID(newOrderDetail.ProductID);
+                if(Convert.ToInt32(_orderDetailQuantity) > storedProduct.ProductQuantity)
+                {
+                    MessageBox.Show("Insufficient stocks!");
+                    return;
+                } else
+                {
+                    _order.OrderDetails.Add(newOrderDetail);
+                    storedProduct.ProductQuantity -= newOrderDetail.OrderDetailQuantity;
+                }
             } else
             {
-                orderDetail.OrderDetailQuantity += Convert.ToInt32(_orderDetailQuantity);
-                orderDetail.OrderDetailAmount = orderDetail.OrderDetailQuantity * orderDetail.Product.ProductPrice;
+                if(Convert.ToInt32(_orderDetailQuantity) > storedOrderDetail.Product.ProductQuantity)
+                {
+                    MessageBox.Show("Insufficient stocks!");
+                    return;
+                } else
+                {
+                    storedOrderDetail.OrderDetailQuantity += Convert.ToInt32(_orderDetailQuantity);
+                    storedOrderDetail.OrderDetailAmount = storedOrderDetail.OrderDetailQuantity * storedOrderDetail.Product.ProductPrice;
+                    storedOrderDetail.Product.ProductQuantity -= Convert.ToInt32(_orderDetailQuantity);
+                }
             }
 
             MessageBox.Show("Successful");
