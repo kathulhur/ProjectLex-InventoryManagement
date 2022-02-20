@@ -35,7 +35,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
 
         public RelayCommand LoadOrderDetailsCommand { get; }
-        public RelayCommand<ContentControl> PrintCommand { get; }
+        public RelayCommand<InvoiceDocumentControl> PrintCommand { get; }
 
         public PrintInvoiceViewModel(NavigationStore navigationStore, Guid orderID)
         {
@@ -48,10 +48,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
 
             LoadOrderDetailsCommand = new RelayCommand(LoadOrderDetails);
-            PrintCommand = new RelayCommand<ContentControl>(Print);
+            PrintCommand = new RelayCommand<InvoiceDocumentControl>(Print);
         }
 
-        private void Print(ContentControl userControl)
+        private void Print(InvoiceDocumentControl userControl)
         {
             InvoiceDocumentControl invoiceDocument = (InvoiceDocumentControl)userControl;
             PrintDialog printDialog = new PrintDialog();

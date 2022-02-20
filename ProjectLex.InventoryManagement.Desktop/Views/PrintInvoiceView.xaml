@@ -18,14 +18,14 @@
             Margin="20"
             HorizontalAlignment="Right"
             Command="{Binding PrintCommand}"
-            CommandParameter="{Binding ElementName=InvoiceControl}">
+            CommandParameter="{Binding Path=Content, ElementName=InvoiceControl}">
             <materialDesign:PackIcon Kind="Printer"/>
         </Button>
 
         <Grid Grid.Row="1" Margin="20 20 20 20">
             <Border BorderBrush="{StaticResource MaterialDesignBody}" BorderThickness="1">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <controls:InvoiceDocumentControl x:Name="InvoiceControl"/>
+                <ScrollViewer x:Name="InvoiceControl" VerticalScrollBarVisibility="Auto">
+                    <controls:InvoiceDocumentControl/>
                 </ScrollViewer>
             </Border>
         </Grid>
