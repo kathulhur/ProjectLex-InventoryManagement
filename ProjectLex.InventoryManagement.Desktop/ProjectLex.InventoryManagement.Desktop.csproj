@@ -5,7 +5,7 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>ProjectLex.InventoryManagement.Desktop.App</StartupObject>
-    <ApplicationIcon />
+    <ApplicationIcon>Assets\IMSLogo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -60,8 +60,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\IMSLogo.ico" />
     <None Remove="Assets\IMSLogo.png" />
     <None Remove="Assets\logo.png" />
+    <None Remove="Assets\SplashScreen.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -80,24 +82,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\IMSLogo.ico" />
     <Resource Include="Assets\IMSLogo.png" />
     <Resource Include="Assets\logo.png" />
+    <Resource Include="Assets\SplashScreen.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\AttributeViews\AttributeListView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AttributeViews\CreateAttributeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AttributeViews\ModifyBrandView - Copy.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>ModifyAttributeView.xaml.cs</DependentUpon>
-    </Compile>
-    <Compile Update="Views\AttributeViews\ModifyAttributeView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\DefectiveViews\CreateDefectiveView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -153,15 +144,6 @@
     <Compile Update="Views\OrderViews\OrderListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AttributeValueViews\CreateAttributeValueView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AttributeValueViews\ModifyAttributeValueView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AttributeValueViews\AttributeValueListView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\StaffViews\StaffFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -186,18 +168,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Views\AttributeViews\AttributeListView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeViews\CreateAttributeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeViews\ModifyAttributeView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\DefectiveViews\CreateDefectiveView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
@@ -231,18 +201,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrderViews\OrderListView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeValueViews\CreateAttributeValueView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeValueViews\ModifyAttributeValueView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeValueViews\AttributeValueListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

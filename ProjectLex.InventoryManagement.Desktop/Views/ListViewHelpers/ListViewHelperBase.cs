@@ -1,17 +1,17 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
-using ProjectLex.InventoryManagement.Database.Models;
-using ProjectLex.InventoryManagement.Desktop.DAL;
-using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
-namespace ProjectLex.InventoryManagement.Desktop.ViewModels
+namespace ProjectLex.InventoryManagement.Desktop.Views.ListViewHelpers
 {
-    class LogListViewModel : ViewModelBase
+    public abstract class ListViewHelperBase<TViewModel> : ViewModelBase
     {
         private bool _isDisposed = false;
 
@@ -26,7 +26,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
-        private int _numberOfPages = 10;
+        private int _numberOfPages = 1;
 
         public int NumberOfPages
         {
@@ -46,54 +46,66 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 SetProperty(ref _selectedRecordsPerPage, value);
                 UpdateRecordsPerPage();
-                
             }
         }
 
-        private void UpdateRecordsPerPage()
+
+        private string _filter = string.Empty;
+
+        public string Filter
         {
-            NumberOfPages = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(_logs.Count) / SelectedRecordsPerPage));
-            NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
-            FirstPage();
+            get { return _filter; }
+            set
+            {
+                SetProperty(ref _filter, value);
+                _collectionView.Refresh();
+                RefreshCollection();
+            }
         }
 
-        private IEnumerable<int> _recordsPerPage = new List<int> { 10, 20, 30 };
-        public IEnumerable<int> RecordsPerPage => _recordsPerPage;
 
-        private readonly UnitOfWork _unitOfWork;
-        private readonly NavigationStore _navigationStore;
-
-        private readonly ObservableCollection<LogViewModel> _logs;
-        public ObservableCollection<LogViewModel> Logs { get; }
+        private readonly ObservableCollection<TViewModel> _databaseCollection;
+        private ICollectionView _collectionView;
+        public readonly ObservableCollection<TViewModel> DisplayCollection;
 
 
-        public RelayCommand LoadLogsCommand { get; }
         public RelayCommand NextPageCommand { get; }
         public RelayCommand PreviousPageCommand { get; }
         public RelayCommand FirstPageCommand { get; }
         public RelayCommand LastPageCommand { get; }
 
-        public LogListViewModel(NavigationStore navigationStore)
-        {
-            _navigationStore = navigationStore;
-            _unitOfWork = new UnitOfWork();
-            _logs = new ObservableCollection<LogViewModel>();
-            Logs = new ObservableCollection<LogViewModel>();
+        private IEnumerable<int> _recordsPerPage = new List<int> { 10, 20, 30 };
+        public IEnumerable<int> RecordsPerPage => _recordsPerPage;
 
-            LoadLogsCommand = new RelayCommand(LoadLogs);
+        public ListViewHelperBase(ObservableCollection<TViewModel> databaseCollection, ObservableCollection<TViewModel> displayCollection)
+        {
+            _databaseCollection = databaseCollection;
+            _collectionView = CollectionViewSource.GetDefaultView(databaseCollection);
+            _collectionView.Filter = FilterCollection;
+            DisplayCollection = displayCollection;
+
             NextPageCommand = new RelayCommand(NextPage, () => CurrentPage < NumberOfPages);
             PreviousPageCommand = new RelayCommand(PreviousPage, () => CurrentPage > 1);
             FirstPageCommand = new RelayCommand(FirstPage, () => CurrentPage > 1);
             LastPageCommand = new RelayCommand(LastPage, () => CurrentPage < NumberOfPages);
-
         }
 
-        private void UpdateCollection(IEnumerable<LogViewModel> logs)
+        protected abstract bool FilterCollection(object obj);
+
+
+        private void UpdateRecordsPerPage()
         {
-            Logs.Clear();
-            foreach(LogViewModel l in logs)
+            NumberOfPages = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(_collectionView.Cast<TViewModel>().Count()) / SelectedRecordsPerPage));
+            NumberOfPages = NumberOfPages == 0 ? 1 : NumberOfPages;
+            FirstPage();
+        }
+
+        private void UpdateCollection(IEnumerable<TViewModel> collection)
+        {
+            DisplayCollection.Clear();
+            foreach (TViewModel tvm in collection)
             {
-                Logs.Add(l);
+                DisplayCollection.Add(tvm);
             }
         }
 
@@ -108,8 +120,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void NextPage()
         {
             CurrentPage++;
-            int offset = (CurrentPage-1) * SelectedRecordsPerPage;
-            UpdateCollection(_logs.Skip(offset).Take(SelectedRecordsPerPage));
+            int offset = (CurrentPage - 1) * SelectedRecordsPerPage;
+            UpdateCollection(_collectionView.Cast<TViewModel>().Skip(offset).Take(SelectedRecordsPerPage));
             UpdateButtonEnableStates();
         }
 
@@ -117,45 +129,34 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             CurrentPage--;
             int offset = (CurrentPage - 1) * SelectedRecordsPerPage;
-            UpdateCollection(_logs.Skip(offset).Take(SelectedRecordsPerPage));
+            UpdateCollection(_collectionView.Cast<TViewModel>().Skip(offset).Take(SelectedRecordsPerPage));
             UpdateButtonEnableStates();
         }
 
         private void FirstPage()
         {
-            UpdateCollection(_logs.Take(SelectedRecordsPerPage));
+            UpdateCollection(_collectionView.Cast<TViewModel>().Take(SelectedRecordsPerPage));
             CurrentPage = 1;
             UpdateButtonEnableStates();
         }
 
         private void LastPage()
         {
-            int offset = (NumberOfPages-1) * SelectedRecordsPerPage;
-            UpdateCollection(_logs.Skip(offset).Take(SelectedRecordsPerPage));
+            int offset = (NumberOfPages - 1) * SelectedRecordsPerPage;
+            UpdateCollection(_collectionView.Cast<TViewModel>().Skip(offset).Take(SelectedRecordsPerPage));
             CurrentPage = NumberOfPages;
             UpdateButtonEnableStates();
         }
 
-
-
-        private void LoadLogs()
+        public void RefreshCollection()
         {
-            _logs.Clear();
-            foreach (Log s in _unitOfWork.LogRepository.Get(orderBy: l => l.OrderByDescending(l => l.DateTime), includeProperties: "Staff"))
-            {
-                _logs.Add(new LogViewModel(s));
-            }
             UpdateRecordsPerPage();
-            FirstPage();
-            
+            int offset = (CurrentPage - 1) * SelectedRecordsPerPage;
+            UpdateCollection(_collectionView.Cast<TViewModel>().Skip(offset).Take(SelectedRecordsPerPage));
+            UpdateButtonEnableStates();
         }
 
-        public static LogListViewModel LoadViewModel(NavigationStore navigationStore)
-        {
-            LogListViewModel viewModel = new LogListViewModel(navigationStore);
-            viewModel.LoadLogsCommand.Execute(null);
-            return viewModel;
-        }
+
 
         protected override void Dispose(bool disposing)
         {
@@ -166,7 +167,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _unitOfWork.Dispose();
                 }
 
             }

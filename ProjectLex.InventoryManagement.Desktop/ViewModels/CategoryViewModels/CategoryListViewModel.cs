@@ -10,6 +10,7 @@ using ProjectLex.InventoryManagement.Desktop.DAL;
 using Microsoft.Toolkit.Mvvm.Input;
 using ProjectLex.InventoryManagement.Database.Models;
 using System.Windows;
+using ProjectLex.InventoryManagement.Desktop.Views.ListViewHelpers;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -28,10 +29,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ViewModelBase DialogViewModel => _dialogViewModel;
 
         private readonly ObservableCollection<CategoryViewModel> _categories;
-        public IEnumerable<CategoryViewModel> Categories => _categories;
+        public ObservableCollection<CategoryViewModel> Categories { get; }
 
         private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
+
+
+        public CategoryListViewHelper CategoryListViewHelper { get; }
+
         public RelayCommand LoadCategoriesCommand { get; }
         public RelayCommand<CategoryViewModel> RemoveCategoryCommand { get; }
         public RelayCommand<CategoryViewModel> EditCategoryCommand { get; }
@@ -43,8 +48,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
             _categories = new ObservableCollection<CategoryViewModel>();
-
-
+            Categories = new ObservableCollection<CategoryViewModel>();
+            CategoryListViewHelper = new CategoryListViewHelper(_categories, Categories);
             LoadCategoriesCommand = new RelayCommand(LoadCategories);
             RemoveCategoryCommand = new RelayCommand<CategoryViewModel>(RemoveCategory);
             EditCategoryCommand = new RelayCommand<CategoryViewModel>(EditCategory);
@@ -56,6 +61,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.CategoryRepository.Delete(categoryViewModel.Category);
             _unitOfWork.Save();
             _categories.Remove(categoryViewModel);
+            CategoryListViewHelper.RefreshCollection();
             MessageBox.Show("Category Removed Successfully");
         }
 
@@ -88,14 +94,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _categories.Add(new CategoryViewModel(c));
             }
-
+            CategoryListViewHelper.RefreshCollection();
         }
 
         public static CategoryListViewModel LoadViewModel(NavigationStore navigationStore)
         {
             CategoryListViewModel viewModel = new CategoryListViewModel(navigationStore);
             viewModel.LoadCategoriesCommand.Execute(null);
-
             return viewModel;
         }
 
@@ -121,6 +126,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
+                    CategoryListViewHelper?.Dispose();
                 }
 
             }

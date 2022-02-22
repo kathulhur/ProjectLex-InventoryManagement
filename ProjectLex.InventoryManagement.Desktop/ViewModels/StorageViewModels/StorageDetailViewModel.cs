@@ -29,8 +29,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public LocationViewModel Location => new LocationViewModel(_location);
 
         private readonly NavigationStore _navigationStore;
+
+        private PaginationHelper<ProductLocationViewModel> _paginationHelper;
+        public PaginationHelper<ProductLocationViewModel> PaginationHelper => _paginationHelper;
+
         private readonly ObservableCollection<ProductLocationViewModel> _productLocations;
-        public IEnumerable<ProductLocationViewModel> ProductLocations => _productLocations;
+        public ObservableCollection<ProductLocationViewModel> ProductLocations { get; }
 
         public RelayCommand LoadProductLocationsCommand { get; }
         public RelayCommand AddProductCommand { get; }
@@ -44,7 +48,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
             _productLocations = new ObservableCollection<ProductLocationViewModel>();
+            ProductLocations = new ObservableCollection<ProductLocationViewModel>();
             _location = _unitOfWork.LocationRepository.Get(l => l.LocationID == locationID, includeProperties: "ProductLocations,ProductLocations.Product").SingleOrDefault();
+
+            _paginationHelper = new PaginationHelper<ProductLocationViewModel>(_productLocations, ProductLocations);
 
             LoadProductLocationsCommand = new RelayCommand(LoadProductLocations);
             AddProductCommand = new RelayCommand(AddProduct);
@@ -119,6 +126,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _productLocations.Add(new ProductLocationViewModel(pl));
             }
+            _paginationHelper.RefreshCollection();
         }
 
 
@@ -142,6 +150,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork?.Dispose();
                     _dialogViewModel?.Dispose();
+                    _paginationHelper?.Dispose();
                 }
 
             }

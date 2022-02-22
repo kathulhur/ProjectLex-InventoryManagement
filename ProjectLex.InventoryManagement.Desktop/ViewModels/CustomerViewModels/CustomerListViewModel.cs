@@ -25,8 +25,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
+        private PaginationHelper<CustomerViewModel> _paginationHelper;
+        public PaginationHelper<CustomerViewModel> PaginationHelper => _paginationHelper;
+
         private readonly ObservableCollection<CustomerViewModel> _customers;
-        public IEnumerable<CustomerViewModel> Customers => _customers;
+        public ObservableCollection<CustomerViewModel> Customers { get; }
 
         public RelayCommand CreateCustomerCommand { get; }
         public RelayCommand LoadCustomersCommand { get; }
@@ -37,8 +40,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
-
             _customers = new ObservableCollection<CustomerViewModel>();
+            Customers = new ObservableCollection<CustomerViewModel>();
+
+            _paginationHelper = new PaginationHelper<CustomerViewModel>(_customers, Customers);
 
             LoadCustomersCommand = new RelayCommand(LoadCustomers);
             RemoveCustomerCommand = new RelayCommand<CustomerViewModel>(RemoveCustomer);
@@ -53,6 +58,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.CustomerRepository.Delete(customerViewModel.Customer);
             _unitOfWork.Save();
             _customers.Remove(customerViewModel);
+            _paginationHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -92,6 +98,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _customers.Add(new CustomerViewModel(u));
             }
+            _paginationHelper.RefreshCollection();
         }
 
         public static CustomerListViewModel LoadViewModel(NavigationStore navigationStore)
@@ -114,6 +121,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
+                    _paginationHelper?.Dispose();
                 }
 
             }

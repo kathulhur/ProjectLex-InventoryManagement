@@ -18,6 +18,9 @@
     <Compile Update="Controls\DeliveredOrderCountControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\FilterControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\InTransitOrderCountControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +31,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\NavigationBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PaginationControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\ProcessingOrderCountControl.xaml.cs">
@@ -98,6 +104,9 @@
     <Page Update="Controls\DeliveredOrderCountControl.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\FilterControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\InTransitOrderCountControl.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -108,6 +117,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\NavigationBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PaginationControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\ProcessingOrderCountControl.xaml">
@@ -126,15 +138,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ResourceDictionaries\Styles.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeViews\AttributeListView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeViews\CreateAttributeView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeViews\ModifyAttributeView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CreateProductLocationView.xaml">
@@ -191,15 +194,6 @@
     <Page Update="Views\StorageViews\StorageListView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\StoreViews\CreateStoreView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StoreViews\EditStoreView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\StoreViews\StoreListView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\OrderViews\CreateOrderView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -207,15 +201,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OrderViews\OrderListView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeValueViews\CreateAttributeValueView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeValueViews\ModifyAttributeValueView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AttributeValueViews\AttributeValueListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\StaffViews\StaffFormView.xaml">

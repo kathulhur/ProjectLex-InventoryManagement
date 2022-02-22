@@ -6,8 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-             xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-             xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -52,7 +51,11 @@
 
             <Grid 
                 Grid.Row="1">
-                <DataGrid
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid Grid.Row="0"
                     ItemsSource="{Binding Categories}"
                     Style="{StaticResource MaterialDesignDataGrid}"
                     BorderBrush="Black"
@@ -93,7 +96,7 @@
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditCategoryCommand, 
-                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:CategoryListView}}"
                                             CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Edit"/>
 
@@ -105,7 +108,7 @@
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.RemoveCategoryCommand, 
-                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:CategoryListView}}"
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:CategoryListView}}"
                                             CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Remove"/>
                                         </Button>
@@ -116,7 +119,27 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
-              
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Margin="0 0 40 0">
+                        <controls:FilterControl Filter="{Binding CategoryListViewHelper.Filter}"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <controls:PaginationControl
+                            CurrentPage="{Binding CategoryListViewHelper.CurrentPage}"
+                            NumberOfPages="{Binding CategoryListViewHelper.NumberOfPages}"
+                            RecordsPerPage="{Binding CategoryListViewHelper.RecordsPerPage}"
+                            SelectedRecordsPerPage="{Binding CategoryListViewHelper.SelectedRecordsPerPage}"
+                            FirstPageCommand="{Binding CategoryListViewHelper.FirstPageCommand}"
+                            PreviousPageCommand="{Binding CategoryListViewHelper.PreviousPageCommand}"
+                            NextPageCommand="{Binding CategoryListViewHelper.NextPageCommand}"
+                            LastPageCommand="{Binding CategoryListViewHelper.LastPageCommand}"
+                        />
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
             

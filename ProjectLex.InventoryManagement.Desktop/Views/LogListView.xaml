@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
              mc:Ignorable="d">
     
     
@@ -78,7 +79,20 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <StackPanel 
+            <Grid Grid.Row="1" Margin="5">
+                <controls:PaginationControl
+                    CurrentPage="{Binding CurrentPage}"
+                    NumberOfPages="{Binding NumberOfPages}"
+                    RecordsPerPage="{Binding RecordsPerPage}"
+                    SelectedRecordsPerPage="{Binding SelectedRecordsPerPage}"
+                    FirstPageCommand="{Binding FirstPageCommand}"
+                    PreviousPageCommand="{Binding PreviousPageCommand}"
+                    NextPageCommand="{Binding NextPageCommand}"
+                    LastPageCommand="{Binding LastPageCommand}"/>
+            </Grid>
+
+
+            <!--<StackPanel 
                 Grid.Row="1"
                 Orientation="Horizontal"
                 HorizontalAlignment="Right">
@@ -102,7 +116,7 @@
                 </TextBlock>
                 <Button Content="&gt;" ToolTip="Next Page" Margin="5" Command="{Binding NextPageCommand}"/>
                 <Button Content="&gt;&gt;" ToolTip="Last Page" Margin="5" Command="{Binding LastPageCommand}"/>
-            </StackPanel>
+            </StackPanel>-->
         </Grid>
 
     </Grid>

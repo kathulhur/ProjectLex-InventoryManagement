@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
+             xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
              mc:Ignorable="d">
 
     <materialDesign:DialogHost 
@@ -46,14 +47,19 @@
             </Grid>
 
             <Grid 
-            Grid.Row="1">
+                Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <DataGrid
-                ItemsSource="{Binding Locations}"
-                Style="{StaticResource MaterialDesignDataGrid}"
-                BorderBrush="Black"
-                BorderThickness="2"
-                IsReadOnly="True"
-                AutoGenerateColumns="False">
+                    Grid.Row="0"
+                    ItemsSource="{Binding Locations}"
+                    Style="{StaticResource MaterialDesignDataGrid}"
+                    BorderBrush="Black"
+                    BorderThickness="2"
+                    IsReadOnly="True"
+                    AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Header="Location"
@@ -99,6 +105,18 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
+                <Grid Grid.Row="1">
+                    <controls:PaginationControl
+                    CurrentPage="{Binding PaginationHelper.CurrentPage}"
+                    NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
+                    RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
+                    SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
+                    FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
+                    PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
+                    NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
+                    LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
+                    />
+                </Grid>
 
             </Grid>
         </Grid>

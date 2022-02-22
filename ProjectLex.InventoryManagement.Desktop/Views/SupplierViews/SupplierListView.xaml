@@ -5,9 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-             xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920">
+             xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
+             mc:Ignorable="d">
 
     <materialDesign:DialogHost 
         CloseOnClickAway="true" 
@@ -52,7 +51,12 @@
 
             <Grid 
                 Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <DataGrid
+                    Grid.Row="0"
                     ItemsSource="{Binding Suppliers}"
                     Style="{StaticResource MaterialDesignDataGrid}"
                     BorderBrush="Black"
@@ -106,7 +110,7 @@
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditSupplierCommand, 
-                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:SupplierListView}}"
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupplierListView}}"
                                             CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Edit"/>
                                         </Button>
@@ -117,7 +121,7 @@
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.RemoveSupplierCommand, 
-                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:SupplierListView}}"
+                                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupplierListView}}"
                                             CommandParameter="{Binding}">
                                             <materialDesign:PackIcon Kind="Remove"/>
                                         </Button>
@@ -128,6 +132,18 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
+                <Grid Grid.Row="1">
+                    <controls:PaginationControl
+                        CurrentPage="{Binding PaginationHelper.CurrentPage}"
+                        NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
+                        RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
+                        SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
+                        FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
+                        PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
+                        NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
+                        LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
+                        />
+                </Grid>
             </Grid>
 
         </Grid>

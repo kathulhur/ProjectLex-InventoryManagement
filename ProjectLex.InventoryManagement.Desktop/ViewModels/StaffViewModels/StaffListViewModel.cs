@@ -28,8 +28,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
+        private PaginationHelper<StaffViewModel> _paginationHelper;
+        public PaginationHelper<StaffViewModel> PaginationHelper { get; }
+
+
         private readonly ObservableCollection<StaffViewModel> _staffs;
-        public IEnumerable<StaffViewModel> Staffs => _staffs;
+        public ObservableCollection<StaffViewModel> Staffs { get; }
         
         public RelayCommand CreateStaffCommand { get; }
         public RelayCommand LoadStaffsCommand { get; }
@@ -42,6 +46,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork = new UnitOfWork();
 
             _staffs = new ObservableCollection<StaffViewModel>();
+            Staffs = new ObservableCollection<StaffViewModel>();
+
+            _paginationHelper = new PaginationHelper<StaffViewModel>(_staffs, Staffs);
 
             LoadStaffsCommand = new RelayCommand(LoadStaffs);
             RemoveStaffCommand = new RelayCommand<StaffViewModel>(RemoveStaff);
@@ -56,6 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.StaffRepository.Delete(staffViewModel.Staff);
             _unitOfWork.Save();
             _staffs.Remove(staffViewModel);
+            _paginationHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -95,6 +103,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _staffs.Add(new StaffViewModel(u));
             }
+            _paginationHelper.RefreshCollection();
         }
 
         public static StaffListViewModel LoadViewModel(NavigationStore navigationStore)
@@ -117,6 +126,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
+                    _paginationHelper?.Dispose();
                 }
 
             }

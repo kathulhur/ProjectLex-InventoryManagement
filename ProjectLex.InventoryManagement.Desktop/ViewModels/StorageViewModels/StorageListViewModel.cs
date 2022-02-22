@@ -17,10 +17,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private bool _isDisposed = false;
 
         private UnitOfWork _unitOfWork;
-
         private readonly NavigationStore _navigationStore;
+
+        private PaginationHelper<LocationViewModel> _paginationHelper;
+        public PaginationHelper<LocationViewModel> PaginationHelper => _paginationHelper;
+
+
         private readonly ObservableCollection<LocationViewModel> _locations;
-        public IEnumerable<LocationViewModel> Locations => _locations;
+        public ObservableCollection<LocationViewModel> Locations { get; }
 
         public RelayCommand LoadLocationsCommand { get; }
         public RelayCommand CreateLocationCommand { get; }
@@ -31,6 +35,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore = navigationStore;
             _unitOfWork = new UnitOfWork();
             _locations = new ObservableCollection<LocationViewModel>();
+            Locations = new ObservableCollection<LocationViewModel>();
+
+            _paginationHelper = new PaginationHelper<LocationViewModel>(_locations, Locations);
 
             LoadLocationsCommand = new RelayCommand(LoadLocations);
             LocationDetailsCommand = new RelayCommand<LocationViewModel>(LocationDetails);
@@ -50,6 +57,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _locations.Add(new LocationViewModel(r));
             }
+            _paginationHelper.RefreshCollection();
         }
 
 
@@ -72,6 +80,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
+                    _paginationHelper.Dispose();
                 }
 
             }

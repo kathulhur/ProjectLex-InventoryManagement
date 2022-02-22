@@ -24,5 +24,6 @@ namespace ProjectLex.InventoryManagement.Desktop.Views
         {
             InitializeComponent();
         }
+
     }
 }

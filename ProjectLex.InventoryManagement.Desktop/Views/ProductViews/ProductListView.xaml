@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
+             xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
 
@@ -50,7 +51,12 @@
 
             <Grid 
                 Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <DataGrid
+                    Grid.Row="0"
                     ItemsSource="{Binding Products}"
                     Style="{StaticResource MaterialDesignDataGrid}"
                     BorderBrush="Black"
@@ -145,6 +151,18 @@
 
                     </DataGrid.Columns>
                 </DataGrid>
+                <Grid Grid.Row="1">
+                    <controls:PaginationControl
+                    CurrentPage="{Binding PaginationHelper.CurrentPage}"
+                    NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
+                    RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
+                    SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
+                    FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
+                    PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
+                    NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
+                    LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
+                    />
+                </Grid>
             </Grid>
 
 

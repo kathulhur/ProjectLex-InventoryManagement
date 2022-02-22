@@ -6,7 +6,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:local="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
-             mc:Ignorable="d" >
+             xmlns:controls="clr-namespace:ProjectLex.InventoryManagement.Desktop.Controls"
+             mc:Ignorable="d"
+             >
 
     <Grid Margin="30 30 30 30">
         <Grid.RowDefinitions>
@@ -29,7 +31,12 @@
 
         <Grid 
             Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
             <DataGrid
+                Grid.Row="0"
                 ItemsSource="{Binding Locations}"
                 Style="{StaticResource MaterialDesignDataGrid}"
                 BorderBrush="Black"
@@ -71,7 +78,18 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-
+            <Grid Grid.Row="1">
+                <controls:PaginationControl
+                    CurrentPage="{Binding PaginationHelper.CurrentPage}"
+                    NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
+                    RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
+                    SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
+                    FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
+                    PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
+                    NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
+                    LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
+                    />
+            </Grid>
         </Grid>
     </Grid>
 

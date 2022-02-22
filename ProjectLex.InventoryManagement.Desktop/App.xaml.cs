@@ -24,14 +24,12 @@ namespace ProjectLex.InventoryManagement.Desktop
 
         private readonly NavigationStore _navigationStore;
         private readonly AuthenticationStore _authenticationStore;
-        
-
         public App()
         {
+            SplashScreen splashScreen = new SplashScreen(@"./Assets/SplashScreen.png");
+            splashScreen.Show(true);
             _navigationStore = new NavigationStore();
             _authenticationStore = new AuthenticationStore();
-            
-
         }
 
         protected override void OnStartup(StartupEventArgs e)

@@ -26,10 +26,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ViewModelBase DialogViewModel => _dialogViewModel;
 
         private UnitOfWork _unitOfWork;
-
         private readonly NavigationStore _navigationStore;
+
+        private PaginationHelper<RoleViewModel> _paginationHelper;
+        public PaginationHelper<RoleViewModel> PaginationHelper => _paginationHelper;
+
+
         private readonly ObservableCollection<RoleViewModel> _roles;
-        public IEnumerable<RoleViewModel> Roles => _roles;
+        public ObservableCollection<RoleViewModel> Roles { get; }
 
         public RelayCommand LoadRolesCommand { get; }
         public RelayCommand CreateRoleCommand { get; }
@@ -39,9 +43,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public RoleListViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-
             _unitOfWork = new UnitOfWork();
+
             _roles = new ObservableCollection<RoleViewModel>();
+            Roles = new ObservableCollection<RoleViewModel>();
+
+            _paginationHelper = new PaginationHelper<RoleViewModel>(_roles, Roles);
+
             LoadRolesCommand = new RelayCommand(LoadData);
             RemoveRoleCommand = new RelayCommand<RoleViewModel>(RemoveRole);
             CreateRoleCommand = new RelayCommand(CreateRole);
@@ -75,6 +83,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.RoleRepository.Delete(roleViewModel.Role);
             _unitOfWork.Save();
             _roles.Remove(roleViewModel);
+            _paginationHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -85,6 +94,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _roles.Add(new RoleViewModel(r));
             }
+            _paginationHelper.RefreshCollection();
         }
 
         private void CloseDialogCallback()
@@ -116,6 +126,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
+                    _paginationHelper?.Dispose();
                 }
 
             }
