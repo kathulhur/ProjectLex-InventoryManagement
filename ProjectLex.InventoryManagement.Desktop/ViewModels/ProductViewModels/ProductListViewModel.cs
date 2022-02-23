@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,8 +30,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
-        private PaginationHelper<ProductViewModel> _paginationHelper;
-        public PaginationHelper<ProductViewModel> PaginationHelper => _paginationHelper;
+        public ProductListViewHelper ProductListViewHelper { get; }
 
 
         private readonly ObservableCollection<ProductViewModel> _products;
@@ -49,7 +49,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _products = new ObservableCollection<ProductViewModel>();
             Products = new ObservableCollection<ProductViewModel>();
 
-            _paginationHelper = new PaginationHelper<ProductViewModel>(_products, Products);
+            ProductListViewHelper = new ProductListViewHelper(_products, Products);
 
             LoadProductsCommand = new RelayCommand(LoadProducts);
             RemoveProductCommand = new RelayCommand<ProductViewModel>(RemoveProduct);
@@ -64,7 +64,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.ProductRepository.Delete(productViewModel.Product);
             _unitOfWork.Save();
             _products.Remove(productViewModel);
-            _paginationHelper.RefreshCollection();
+            ProductListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
 
         }
@@ -104,7 +104,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _products.Add(new ProductViewModel(p));
             }
-            _paginationHelper.RefreshCollection();
+            ProductListViewHelper.RefreshCollection();
         }
 
         public static ProductListViewModel LoadViewModel(NavigationStore navigationStore)
@@ -127,7 +127,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    ProductListViewHelper.Dispose();
                 }
 
             }

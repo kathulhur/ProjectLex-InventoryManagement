@@ -2,7 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
-using ProjectLex.InventoryManagement.Desktop.ViewModels;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,8 +30,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private readonly NavigationStore _navigationStore;
 
-        private PaginationHelper<ProductLocationViewModel> _paginationHelper;
-        public PaginationHelper<ProductLocationViewModel> PaginationHelper => _paginationHelper;
+        public StorageDetailListViewHelper StorageDetailListViewHelper { get; }
 
         private readonly ObservableCollection<ProductLocationViewModel> _productLocations;
         public ObservableCollection<ProductLocationViewModel> ProductLocations { get; }
@@ -51,7 +50,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             ProductLocations = new ObservableCollection<ProductLocationViewModel>();
             _location = _unitOfWork.LocationRepository.Get(l => l.LocationID == locationID, includeProperties: "ProductLocations,ProductLocations.Product").SingleOrDefault();
 
-            _paginationHelper = new PaginationHelper<ProductLocationViewModel>(_productLocations, ProductLocations);
+            StorageDetailListViewHelper = new StorageDetailListViewHelper(_productLocations, ProductLocations);
 
             LoadProductLocationsCommand = new RelayCommand(LoadProductLocations);
             AddProductCommand = new RelayCommand(AddProduct);
@@ -126,7 +125,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _productLocations.Add(new ProductLocationViewModel(pl));
             }
-            _paginationHelper.RefreshCollection();
+            StorageDetailListViewHelper.RefreshCollection();
         }
 
 
@@ -148,9 +147,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _unitOfWork?.Dispose();
+                    _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    StorageDetailListViewHelper.Dispose();
                 }
 
             }

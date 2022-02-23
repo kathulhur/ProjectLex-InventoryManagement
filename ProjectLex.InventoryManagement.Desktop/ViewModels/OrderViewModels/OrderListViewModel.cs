@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,8 +29,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
-        private PaginationHelper<OrderViewModel> _paginationHelper;
-        public PaginationHelper<OrderViewModel> PaginationHelper => _paginationHelper;
+        public OrderListViewHelper OrderListViewHelper { get; }
 
         private readonly ObservableCollection<OrderViewModel> _orders;
         public ObservableCollection<OrderViewModel> Orders { get; }
@@ -47,7 +47,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orders = new ObservableCollection<OrderViewModel>();
             Orders = new ObservableCollection<OrderViewModel>();
 
-            _paginationHelper = new PaginationHelper<OrderViewModel>(_orders, Orders);
+            OrderListViewHelper = new OrderListViewHelper(_orders, Orders);
 
             LoadOrdersCommand = new RelayCommand(LoadOrders);
             CreateOrderCommand = new RelayCommand<OrderViewModel>(CreateOrder);
@@ -72,7 +72,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.OrderRepository.Delete(orderViewModel.Order);
             _unitOfWork.Save();
             _orders.Remove(orderViewModel);
-            _paginationHelper.RefreshCollection();
+            OrderListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -93,7 +93,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _orders.Add(new OrderViewModel(o));
             }
-            _paginationHelper.RefreshCollection();
+            OrderListViewHelper.RefreshCollection();
 
         }
         
@@ -116,9 +116,9 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if (disposing) // dispose all unamanage and managed resources
                 {
                     // dispose resources here
-                    _unitOfWork?.Dispose();
+                    _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    OrderListViewHelper.Dispose();
                 }
 
             }

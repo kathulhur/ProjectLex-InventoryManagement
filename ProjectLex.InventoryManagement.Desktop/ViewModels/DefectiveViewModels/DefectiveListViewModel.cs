@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,7 +17,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
     public class DefectiveListViewModel : ViewModelBase
     {
-
         private bool _isDisposed = false;
 
         private bool _isDialogOpen = false;
@@ -28,8 +28,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
-        private PaginationHelper<DefectiveViewModel> _paginationHelper;
-        public PaginationHelper<DefectiveViewModel> PaginationHelper => _paginationHelper;
+        public DefectiveListViewHelper DefectiveListViewHelper { get; }
 
         private readonly ObservableCollection<DefectiveViewModel> _defectives;
         public ObservableCollection<DefectiveViewModel> Defectives { get; }
@@ -46,7 +45,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
             _defectives = new ObservableCollection<DefectiveViewModel>();
             Defectives = new ObservableCollection<DefectiveViewModel>();
-            _paginationHelper = new PaginationHelper<DefectiveViewModel>(_defectives, Defectives);
+            DefectiveListViewHelper = new DefectiveListViewHelper(_defectives, Defectives);
 
             LoadDefectivesCommand = new RelayCommand(LoadDefectives);
             RemoveDefectiveCommand = new RelayCommand<DefectiveViewModel>(RemoveDefective);
@@ -61,7 +60,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.DefectiveRepository.Delete(defectiveViewModel.Defective);
             _unitOfWork.Save();
             _defectives.Remove(defectiveViewModel);
-            _paginationHelper.RefreshCollection();
+            DefectiveListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -101,7 +100,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _defectives.Add(new DefectiveViewModel(u));
             }
-            _paginationHelper.RefreshCollection();
+            DefectiveListViewHelper.RefreshCollection();
         }
 
         public static DefectiveListViewModel LoadViewModel(NavigationStore navigationStore)
@@ -124,7 +123,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    DefectiveListViewHelper?.Dispose();
                 }
 
             }

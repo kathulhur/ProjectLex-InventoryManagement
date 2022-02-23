@@ -144,16 +144,25 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Grid Grid.Row="1">
-                    <controls:PaginationControl
-                        CurrentPage="{Binding PaginationHelper.CurrentPage}"
-                        NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
-                        RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
-                        SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
-                        FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
-                        PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
-                        NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
-                        LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
-                        />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <controls:FilterControl Filter="{Binding StorageDetailListViewHelper.Filter}"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <controls:PaginationControl
+                            CurrentPage="{Binding StorageDetailListViewHelper.CurrentPage}"
+                            NumberOfPages="{Binding StorageDetailListViewHelper.NumberOfPages}"
+                            RecordsPerPage="{Binding StorageDetailListViewHelper.RecordsPerPage}"
+                            SelectedRecordsPerPage="{Binding StorageDetailListViewHelper.SelectedRecordsPerPage}"
+                            FirstPageCommand="{Binding StorageDetailListViewHelper.FirstPageCommand}"
+                            PreviousPageCommand="{Binding StorageDetailListViewHelper.PreviousPageCommand}"
+                            NextPageCommand="{Binding StorageDetailListViewHelper.NextPageCommand}"
+                            LastPageCommand="{Binding StorageDetailListViewHelper.LastPageCommand}"
+                            />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

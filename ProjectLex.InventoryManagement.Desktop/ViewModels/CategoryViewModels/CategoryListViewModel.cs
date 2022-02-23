@@ -10,7 +10,7 @@ using ProjectLex.InventoryManagement.Desktop.DAL;
 using Microsoft.Toolkit.Mvvm.Input;
 using ProjectLex.InventoryManagement.Database.Models;
 using System.Windows;
-using ProjectLex.InventoryManagement.Desktop.Views.ListViewHelpers;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {

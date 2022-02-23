@@ -6,26 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectLex.InventoryManagement.Desktop.Views.ListViewHelpers
+namespace ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers
 {
-    public class CategoryListViewHelper : ListViewHelperBase<CategoryViewModel>
+    public class RoleListViewHelper : ListViewHelperBase<RoleViewModel>
     {
         
 
         
 
-        public CategoryListViewHelper(ObservableCollection<CategoryViewModel> databaseCollection, ObservableCollection<CategoryViewModel> displayCollection)
+        public RoleListViewHelper(ObservableCollection<RoleViewModel> databaseCollection, ObservableCollection<RoleViewModel> displayCollection)
             :base(databaseCollection, displayCollection)
         {
 
         }
 
 
+
         protected override bool FilterCollection(object obj)
         {
-            if(obj is CategoryViewModel viewModel)
+            if(obj is RoleViewModel viewModel)
             {
-                return viewModel.CategoryName.Contains(Filter);
+                return viewModel.RoleName.Contains(Filter, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
         }

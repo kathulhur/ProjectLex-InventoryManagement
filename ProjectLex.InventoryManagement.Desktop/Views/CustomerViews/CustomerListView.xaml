@@ -141,16 +141,25 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Grid Grid.Row="1">
-                    <controls:PaginationControl
-                    CurrentPage="{Binding PaginationHelper.CurrentPage}"
-                    NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
-                    RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
-                    SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
-                    FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
-                    PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
-                    NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
-                    LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
-                    />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <controls:FilterControl Filter="{Binding CustomerListViewHelper.Filter}"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <controls:PaginationControl
+                            CurrentPage="{Binding CustomerListViewHelper.CurrentPage}"
+                            NumberOfPages="{Binding CustomerListViewHelper.NumberOfPages}"
+                            RecordsPerPage="{Binding CustomerListViewHelper.RecordsPerPage}"
+                            SelectedRecordsPerPage="{Binding CustomerListViewHelper.SelectedRecordsPerPage}"
+                            FirstPageCommand="{Binding CustomerListViewHelper.FirstPageCommand}"
+                            PreviousPageCommand="{Binding CustomerListViewHelper.PreviousPageCommand}"
+                            NextPageCommand="{Binding CustomerListViewHelper.NextPageCommand}"
+                            LastPageCommand="{Binding CustomerListViewHelper.LastPageCommand}"
+                            />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

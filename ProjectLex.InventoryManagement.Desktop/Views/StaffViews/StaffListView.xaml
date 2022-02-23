@@ -142,16 +142,25 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Grid Grid.Row="1">
-                    <controls:PaginationControl
-                    CurrentPage="{Binding PaginationHelper.CurrentPage}"
-                    NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
-                    RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
-                    SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
-                    FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
-                    PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
-                    NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
-                    LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
-                    />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <controls:FilterControl Filter="{Binding StaffListViewHelper.Filter}"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <controls:PaginationControl
+                            CurrentPage="{Binding StaffListViewHelper.CurrentPage}"
+                            NumberOfPages="{Binding StaffListViewHelper.NumberOfPages}"
+                            RecordsPerPage="{Binding StaffListViewHelper.RecordsPerPage}"
+                            SelectedRecordsPerPage="{Binding StaffListViewHelper.SelectedRecordsPerPage}"
+                            FirstPageCommand="{Binding StaffListViewHelper.FirstPageCommand}"
+                            PreviousPageCommand="{Binding StaffListViewHelper.PreviousPageCommand}"
+                            NextPageCommand="{Binding StaffListViewHelper.NextPageCommand}"
+                            LastPageCommand="{Binding StaffListViewHelper.LastPageCommand}"
+                        />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

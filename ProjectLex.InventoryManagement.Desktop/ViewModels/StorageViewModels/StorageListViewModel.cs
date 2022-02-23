@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,8 +20,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
 
-        private PaginationHelper<LocationViewModel> _paginationHelper;
-        public PaginationHelper<LocationViewModel> PaginationHelper => _paginationHelper;
+        public StorageListViewHelper StorageListViewHelper { get; }
 
 
         private readonly ObservableCollection<LocationViewModel> _locations;
@@ -37,7 +37,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _locations = new ObservableCollection<LocationViewModel>();
             Locations = new ObservableCollection<LocationViewModel>();
 
-            _paginationHelper = new PaginationHelper<LocationViewModel>(_locations, Locations);
+            StorageListViewHelper = new StorageListViewHelper(_locations, Locations);
 
             LoadLocationsCommand = new RelayCommand(LoadLocations);
             LocationDetailsCommand = new RelayCommand<LocationViewModel>(LocationDetails);
@@ -57,7 +57,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _locations.Add(new LocationViewModel(r));
             }
-            _paginationHelper.RefreshCollection();
+            StorageListViewHelper.RefreshCollection();
         }
 
 
@@ -80,7 +80,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
-                    _paginationHelper.Dispose();
+                    StorageListViewHelper.Dispose();
                 }
 
             }

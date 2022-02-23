@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,8 +31,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ObservableCollection<SupplierViewModel> _suppliers;
         public ObservableCollection<SupplierViewModel> Suppliers { get; }
 
-        private PaginationHelper<SupplierViewModel> _paginationHelper;
-        public PaginationHelper<SupplierViewModel> PaginationHelper => _paginationHelper;
+        public SupplierListViewHelper SupplierListViewHelper { get; }
 
         public ICommand ToCreateSupplierCommand { get; }
         public RelayCommand LoadSuppliersCommand { get; }
@@ -45,7 +45,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork = new UnitOfWork();
             _suppliers = new ObservableCollection<SupplierViewModel>();
             Suppliers = new ObservableCollection<SupplierViewModel>();
-            _paginationHelper = new PaginationHelper<SupplierViewModel>(_suppliers, Suppliers);
+            SupplierListViewHelper = new SupplierListViewHelper(_suppliers, Suppliers);
 
             LoadSuppliersCommand = new RelayCommand(LoadSuppliers);
             RemoveSupplierCommand = new RelayCommand<SupplierViewModel>(RemoveSupplier);
@@ -58,7 +58,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.SupplierRepository.Delete(supplierViewModel.Supplier);
             _unitOfWork.Save();
             _suppliers.Remove(supplierViewModel);
-            _paginationHelper.RefreshCollection();
+            SupplierListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -100,7 +100,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _suppliers.Add(new SupplierViewModel(s));
             }
-            _paginationHelper.RefreshCollection();
+            SupplierListViewHelper.RefreshCollection();
         }
 
         public static SupplierListViewModel LoadViewModel(NavigationStore navigationStore)
@@ -121,7 +121,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    SupplierListViewHelper.Dispose();
                 }
 
             }

@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,8 +29,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
 
-        private PaginationHelper<StaffViewModel> _paginationHelper;
-        public PaginationHelper<StaffViewModel> PaginationHelper { get; }
+        public StaffListViewHelper StaffListViewHelper { get; }
 
 
         private readonly ObservableCollection<StaffViewModel> _staffs;
@@ -48,7 +48,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _staffs = new ObservableCollection<StaffViewModel>();
             Staffs = new ObservableCollection<StaffViewModel>();
 
-            _paginationHelper = new PaginationHelper<StaffViewModel>(_staffs, Staffs);
+            StaffListViewHelper = new StaffListViewHelper(_staffs, Staffs);
 
             LoadStaffsCommand = new RelayCommand(LoadStaffs);
             RemoveStaffCommand = new RelayCommand<StaffViewModel>(RemoveStaff);
@@ -63,7 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.StaffRepository.Delete(staffViewModel.Staff);
             _unitOfWork.Save();
             _staffs.Remove(staffViewModel);
-            _paginationHelper.RefreshCollection();
+            StaffListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -103,7 +103,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _staffs.Add(new StaffViewModel(u));
             }
-            _paginationHelper.RefreshCollection();
+            StaffListViewHelper.RefreshCollection();
         }
 
         public static StaffListViewModel LoadViewModel(NavigationStore navigationStore)
@@ -126,7 +126,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    StaffListViewHelper.Dispose();
                 }
 
             }

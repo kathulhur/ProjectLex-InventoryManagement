@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,8 +26,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
 
-        private PaginationHelper<LocationViewModel> _paginationHelper;
-        public PaginationHelper<LocationViewModel> PaginationHelper => _paginationHelper;
+        public LocationListViewHelper LocationListViewHelper { get; }
 
         private readonly ObservableCollection<LocationViewModel> _locations;
         public ObservableCollection<LocationViewModel> Locations { get; }
@@ -43,7 +43,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _locations = new ObservableCollection<LocationViewModel>();
             Locations = new ObservableCollection<LocationViewModel>();
 
-            _paginationHelper = new PaginationHelper<LocationViewModel>(_locations, Locations);
+            LocationListViewHelper = new LocationListViewHelper(_locations, Locations);
 
             LoadLocationsCommand = new RelayCommand(LoadData);
             RemoveLocationCommand = new RelayCommand<LocationViewModel>(RemoveLocation);
@@ -75,7 +75,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.LocationRepository.Delete(locationViewModel.Location);
             _unitOfWork.Save();
             _locations.Remove(locationViewModel);
-            _paginationHelper.RefreshCollection();
+            LocationListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -92,7 +92,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _locations.Add(new LocationViewModel(r));
             }
-            _paginationHelper.RefreshCollection();
+            LocationListViewHelper.RefreshCollection();
         }
 
 
@@ -115,7 +115,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 {
                     // dispose resources here
                     _unitOfWork.Dispose();
-                    _paginationHelper?.Dispose();
+                    _dialogViewModel?.Dispose();
+                    LocationListViewHelper.Dispose();
                 }
 
             }

@@ -39,7 +39,6 @@
                 AutoGenerateColumns="False"
                 >
                 <DataGrid.Columns>
-
                     <DataGridTextColumn
                             Header="DateTime"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
@@ -79,16 +78,25 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <Grid Grid.Row="1" Margin="5">
-                <controls:PaginationControl
-                    CurrentPage="{Binding CurrentPage}"
-                    NumberOfPages="{Binding NumberOfPages}"
-                    RecordsPerPage="{Binding RecordsPerPage}"
-                    SelectedRecordsPerPage="{Binding SelectedRecordsPerPage}"
-                    FirstPageCommand="{Binding FirstPageCommand}"
-                    PreviousPageCommand="{Binding PreviousPageCommand}"
-                    NextPageCommand="{Binding NextPageCommand}"
-                    LastPageCommand="{Binding LastPageCommand}"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <controls:FilterControl Filter="{Binding LogListViewHelper.Filter}"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <controls:PaginationControl
+                        CurrentPage="{Binding LogListViewHelper.CurrentPage}"
+                        NumberOfPages="{Binding LogListViewHelper.NumberOfPages}"
+                        RecordsPerPage="{Binding LogListViewHelper.RecordsPerPage}"
+                        SelectedRecordsPerPage="{Binding LogListViewHelper.SelectedRecordsPerPage}"
+                        FirstPageCommand="{Binding LogListViewHelper.FirstPageCommand}"
+                        PreviousPageCommand="{Binding LogListViewHelper.PreviousPageCommand}"
+                        NextPageCommand="{Binding LogListViewHelper.NextPageCommand}"
+                        LastPageCommand="{Binding LogListViewHelper.LastPageCommand}"/>
+                </Grid>
             </Grid>
 
 

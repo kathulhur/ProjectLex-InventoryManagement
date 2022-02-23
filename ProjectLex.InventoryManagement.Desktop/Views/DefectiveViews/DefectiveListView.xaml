@@ -120,16 +120,25 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <Grid Grid.Row="1">
-                    <controls:PaginationControl
-                        CurrentPage="{Binding PaginationHelper.CurrentPage}"
-                        NumberOfPages="{Binding PaginationHelper.NumberOfPages}"
-                        RecordsPerPage="{Binding PaginationHelper.RecordsPerPage}"
-                        SelectedRecordsPerPage="{Binding PaginationHelper.SelectedRecordsPerPage}"
-                        FirstPageCommand="{Binding PaginationHelper.FirstPageCommand}"
-                        PreviousPageCommand="{Binding PaginationHelper.PreviousPageCommand}"
-                        NextPageCommand="{Binding PaginationHelper.NextPageCommand}"
-                        LastPageCommand="{Binding PaginationHelper.LastPageCommand}"
-                        />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <controls:FilterControl Filter="{Binding DefectiveListViewHelper.Filter}"/>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <controls:PaginationControl
+                            CurrentPage="{Binding DefectiveListViewHelper.CurrentPage}"
+                            NumberOfPages="{Binding DefectiveListViewHelper.NumberOfPages}"
+                            RecordsPerPage="{Binding DefectiveListViewHelper.RecordsPerPage}"
+                            SelectedRecordsPerPage="{Binding DefectiveListViewHelper.SelectedRecordsPerPage}"
+                            FirstPageCommand="{Binding DefectiveListViewHelper.FirstPageCommand}"
+                            PreviousPageCommand="{Binding DefectiveListViewHelper.PreviousPageCommand}"
+                            NextPageCommand="{Binding DefectiveListViewHelper.NextPageCommand}"
+                            LastPageCommand="{Binding DefectiveListViewHelper.LastPageCommand}"
+                            />
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>

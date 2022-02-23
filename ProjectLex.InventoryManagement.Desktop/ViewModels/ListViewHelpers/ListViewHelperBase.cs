@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace ProjectLex.InventoryManagement.Desktop.Views.ListViewHelpers
+namespace ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers
 {
     public abstract class ListViewHelperBase<TViewModel> : ViewModelBase
     {

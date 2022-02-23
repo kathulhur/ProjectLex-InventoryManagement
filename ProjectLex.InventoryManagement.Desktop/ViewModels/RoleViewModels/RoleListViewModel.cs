@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,8 +29,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
 
-        private PaginationHelper<RoleViewModel> _paginationHelper;
-        public PaginationHelper<RoleViewModel> PaginationHelper => _paginationHelper;
+        public RoleListViewHelper RoleListViewHelper { get; }
 
 
         private readonly ObservableCollection<RoleViewModel> _roles;
@@ -48,7 +48,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _roles = new ObservableCollection<RoleViewModel>();
             Roles = new ObservableCollection<RoleViewModel>();
 
-            _paginationHelper = new PaginationHelper<RoleViewModel>(_roles, Roles);
+            RoleListViewHelper = new RoleListViewHelper(_roles, Roles);
 
             LoadRolesCommand = new RelayCommand(LoadData);
             RemoveRoleCommand = new RelayCommand<RoleViewModel>(RemoveRole);
@@ -83,7 +83,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.RoleRepository.Delete(roleViewModel.Role);
             _unitOfWork.Save();
             _roles.Remove(roleViewModel);
-            _paginationHelper.RefreshCollection();
+            RoleListViewHelper.RefreshCollection();
             MessageBox.Show("Successful");
         }
 
@@ -94,7 +94,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 _roles.Add(new RoleViewModel(r));
             }
-            _paginationHelper.RefreshCollection();
+            RoleListViewHelper.RefreshCollection();
         }
 
         private void CloseDialogCallback()
@@ -126,7 +126,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     // dispose resources here
                     _unitOfWork.Dispose();
                     _dialogViewModel?.Dispose();
-                    _paginationHelper?.Dispose();
+                    RoleListViewHelper.Dispose();
                 }
 
             }
