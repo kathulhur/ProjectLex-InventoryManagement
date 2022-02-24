@@ -23,7 +23,7 @@
                             <ToggleButton Cursor="Hand" ToolTip="Enable Dark Mode" Margin="12 0 8 0" x:Name="themeToggle" IsChecked="{Binding IsDarkTheme}" Command="{ Binding ToggleThemeCommand }"/>
                         </StackPanel>
 
-                        <Button ToolTip="Having Trouble Logging In?" Margin="0 8 0 0" Content="Help Me"/>
+                        <Button ToolTip="Having Trouble Logging In?" Margin="0 8 0 0" Content="Help Me" Command="{Binding HelpCommand}"/>
                         <Button x:Name="btn_exit" ToolTip="Close Application" Content="Exit Application" Command="{Binding ExitAppCommand }"/>
                     </StackPanel>
                 </materialDesign:PopupBox>

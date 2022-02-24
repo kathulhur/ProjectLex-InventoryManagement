@@ -38,13 +38,21 @@
                 <TextBlock 
                     Grid.Column="0" 
                     Text="Staffs"
-                    Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    FontWeight="Bold"/>
 
                 <Button
                     Grid.Column="1"
-                    Command="{ Binding CreateStaffCommand }"
-                    Margin="0 0 10 0 "
-                    Style="{StaticResource MaterialDesignPaperButton}">
+                    Command="{ Binding CreateStaffCommand }">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.StaffsAdd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <materialDesign:PackIcon Kind="Add"/>
                 </Button>
             </Grid>
@@ -117,22 +125,38 @@
                                             Grid.Column="0"
                                             Margin="0 0 5 0"
                                             BorderBrush="Orange"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditStaffCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:StaffListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.StaffsEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Edit"/>
                                         </Button>
 
                                         <Button 
                                             Grid.Column="1"
-                                            BorderBrush="OrangeRed"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            BorderBrush="Red"
                                             Command="{
                                                 Binding DataContext.RemoveStaffCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:StaffListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.StaffsDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Remove"/>
                                         </Button>
                                     </StackPanel>

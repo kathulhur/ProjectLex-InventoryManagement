@@ -36,13 +36,21 @@
                 <TextBlock 
                     Grid.Column="0" 
                     Text="Suppliers"
-                    Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    FontWeight="Bold"/>
 
                 <Button
                     Grid.Column="1"
-                    Command="{ Binding CreateSupplierCommand }"
-                    Style="{StaticResource MaterialDesignPaperLightButton}"
-                    Margin="0 0 10 0">
+                    Command="{ Binding CreateSupplierCommand }">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.SuppliersAdd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <materialDesign:PackIcon Kind="Add"/>
                 </Button>
 
@@ -107,22 +115,38 @@
                                             Grid.Column="0"
                                             BorderBrush="Orange"
                                             Margin="0 0 5 0"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditSupplierCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupplierListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.SuppliersEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Edit"/>
                                         </Button>
 
                                         <Button
                                             Grid.Column="1"
-                                            BorderBrush="OrangeRed"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            BorderBrush="Red"
                                             Command="{
                                                 Binding DataContext.RemoveSupplierCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:SupplierListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.SuppliersDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Remove"/>
                                         </Button>
                                     </StackPanel>

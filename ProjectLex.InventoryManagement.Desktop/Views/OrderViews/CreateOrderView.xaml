@@ -30,7 +30,8 @@
 
             <TextBlock
                 Grid.Row="0"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                FontWeight="Bold"
                 Text="New Order"/>
 
 
@@ -129,6 +130,7 @@
                                         <Button 
                                             Grid.Column="0"
                                             BorderBrush="Orange"
+                                            Margin="0 0 5 0"
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditOrderDetailCommand, 
@@ -139,7 +141,7 @@
 
                                         <Button 
                                             Grid.Column="1"
-                                            BorderBrush="OrangeRed"
+                                            BorderBrush="Red"
                                             Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.RemoveOrderDetailCommand, 

@@ -26,7 +26,8 @@
 
         <TextBlock
             Grid.Row="0"
-            Style="{StaticResource MaterialDesignHeadline3TextBlock}"
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            FontWeight="Bold"
             Text="New Product"/>
 
         <Grid 

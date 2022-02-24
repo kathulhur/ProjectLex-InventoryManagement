@@ -72,6 +72,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 return;
             }
+            else if (Convert.ToInt32(_quantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
+            }
             else if (!int.TryParse(_quantity, out tmpQuantity))
             {
                 MessageBox.Show("Invalid Input");
@@ -96,6 +101,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.STORAGES, ActionType.DELARE_AS_DEFECTIVE, $"Product declared as defective; ProductID: {_productLocation.ProductID}, Quantity: {_quantity}"));
             _unitOfWork.Save();
 
+            MessageBox.Show("Successful");
             _closeDialogCallback();
         }
 

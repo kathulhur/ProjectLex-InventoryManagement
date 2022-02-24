@@ -9,126 +9,223 @@
     <Grid>
         <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}" VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <Grid HorizontalAlignment="Center" Margin="0 10 0 10">
+                <Grid HorizontalAlignment="Center" Margin="0 20 0 0">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Image Source="/Assets/IMSLogo.png" Width="44" VerticalAlignment="Center"/>
                         <TextBlock Text="IMS" FontFamily="Bebas Neue" FontSize="60" VerticalAlignment="center"/>
                     </StackPanel>
                 </Grid>
 
-
-                <Grid>
-                    <Button Command="{Binding NavigateToDashboardCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Dashboard" FontSize="14" FontWeight="Bold"/>
+                <Grid HorizontalAlignment="Center" Margin="0 10 0 10">
+                    <Label FontSize="16" VerticalAlignment="Center" FontWeight="Bold" Padding="20 0 20 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Hello, " />
+                            <TextBlock Text="{Binding CurrentStaff.StaffUsername}"/>
                         </StackPanel>
-                    </Button>
+                    </Label>
                 </Grid>
 
 
-                <Grid>
-                    <Button Command="{Binding NavigateToOrderListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="CartCheck" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Orders" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
+                <Grid Margin="0 20 0 0">
+                    <StackPanel>
+                        <Button Command="{Binding NavigateToDashboardCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="ViewDashboardOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Dashboard" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavigateToOrderListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.OrdersView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="CartCheck" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Orders" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavigateToCustomerListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.CustomersView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="BusinessCardOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Customers" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </Grid>
 
 
-                <Grid>
-                    <Button Command="{Binding NavigateToCustomerListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                <Grid Margin="0 20 0 0">
+                    <StackPanel>
+                        <Button Command="{Binding NavigateToProductListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.ProductsView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="BoxOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Products" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavigateToStorageListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.StoragesView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="Storage" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Storages" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavigateToDefectiveListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.DefectivesView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="BusinessCardOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Customers" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
+                                <materialDesign:PackIcon Kind="GlassBroken" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Defectives" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </Grid>
 
 
-                <Grid Margin="0 30 0 0">
-                    <Button Command="{Binding NavigateToProductListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="BoxOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Products" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-
-                <Grid>
-                    <Button Command="{Binding NavigateToStorageListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="Storage" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Storages" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-
-                <Grid>
-                    <Button Command="{Binding NavigateToDefectiveListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="GlassBroken" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Defectives" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
 
 
+                <Grid Margin="0 20 0 0">
+                    <StackPanel>
+                        <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.CategoriesView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="CategoryOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Categories" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
 
+                        <Button Command="{Binding NavigateToLocationListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.LocationsView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="LocationOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Locations" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
 
-                <Grid Margin="0 30 0 0">
-                    <Button Command="{Binding NavigateToCategoryListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="CategoryOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Categories" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-
-
-                <Grid>
-                    <Button Command="{Binding NavigateToLocationListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="LocationOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Locations" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-
-
-                <Grid>
-                    <Button Command="{Binding NavigateToSupplierListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="ClipboardListOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Suppliers" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
+                        <Button Command="{Binding NavigateToSupplierListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.SuppliersView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="ClipboardListOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Suppliers" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </Grid>
 
 
-                <Grid Margin="0 30 0 0">
-                    <Button Command="{Binding NavigateToRoleListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="PersonOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Roles" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
+                <Grid Margin="0 20 0 0">
+                    <StackPanel>
+                        <Button Command="{Binding NavigateToRoleListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.RolesView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="PersonOutline" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Roles" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Command="{Binding NavigateToStaffListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentStaff.Role.StaffsView}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
+                                <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center" Foreground="#2d89ef"/>
+                                <Label Margin="20 0 0 0" Content="Staffs" FontSize="14" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
                 </Grid>
 
 
-                <Grid>
-                    <Button Command="{Binding NavigateToStaffListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
-                        <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
-                            <materialDesign:PackIcon Kind="CustomerService" VerticalAlignment="Center" Foreground="#2d89ef"/>
-                            <Label Margin="20 0 0 0" Content="Staffs" FontSize="14" FontWeight="Bold"/>
-                        </StackPanel>
-                    </Button>
-                </Grid>
-
-
-                <Grid Margin="0 30 0 0">
+                <Grid Margin="0 20 0 0">
                     <Button Command="{Binding NavigateToLogListCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CurrentStaff.Role.LogsView}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                             <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" Foreground="#2d89ef"/>
                             <Label Margin="20 0 0 0" Content="Activity Logs" FontSize="14" FontWeight="Bold"/>
@@ -137,7 +234,7 @@
                 </Grid>
 
 
-                <Grid Margin="0 30 0 0">
+                <Grid Margin="0 20 0 0">
                     <Button Command="{Binding LogOutCommand}" HorizontalContentAlignment="Left" Background="Transparent" BorderBrush="Transparent">
                         <StackPanel Orientation="Horizontal" Margin="20 0 0 0">
                             <materialDesign:PackIcon Kind="Logout" VerticalAlignment="Center" Foreground="#2d89ef"/>

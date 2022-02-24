@@ -43,11 +43,12 @@
                 <controls:NavigationBar/>
 
             </Grid>
-
-            <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}" Background="Gray"/>
+            <Grid Grid.Column="1">
+                <ContentControl Content="{Binding CurrentViewModel}" Background="Gray"/>
+            </Grid>
         </Grid>
 
-        <Label Grid.Row="1" HorizontalAlignment="Center" FontWeight="Bold">
+        <Label Grid.Row="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10">
             <StackPanel >
                 <TextBlock Text="Powered By: PROJECT LEX LABS" HorizontalAlignment="Center"/>
                 <TextBlock Text="© PROJECT LEX LABS Inc. All rights reserved." HorizontalAlignment="Center"/>

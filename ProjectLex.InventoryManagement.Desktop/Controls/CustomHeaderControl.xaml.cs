@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjectLex.InventoryManagement.Desktop.Views
+namespace ProjectLex.InventoryManagement.Desktop.Controls
 {
     /// <summary>
-    /// Interaction logic for OrderDetailListView.xaml
+    /// Interaction logic for CustomHeaderControl.xaml
     /// </summary>
-    public partial class OrderDetailListView : UserControl
+    public partial class CustomHeaderControl : UserControl
     {
-        public OrderDetailListView()
+        public CustomHeaderControl()
         {
             InitializeComponent();
         }

@@ -93,6 +93,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 return;
             }
+            else if (Convert.ToInt32(_quantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
+            }
             else if (!int.TryParse(_quantity, out tmpQuantity))
             {
                 MessageBox.Show("Invalid Input");

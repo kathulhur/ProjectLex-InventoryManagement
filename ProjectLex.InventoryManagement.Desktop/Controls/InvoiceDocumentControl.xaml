@@ -9,7 +9,8 @@
              Width="850"
              MinHeight="1100"
              Padding="50 50 50 50"
-             Background="{StaticResource MaterialDesignBackground}">
+             Background="{StaticResource MaterialDesignLightBackground}"
+             Foreground="{StaticResource MaterialDesignLightForeground}">
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -27,7 +28,7 @@
             </StackPanel>
         </Label>
         
-        <Rectangle Grid.Row="1" Height="1" Fill="{StaticResource MaterialDesignDivider}" Margin="0 25 0 25"/>
+        <Rectangle Grid.Row="1" Height="1" Fill="Black" Margin="0 25 0 25"/>
         
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -101,7 +102,7 @@
             </Grid>
         </Grid>
 
-        <Rectangle Grid.Row="3" Height="1" Fill="{StaticResource MaterialDesignDivider}" Margin="0 25 0 25"/>
+        <Rectangle Grid.Row="3" Height="1" Margin="0 25 0 25"/>
         
         <ListView 
             Grid.Row="4"

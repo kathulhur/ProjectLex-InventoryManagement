@@ -58,7 +58,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (HasErrors)
             {
                 return;
-            } else if (Convert.ToInt32(_disposeQuantity) > _productLocation.ProductQuantity)
+            }
+            else if (Convert.ToInt32(_disposeQuantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
+            }
+            else if (Convert.ToInt32(_disposeQuantity) > _productLocation.ProductQuantity)
             {
                 MessageBox.Show($"Quantity Exceeded. There are only {_productLocation.ProductQuantity} in stock.");
                 return;

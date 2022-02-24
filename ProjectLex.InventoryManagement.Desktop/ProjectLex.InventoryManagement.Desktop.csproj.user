@@ -15,6 +15,9 @@
     <Compile Update="Controls\CurrentMonthRevenue.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\CustomHeaderControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\DeliveredOrderCountControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -99,6 +102,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\CurrentMonthRevenue.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\CustomHeaderControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\DeliveredOrderCountControl.xaml">
@@ -213,9 +219,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RoleViews\RoleFormView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\OrderDetailViews\OrderDetailListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RoleViews\RoleListView.xaml">

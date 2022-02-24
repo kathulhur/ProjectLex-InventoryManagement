@@ -100,7 +100,13 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (HasErrors)
             {
                 return;
-            } else if(Convert.ToInt32(_orderDetailQuantity) >= _orderDetail.OrderDetailQuantity)
+            }
+            else if (Convert.ToInt32(_orderDetailQuantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
+            }
+            else if(Convert.ToInt32(_orderDetailQuantity) >= _orderDetail.OrderDetailQuantity)
             {
                 int addedQuantity = Convert.ToInt32(_orderDetailQuantity) - _orderDetail.OrderDetailQuantity;
                 if (addedQuantity > _product.Product.ProductQuantity)
@@ -119,7 +125,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _orderDetail.OrderDetailQuantity = Convert.ToInt32(_orderDetailQuantity);
             _orderDetail.OrderDetailAmount = Convert.ToDecimal(_orderDetailAmount);
 
-            MessageBox.Show("Successful");
             _closeDialogCallback();
         }
 

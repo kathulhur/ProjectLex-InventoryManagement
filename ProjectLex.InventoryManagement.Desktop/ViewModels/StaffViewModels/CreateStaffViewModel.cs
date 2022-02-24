@@ -197,7 +197,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void LoadRoles()
         {
             _roles.Clear();
-            foreach(Role r in _unitOfWork.RoleRepository.Get())
+            foreach(Role r in _unitOfWork.RoleRepository.Get(filter: r => r.RoleStatus == "Active"))
             {
                 _roles.Add(new RoleViewModel(r));
             }

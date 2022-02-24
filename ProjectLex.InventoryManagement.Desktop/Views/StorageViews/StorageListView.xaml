@@ -25,7 +25,8 @@
             <TextBlock 
                 Grid.Column="0" 
                 Text="Storages"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                FontWeight="Bold"/>
 
         </Grid>
 

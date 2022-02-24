@@ -22,10 +22,11 @@
         <Grid
             Grid.Row="0">
             <TextBlock
-                    Grid.Column="0"
-                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                    Height="auto"
-                    Text="New Defective"/>
+                Grid.Column="0"
+                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                Height="auto"
+                Text="Edit Defective"
+                FontWeight="Bold"/>
         </Grid>
 
 

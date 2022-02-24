@@ -75,6 +75,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (HasErrors)
             {
                 return;
+            }else if (Convert.ToInt32(_productQuantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
             }
 
             ProductLocation productLocation = _location.ProductLocations.SingleOrDefault(od => od.ProductID.ToString() == _productID);

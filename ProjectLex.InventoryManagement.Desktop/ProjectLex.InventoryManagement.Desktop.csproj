@@ -156,9 +156,6 @@
     <Compile Update="Views\RoleViews\RoleFormView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\OrderDetailViews\OrderDetailListView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\RoleViews\RoleListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -217,10 +214,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\RoleViews\RoleFormView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\OrderDetailViews\OrderDetailListView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

@@ -69,6 +69,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 return;
             }
+            else if (Convert.ToInt32(_productQuantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
+            }
             else if (Convert.ToInt32(_productQuantity) > _productLocation.ProductQuantity)
             {
                 MessageBox.Show($"Quantity Exceeded. There are only {_productLocation.ProductQuantity} units in stock.");

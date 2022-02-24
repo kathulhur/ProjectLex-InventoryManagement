@@ -22,7 +22,7 @@
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-            Text="New Category"/>
+            Text="New Category" FontWeight="Bold"/>
         
         <Grid 
             Grid.Row="1"

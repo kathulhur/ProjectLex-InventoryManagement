@@ -37,7 +37,8 @@
                 <TextBlock 
                     Grid.Column="0" 
                     Text="Defectives"
-                    Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    FontWeight="Bold"/>
 
                 <!--<Button
                     Grid.Column="1"
@@ -105,12 +106,20 @@
 
                                         <Button 
                                             Grid.Column="1"
-                                            BorderBrush="OrangeRed"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
+                                            BorderBrush="Red"
                                             Command="{
                                                 Binding DataContext.RemoveDefectiveCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:DefectiveListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.DefectivesDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Remove"/>
                                         </Button>
                                     </StackPanel>

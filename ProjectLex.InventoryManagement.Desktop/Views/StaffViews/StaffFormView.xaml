@@ -39,7 +39,7 @@
                     <TextBlock
                         Grid.Column="0"
                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                        Height="auto"
+                        FontWeight="Bold"
                         Text="New Staff"/>
 
                     <Grid 

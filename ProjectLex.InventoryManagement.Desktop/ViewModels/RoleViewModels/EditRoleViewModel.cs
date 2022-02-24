@@ -63,6 +63,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             }
         }
 
+        public RolePrivilegesHelper RolePrivilegesHelper { get; }
+
         private readonly UnitOfWork _unitOfWork;
         private readonly NavigationStore _navigationStore;
         private readonly Action _closeDialogCallback;
@@ -76,6 +78,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _navigationStore = navigationStore;
             _closeDialogCallback = closeDialogCallback;
             _role = role;
+
+            RolePrivilegesHelper = new RolePrivilegesHelper(role);
 
             RoleName = _role.RoleName;
             RoleDescription = _role.RoleDescription;
@@ -97,6 +101,71 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _role.RoleName = RoleName;
             _role.RoleDescription = RoleDescription;
             _role.RoleStatus = RoleStatus;
+            _role.OrdersView = RolePrivilegesHelper.OrdersView;
+            _role.OrdersAdd = RolePrivilegesHelper.OrdersAdd;
+            _role.OrdersEdit = RolePrivilegesHelper.OrdersEdit;
+            _role.OrdersDelete = RolePrivilegesHelper.OrdersDelete;
+
+
+            _role.CustomersView = RolePrivilegesHelper.CustomersView;
+            _role.CustomersAdd = RolePrivilegesHelper.CustomersAdd;
+            _role.CustomersEdit = RolePrivilegesHelper.CustomersEdit;
+            _role.CustomersDelete = RolePrivilegesHelper.CustomersDelete;
+
+
+            _role.ProductsView = RolePrivilegesHelper.ProductsView;
+            _role.ProductsAdd = RolePrivilegesHelper.ProductsAdd;
+            _role.ProductsEdit = RolePrivilegesHelper.ProductsEdit;
+            _role.ProductsDelete = RolePrivilegesHelper.ProductsDelete;
+
+
+            _role.StoragesView = RolePrivilegesHelper.StoragesView;
+            _role.StoragesAdd = RolePrivilegesHelper.StoragesAdd;
+            _role.StoragesEdit = RolePrivilegesHelper.StoragesEdit;
+            _role.StoragesDelete = RolePrivilegesHelper.StoragesDelete;
+
+
+            _role.DefectivesView = RolePrivilegesHelper.DefectivesView;
+            _role.DefectivesAdd = RolePrivilegesHelper.DefectivesAdd;
+            _role.DefectivesEdit = RolePrivilegesHelper.DefectivesEdit;
+            _role.DefectivesDelete = RolePrivilegesHelper.DefectivesDelete;
+
+
+            _role.CategoriesView = RolePrivilegesHelper.CategoriesView;
+            _role.CategoriesAdd = RolePrivilegesHelper.CategoriesAdd;
+            _role.CategoriesEdit = RolePrivilegesHelper.CategoriesEdit;
+            _role.CategoriesDelete = RolePrivilegesHelper.CategoriesDelete;
+
+
+            _role.LocationsView = RolePrivilegesHelper.LocationsView;
+            _role.LocationsAdd = RolePrivilegesHelper.LocationsAdd;
+            _role.LocationsEdit = RolePrivilegesHelper.LocationsEdit;
+            _role.LocationsDelete = RolePrivilegesHelper.LocationsDelete;
+
+
+            _role.SuppliersView = RolePrivilegesHelper.SuppliersView;
+            _role.SuppliersAdd = RolePrivilegesHelper.SuppliersAdd;
+            _role.SuppliersEdit = RolePrivilegesHelper.SuppliersEdit;
+            _role.SuppliersDelete = RolePrivilegesHelper.SuppliersDelete;
+
+
+            _role.RolesView = RolePrivilegesHelper.RolesView;
+            _role.RolesAdd = RolePrivilegesHelper.RolesAdd;
+            _role.RolesEdit = RolePrivilegesHelper.RolesEdit;
+            _role.RolesDelete = RolePrivilegesHelper.RolesDelete;
+
+
+            _role.StaffsView = RolePrivilegesHelper.StaffsView;
+            _role.StaffsAdd = RolePrivilegesHelper.StaffsAdd;
+            _role.StaffsEdit = RolePrivilegesHelper.StaffsEdit;
+            _role.StaffsDelete = RolePrivilegesHelper.StaffsDelete;
+
+
+            _role.LogsView = RolePrivilegesHelper.LogsView;
+            _role.LogsAdd = RolePrivilegesHelper.LogsAdd;
+            _role.LogsEdit = RolePrivilegesHelper.LogsEdit;
+            _role.LogsDelete = RolePrivilegesHelper.LogsDelete;
+
 
             _unitOfWork.RoleRepository.Update(_role);
             _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.ROLES, ActionType.CREATE, $"Role updated; RoleID:{_role.RoleID};"));
@@ -125,6 +194,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 if(disposing)
                 {
                     // dispose managed resources
+                    RolePrivilegesHelper.Dispose();
                 }
                 // dispose unmanaged resources
             }

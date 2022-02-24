@@ -8,115 +8,332 @@
              xmlns:views="clr-namespace:ProjectLex.InventoryManagement.Desktop.Views"
              xmlns:view_models="clr-namespace:ProjectLex.InventoryManagement.Desktop.ViewModels"
              xmlns:utilities="clr-namespace:ProjectLex.InventoryManagement.Desktop.Utilities"
-             mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920"
+             mc:Ignorable="d"
              d:Background="White">
 
-    <Grid Width="300" Margin="50 50 50 50">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
+    <ScrollViewer>
+        <Grid Width="800" Margin="50 50 50 50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock
-            Grid.Row="0"
-            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-            Text="New Role"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                        Text="New Role"
+                        FontWeight="Bold"/>
 
-        <Grid 
-            Grid.Row="1"
-            Margin="0 30 0 0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid 
+                        Grid.Row="0"
+                        Margin="0 30 0 0">
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" 
-                    Text="Name" 
-                    Style="{ StaticResource MaterialDesignTextBlock }"
-                    FontWeight="DemiBold"/>
-                        
-                <TextBox Grid.Row="1"
-                    Text="{ Binding RoleName, UpdateSourceTrigger=PropertyChanged }"
-                    Style="{ StaticResource MaterialDesignTextBox }"
-                    Padding="10"/>
+                                <TextBlock Grid.Row="0" 
+                                Text="Name" 
+                                Style="{ StaticResource MaterialDesignTextBlock }"
+                                FontWeight="DemiBold"/>
+
+                                <TextBox Grid.Row="1"
+                                Text="{ Binding RoleName, UpdateSourceTrigger=PropertyChanged }"
+                                Style="{ StaticResource MaterialDesignTextBox }"
+                                Padding="10"/>
+                            </Grid>
+                        </Grid>
+
+
+                        <Grid 
+                        Grid.Row="1"
+                        Margin="0 30 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock 
+                            Grid.Row="0" 
+                            Text="Description" 
+                            Style="{StaticResource MaterialDesignTextBlock}"
+                            FontWeight="DemiBold"/>
+
+                            <TextBox Grid.Row="1"
+                            Text="{Binding RoleDescription, UpdateSourceTrigger=PropertyChanged}"
+                            Style="{StaticResource MaterialDesignTextBox}"
+                            MaxHeight="100"
+                            Padding="10"
+                            TextWrapping="wrap"/>
+
+                        </Grid>
+
+
+                        <Grid 
+                        Grid.Row="2"
+                        Margin="0 30 0 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock 
+                            Grid.Row="0" 
+                            Text="Status" 
+                            Style="{StaticResource MaterialDesignTextBlock}"
+                            FontWeight="DemiBold"
+                                    />
+
+                            <ComboBox Grid.Row="1"
+                                    Style="{ StaticResource MaterialDesignComboBox }"
+                                    ItemsSource="{ Binding Source={x:Static utilities:Constants.Statuses}, Mode=OneWay}"
+                                    SelectedItem="{ Binding RoleStatus }"
+                                    Padding="10"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                
+                <Grid Grid.Column="1" Margin="50 0 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="Privileges" Style="{StaticResource MaterialDesignHeadline5TextBlock}" HorizontalAlignment="Center" FontWeight="DemiBold"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="1" Text="View" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="Add" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="Edit" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Column="4" Text="Delete" FontWeight="DemiBold" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Orders" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.OrdersView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.OrdersAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.OrdersEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.OrdersDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="3" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Customers" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.CustomersView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.CustomersAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.CustomersEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.CustomersDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="4" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Products" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.ProductsView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.ProductsAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.ProductsEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.ProductsDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="5" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Storages" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.StoragesView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.StoragesAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.StoragesEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.StoragesDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="6" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Defectives" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.DefectivesView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.DefectivesAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.DefectivesEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.DefectivesDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="7" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Categories" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.CategoriesView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.CategoriesAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.CategoriesEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.CategoriesDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="8" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Locations" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.LocationsView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.LocationsAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.LocationsEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.LocationsDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="9" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Suppliers" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.SuppliersView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.SuppliersAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.SuppliersEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.SuppliersDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="10" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Roles" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.RolesView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.RolesAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.RolesEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.RolesDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="11" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Staffs" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.StaffsView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.StaffsAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.StaffsEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.StaffsDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+
+                    <Grid Grid.Row="12" Margin="0 20 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Logs" FontWeight="DemiBold"/>
+                        <CheckBox Grid.Column="1" IsChecked="{Binding RolePrivilegesHelper.LogsView}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="2" IsChecked="{Binding RolePrivilegesHelper.LogsAdd}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="3" IsChecked="{Binding RolePrivilegesHelper.LogsEdit}" HorizontalAlignment="Center"/>
+                        <CheckBox Grid.Column="4" IsChecked="{Binding RolePrivilegesHelper.LogsDelete}" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+                
             </Grid>
 
+            <StackPanel 
+                Grid.Row="1" 
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="0 30 0 0">
+                <Button 
+                    Content="Submit"
+                    Command="{Binding SubmitCommand}"
+                    CommandParameter="{Binding}"
+                    Style="{StaticResource MaterialDesignPaperButton}"/>
+
+                <Button 
+                    Margin="10 0 0 0" 
+                    Content="Cancel"
+                    Command="{ Binding CancelCommand}"
+                    Style="{StaticResource MaterialDesignPaperLightButton}"/>
+            </StackPanel>
         </Grid>
-
-
-        <Grid 
-            Grid.Row="2"
-            Margin="0 30 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock 
-                Grid.Row="0" 
-                Text="Description" 
-                Style="{StaticResource MaterialDesignTextBlock}"
-                FontWeight="DemiBold"/>
-                    
-            <TextBox Grid.Row="1"
-                Text="{Binding RoleDescription, UpdateSourceTrigger=PropertyChanged}"
-                Style="{StaticResource MaterialDesignTextBox}"
-                MaxHeight="100"
-                Padding="10"
-                TextWrapping="wrap"/>
-
-        </Grid>
-
-                
-        <Grid 
-            Grid.Row="3"
-            Margin="0 30 0 0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock 
-                Grid.Row="0" 
-                Text="Status" 
-                Style="{StaticResource MaterialDesignTextBlock}"
-                FontWeight="DemiBold"
-                        />
-
-            <ComboBox Grid.Row="1"
-                        Style="{ StaticResource MaterialDesignComboBox }"
-                        ItemsSource="{ Binding Source={x:Static utilities:Constants.Statuses}, Mode=OneWay}"
-                        SelectedItem="{ Binding RoleStatus }"
-                        Padding="10"/>
-        </Grid>
-
-        <StackPanel 
-            Grid.Row="4" 
-            Orientation="Horizontal"
-            Margin="0 30 0 0">
-            <Button 
-                Content="Submit"
-                Command="{Binding SubmitCommand}"
-                CommandParameter="{Binding}"
-                Style="{StaticResource MaterialDesignPaperButton}"/>
-                        
-            <Button 
-                Margin="10 0 0 0" 
-                Content="Cancel"
-                Command="{ Binding CancelCommand}"
-                Style="{StaticResource MaterialDesignPaperLightButton}"/>
-        </StackPanel>
-
-
-    </Grid>
-
+    </ScrollViewer>
 </UserControl>

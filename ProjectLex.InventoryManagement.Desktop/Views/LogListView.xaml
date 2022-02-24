@@ -19,7 +19,8 @@
             Grid.Column="0" 
             Style="{StaticResource MaterialDesignLabel}">
             <Label.Content>
-                <TextBlock Text="Activity Logs" Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                <TextBlock Text="Activity Logs" Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                           FontWeight="Bold"/>
             </Label.Content>
         </Label>
 

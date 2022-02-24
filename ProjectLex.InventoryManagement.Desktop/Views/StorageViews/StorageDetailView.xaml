@@ -33,13 +33,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock 
-                Grid.Column="0" 
-                Text="{Binding Location.LocationName}"
-                Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                    Grid.Column="0" 
+                    Text="{Binding Location.LocationName}"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                    FontWeight="Bold"/>
 
                 <Button
                 Grid.Column="1"
-                BorderBrush="Orange"
                 Style="{StaticResource MaterialDesignPaperButton}"
                 Command="{
                     Binding DataContext.AddProductCommand, 

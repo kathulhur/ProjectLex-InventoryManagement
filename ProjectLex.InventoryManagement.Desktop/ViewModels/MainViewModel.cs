@@ -1,4 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
+using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.Stores;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
         public bool IsLoggedIn => _authenticationStore.IsLoggedIn;
 
+        public Staff CurrentStaff => _authenticationStore.CurrentStaff;
+
         public RelayCommand NavigateToRoleListCommand { get; }
         public RelayCommand NavigateToCategoryListCommand { get; }
         public RelayCommand NavigateToSupplierListCommand { get; }
@@ -39,12 +42,14 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         {
             _navigationStore = navigationStore;
             _authenticationStore = authenticationStore;
-
+            
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore, _authenticationStore);
 
             _authenticationStore.IsLoggedIn = false;
             _authenticationStore.IsLoggedInChanged += OnIsLoggedInChanged;
+
+            _authenticationStore.IsCurrentStaffChanged += OnIsCurrentStaffChanged;
 
             NavigateToCategoryListCommand = new RelayCommand(NavigateToCategoryList);
             NavigateToRoleListCommand = new RelayCommand(NavigateToRoleList);
@@ -144,6 +149,11 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void OnIsLoggedInChanged()
         {
             OnPropertyChanged(nameof(IsLoggedIn));
+        }
+
+        private void OnIsCurrentStaffChanged()
+        {
+            OnPropertyChanged(nameof(CurrentStaff));
         }
 
 

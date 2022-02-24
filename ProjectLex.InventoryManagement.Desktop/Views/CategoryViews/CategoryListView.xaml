@@ -37,14 +37,21 @@
                 <TextBlock 
                     Grid.Column="0" 
                     Text="Categories"
-                    Style="{StaticResource MaterialDesignHeadline3TextBlock}"/>
+                    FontWeight="Bold"
+                    Style="{StaticResource MaterialDesignHeadline4TextBlock}"/>
 
                 <Button
                     Grid.Column="1"
-                    Margin="0 0 10 0"
-                    Style="{StaticResource MaterialDesignPaperButton}"
-                    Command="{ Binding CreateCategoryCommand }"
-                    >
+                    Command="{ Binding CreateCategoryCommand }">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.CategoriesAdd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <materialDesign:PackIcon Kind="Add"></materialDesign:PackIcon>
                 </Button>
             </Grid>
@@ -93,11 +100,19 @@
                                             Grid.Column="0"
                                             BorderBrush="Orange"
                                             Margin="0 0 5 0"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.EditCategoryCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:CategoryListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.CategoriesEdit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Edit"/>
 
                                         </Button>
@@ -105,11 +120,19 @@
                                         <Button
                                             Grid.Column="1"
                                             BorderBrush="OrangeRed"
-                                            Style="{StaticResource MaterialDesignPaperButton}"
                                             Command="{
                                                 Binding DataContext.RemoveCategoryCommand, 
                                                 RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:CategoryListView}}"
                                             CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignPaperButton}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding DataContext.CurrentStaff.Role.CategoriesDelete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
                                             <materialDesign:PackIcon Kind="Remove"/>
                                         </Button>
                                     </StackPanel>

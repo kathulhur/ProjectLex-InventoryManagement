@@ -30,7 +30,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _productName;
             set
             {
-                SetProperty(ref _productName, value);
+                SetProperty(ref _productName, value, true);
             }
         }
 
@@ -43,7 +43,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _productSKU;
             set
             {
-                SetProperty(ref _productSKU, value);
+                SetProperty(ref _productSKU, value, true);
             }
         }
 
@@ -55,7 +55,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _productUnit;
             set
             {
-                SetProperty(ref _productUnit, value);
+                SetProperty(ref _productUnit, value, true);
             }
         }
 
@@ -67,7 +67,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _productPrice;
             set
             {
-                SetProperty(ref _productPrice, value);
+                SetProperty(ref _productPrice, value, true);
             }
         }
 
@@ -78,7 +78,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _productAvailability;
             set
             {
-                SetProperty(ref _productAvailability, value);
+                SetProperty(ref _productAvailability, value, true);
             }
         }
 
@@ -89,7 +89,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _supplierID;
             set
             {
-                SetProperty(ref _supplierID, value);
+                SetProperty(ref _supplierID, value, true);
             }
         }
 
@@ -100,7 +100,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             get => _categoryID;
             set
             {
-                SetProperty(ref _categoryID, value);
+                SetProperty(ref _categoryID, value, true);
             }
         }
 
@@ -184,7 +184,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void LoadSuppliers()
         {
             _suppliers.Clear();
-            foreach (Supplier s in _unitOfWork.SupplierRepository.Get())
+            foreach (Supplier s in _unitOfWork.SupplierRepository.Get(filter: s => s.SupplierStatus == "Active"))
             {
                 _suppliers.Add(new SupplierViewModel(s));
             }
@@ -204,7 +204,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void LoadCategories()
         {
             _categories.Clear();
-            foreach(Category c in _unitOfWork.CategoryRepository.Get())
+            foreach(Category c in _unitOfWork.CategoryRepository.Get(filter: c => c.CategoryStatus == "Active"))
             {
                 _categories.Add(new CategoryViewModel(c));
             }

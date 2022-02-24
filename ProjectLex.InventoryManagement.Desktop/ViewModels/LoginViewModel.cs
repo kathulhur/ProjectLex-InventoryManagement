@@ -41,6 +41,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly AuthenticationStore _authenticationStore;
         public RelayCommand ToggleThemeCommand { get; }
+        public RelayCommand HelpCommand { get; }
         public RelayCommand ExitAppCommand { get; }
         public RelayCommand<object> LoginUserCommand { get; }
 
@@ -50,10 +51,17 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _unitOfWork = new UnitOfWork();
             _authenticationStore = authenticationStore;
             ToggleThemeCommand = new RelayCommand(ToggleTheme);
+            HelpCommand = new RelayCommand(Help);
             LoginUserCommand = new RelayCommand<object>(LoginUser);
             ExitAppCommand = new RelayCommand(ExitApp);
         }
 
+        public void Help()
+        {
+            MessageBox.Show(Application.Current.MainWindow,"Contact Us\n\n" +
+                "Email: support.projectlexlabs@outlook.com\n" +
+                "Facebook Page: ProjectLex Software Lab", "Help");
+        }
 
         public void ToggleTheme()
         {
@@ -88,7 +96,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             string password = passwordBox.Password;
 
 
-            Staff storedStaff = _unitOfWork.StaffRepository.Get(s => s.StaffUsername == username && s.StaffPassword == password).SingleOrDefault();
+            Staff storedStaff = _unitOfWork.StaffRepository.Get(s => s.StaffUsername == username && s.StaffPassword == password, includeProperties: "Role").SingleOrDefault();
 
             if(storedStaff == null)
             {

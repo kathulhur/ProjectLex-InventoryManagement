@@ -113,6 +113,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (HasErrors)
             {
                 return;
+            } else if (Convert.ToInt32(_orderDetailQuantity) < 1)
+            {
+                MessageBox.Show("Only quantities greater than 0 is allowed");
+                return;
             }
 
             OrderDetail storedOrderDetail = _order.OrderDetails.SingleOrDefault(od => od.ProductID == this._product.Product.ProductID);
@@ -151,8 +155,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                     storedOrderDetail.Product.ProductQuantity -= Convert.ToInt32(_orderDetailQuantity);
                 }
             }
-
-            MessageBox.Show("Successful");
             _closeDialogCallback();
         }
 
@@ -164,7 +166,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private void LoadProducts(ObservableCollection<ProductViewModel> products)
         {
             products.Clear();
-            foreach(Product p in _unitOfWork.ProductRepository.Get())
+            foreach(Product p in _unitOfWork.ProductRepository.Get(filter:p => p.ProductAvailability == "Available"))
             {
                 products.Add(new ProductViewModel(p));
             }

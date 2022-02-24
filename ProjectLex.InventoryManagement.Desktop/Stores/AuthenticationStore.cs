@@ -10,7 +10,16 @@ namespace ProjectLex.InventoryManagement.Desktop.Stores
 {
     public class AuthenticationStore
     {
-        public Staff CurrentStaff { get; set; } 
+        private Staff _currentStaff;
+        public Staff CurrentStaff 
+        { 
+            get { return _currentStaff; } 
+            set 
+            {
+                _currentStaff = value;
+                OnIsCurrentStaffChanged();
+            } 
+        } 
 
 
         private bool _isLoggedIn = false;
@@ -31,6 +40,14 @@ namespace ProjectLex.InventoryManagement.Desktop.Stores
         {
             IsLoggedInChanged?.Invoke();
         }
+
+        public event Action IsCurrentStaffChanged;
+
+        private void OnIsCurrentStaffChanged()
+        {
+            IsCurrentStaffChanged?.Invoke();
+        }
+
 
     }
 }
