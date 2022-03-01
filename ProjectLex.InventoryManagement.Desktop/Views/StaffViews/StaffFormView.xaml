@@ -102,7 +102,7 @@
                             Margin="0,5,0,0"
                             Text="{ Binding StaffFirstName, UpdateSourceTrigger=PropertyChanged }"
                             Style="{ StaticResource MaterialDesignTextBox }"
-                            Width="400"
+                            Width="auto"
                             Padding="10"/>
                     </Grid>
 
@@ -126,7 +126,7 @@
                             Margin="0,5,0,0"
                             Text="{ Binding StaffLastName, UpdateSourceTrigger=PropertyChanged }"
                             Style="{ StaticResource MaterialDesignTextBox }"
-                            Width="400"
+                            Width="auto"
                             Padding="10"/>
                     </Grid>
                 </Grid>
@@ -241,7 +241,7 @@
                             Margin="0,5,0,0"
                             Text="{ Binding StaffUsername, UpdateSourceTrigger=PropertyChanged }"
                             Style="{ StaticResource MaterialDesignTextBox }"
-                            Width="400"
+                            Width="auto"
                             Padding="10"/>
                     </Grid>
 
@@ -260,11 +260,10 @@
                             FontWeight="DemiBold"
                             />
 
-                        <TextBox Grid.Row="1"
+                        <PasswordBox Grid.Row="1"
+                            Name="passwordBox"
                             Margin="0,5,0,0"
-                            Text="{Binding StaffPassword, UpdateSourceTrigger=PropertyChanged}"
-                            Style="{ StaticResource MaterialDesignTextBox }"
-                            Width="400"
+                            Width="auto"
                             Padding="10"/>
                     </Grid>
                 </Grid>
@@ -276,7 +275,7 @@
                     <Button 
                         Content="Submit"
                         Command="{Binding SubmitCommand}"
-                        CommandParameter="{Binding}"
+                        CommandParameter="{Binding ElementName=passwordBox}"
                         Style="{StaticResource MaterialDesignPaperButton}"/>
                     <Button 
                         Margin="10 0 0 0" 

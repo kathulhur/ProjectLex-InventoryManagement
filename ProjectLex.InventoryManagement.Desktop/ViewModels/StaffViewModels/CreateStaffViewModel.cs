@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
@@ -120,19 +121,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         }
 
 
-        private string _staffPassword;
-
-        [Required(ErrorMessage = "Password is Required")]
-        [MinLength(5, ErrorMessage = "Password should be at least 5 characters long")]
-        [MaxLength(50, ErrorMessage = "Password longer than 50 characters is Not Allowed")]
-        public string StaffPassword
-        {
-            get => _staffPassword;
-            set
-            {
-                SetProperty(ref _staffPassword, value, true);
-            }
-        }
 
         private readonly NavigationStore _navigationStore;
         private readonly UnitOfWork _unitOfWork;
@@ -141,7 +129,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private readonly ObservableCollection<RoleViewModel> _roles;
         public IEnumerable<RoleViewModel> Roles => _roles;
 
-        public RelayCommand SubmitCommand { get; }
+        public RelayCommand<object> SubmitCommand { get; }
         public RelayCommand CancelCommand { get; }
         private RelayCommand LoadRolesCommand { get; }
 
@@ -153,12 +141,12 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             _roles = new ObservableCollection<RoleViewModel>();
 
 
-            SubmitCommand = new RelayCommand(Submit);
+            SubmitCommand = new RelayCommand<object>(Submit);
             CancelCommand = new RelayCommand(Cancel);
             LoadRolesCommand = new RelayCommand(LoadRoles);
         }
 
-        private void Submit()
+        private void Submit(object obj)
         {
             ValidateAllProperties();
 
@@ -166,6 +154,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             {
                 return;
             }
+
+            PasswordBox passwordBox = obj as PasswordBox;
 
             Staff newStaff = new Staff()
             {
@@ -177,7 +167,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
                 StaffPhone = StaffPhone,
                 StaffEmail = StaffEmail,
                 StaffUsername = StaffUsername,
-                StaffPassword = StaffPassword,
+                StaffPassword = passwordBox.Password,
             };
 
             _unitOfWork.StaffRepository.Insert(newStaff);
