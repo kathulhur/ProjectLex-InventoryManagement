@@ -58,11 +58,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public void RemoveCategory(CategoryViewModel categoryViewModel)
         {
-            _unitOfWork.CategoryRepository.Delete(categoryViewModel.Category);
-            _unitOfWork.Save();
-            _categories.Remove(categoryViewModel);
-            CategoryListViewHelper.RefreshCollection();
-            MessageBox.Show("Category Removed Successfully");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.CategoryRepository.Delete(categoryViewModel.Category);
+                _unitOfWork.Save();
+                _categories.Remove(categoryViewModel);
+                CategoryListViewHelper.RefreshCollection();
+                MessageBox.Show("Category Removed Successfully");
+            }
         }
 
 

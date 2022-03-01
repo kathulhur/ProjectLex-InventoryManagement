@@ -61,11 +61,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void RemoveProduct(ProductViewModel productViewModel)
         {
-            _unitOfWork.ProductRepository.Delete(productViewModel.Product);
-            _unitOfWork.Save();
-            _products.Remove(productViewModel);
-            ProductListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.ProductRepository.Delete(productViewModel.Product);
+                _unitOfWork.Save();
+                _products.Remove(productViewModel);
+                ProductListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
 
         }
 

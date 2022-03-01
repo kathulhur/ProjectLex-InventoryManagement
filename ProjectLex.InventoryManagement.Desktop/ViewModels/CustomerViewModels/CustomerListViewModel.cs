@@ -55,11 +55,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void RemoveCustomer(CustomerViewModel customerViewModel)
         {
-            _unitOfWork.CustomerRepository.Delete(customerViewModel.Customer);
-            _unitOfWork.Save();
-            _customers.Remove(customerViewModel);
-            CustomerListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.CustomerRepository.Delete(customerViewModel.Customer);
+                _unitOfWork.Save();
+                _customers.Remove(customerViewModel);
+                CustomerListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
         }
 
         private void EditCustomer(CustomerViewModel customerViewModel)

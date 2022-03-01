@@ -80,11 +80,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public void RemoveRole(RoleViewModel roleViewModel)
         {
-            _unitOfWork.RoleRepository.Delete(roleViewModel.Role);
-            _unitOfWork.Save();
-            _roles.Remove(roleViewModel);
-            RoleListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.RoleRepository.Delete(roleViewModel.Role);
+                _unitOfWork.Save();
+                _roles.Remove(roleViewModel);
+                RoleListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
         }
 
         public void LoadData()

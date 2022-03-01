@@ -57,11 +57,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void RemoveDefective(DefectiveViewModel defectiveViewModel)
         {
-            _unitOfWork.DefectiveRepository.Delete(defectiveViewModel.Defective);
-            _unitOfWork.Save();
-            _defectives.Remove(defectiveViewModel);
-            DefectiveListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.DefectiveRepository.Delete(defectiveViewModel.Defective);
+                _unitOfWork.Save();
+                _defectives.Remove(defectiveViewModel);
+                DefectiveListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
         }
 
 

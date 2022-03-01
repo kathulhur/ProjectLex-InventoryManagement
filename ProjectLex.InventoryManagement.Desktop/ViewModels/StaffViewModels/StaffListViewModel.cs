@@ -60,11 +60,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void RemoveStaff(StaffViewModel staffViewModel)
         {
-            _unitOfWork.StaffRepository.Delete(staffViewModel.Staff);
-            _unitOfWork.Save();
-            _staffs.Remove(staffViewModel);
-            StaffListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.StaffRepository.Delete(staffViewModel.Staff);
+                _unitOfWork.Save();
+                _staffs.Remove(staffViewModel);
+                StaffListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
         }
 
 

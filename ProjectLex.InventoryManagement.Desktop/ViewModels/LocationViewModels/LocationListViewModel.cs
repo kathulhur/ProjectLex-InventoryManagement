@@ -72,11 +72,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         public void RemoveLocation(LocationViewModel locationViewModel)
         {
-            _unitOfWork.LocationRepository.Delete(locationViewModel.Location);
-            _unitOfWork.Save();
-            _locations.Remove(locationViewModel);
-            LocationListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.LocationRepository.Delete(locationViewModel.Location);
+                _unitOfWork.Save();
+                _locations.Remove(locationViewModel);
+                LocationListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
         }
 
         public void CloseDialogCallback()

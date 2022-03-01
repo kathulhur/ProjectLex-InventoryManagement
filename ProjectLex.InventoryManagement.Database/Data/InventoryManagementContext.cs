@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 
 namespace ProjectLex.InventoryManagement.Database.Data
 {
     public class InventoryManagementContext : DbContext
     {
+
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
@@ -26,7 +29,10 @@ namespace ProjectLex.InventoryManagement.Database.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=InventoryA;Trusted_Connection=True;");
+            var configurationBuilder = new ConfigurationBuilder().AddJsonFile("dbconfig.json");
+
+            var configuration = configurationBuilder.Build();
+            optionsBuilder.UseSqlServer(configuration["connectionstrings:db"]);
             optionsBuilder.EnableSensitiveDataLogging(true);
         }
 

@@ -63,13 +63,13 @@
                         CommandParameter="{Binding ElementName=txtPassword}">
                     </Button>
 
-                    <Button 
+                    <!--<Button 
                         Margin="0 20 0 0" 
                         x:Name="signupBtn" 
                         Style="{StaticResource MaterialDesignFlatButton}"
                         materialDesign:ShadowAssist.ShadowDepth="Depth0" 
                         materialDesign:ButtonAssist.CornerRadius="10"
-                        Content="Create Account"/>
+                        Content="Create Account"/>-->
                 </StackPanel>
             </StackPanel>
         </materialDesign:DialogHost>

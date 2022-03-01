@@ -69,11 +69,15 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         private void RemoveOrder(OrderViewModel orderViewModel)
         {
-            _unitOfWork.OrderRepository.Delete(orderViewModel.Order);
-            _unitOfWork.Save();
-            _orders.Remove(orderViewModel);
-            OrderListViewHelper.RefreshCollection();
-            MessageBox.Show("Successful");
+            var result = MessageBox.Show("Do you really want to remove this item?", "Warning", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                _unitOfWork.OrderRepository.Delete(orderViewModel.Order);
+                _unitOfWork.Save();
+                _orders.Remove(orderViewModel);
+                OrderListViewHelper.RefreshCollection();
+                MessageBox.Show("Successful");
+            }
         }
 
         private void EditOrder(OrderViewModel orderViewModel)
