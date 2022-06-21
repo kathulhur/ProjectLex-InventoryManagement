@@ -72,13 +72,6 @@
                     AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                                Header="Staff"
-                                HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
-                                CellStyle="{StaticResource MaterialDesignDataGridCell}"
-                                Binding="{Binding Staff.StaffFullname}"
-                                Width="auto"/>
-                        
-                        <DataGridTextColumn
                                 Header="Firstname"
                                 HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
@@ -112,7 +105,14 @@
                                 CellStyle="{StaticResource MaterialDesignDataGridCell}"
                                 Binding="{Binding CustomerEmail}"
                                 Width="auto"/>
-                    
+                        
+                        <DataGridTextColumn
+                                Header="Assigned Staff"
+                                HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
+                                CellStyle="{StaticResource MaterialDesignDataGridCell}"
+                                Binding="{Binding Staff.StaffFullname}"
+                                Width="auto"/>
+                        
                         <DataGridTemplateColumn
                             Header="Actions"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"

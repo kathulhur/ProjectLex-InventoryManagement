@@ -38,7 +38,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 
         [Required(ErrorMessage = "Address is Required")]
         [MinLength(10, ErrorMessage = "Address should be longer than 2 characters")]
-        [MaxLength(50, ErrorMessage = "Address longer than 50 characters is Not Allowed")]
         public string SupplierAddress
         {
             get => _supplierAddress;
@@ -51,8 +50,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private string _supplierPhone;
 
         [Required(ErrorMessage = "Phone number is Required")]
-        [StringLength(11, ErrorMessage = "Phone number should be 11 characters long")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Phone should only contain numbers")]
         public string SupplierPhone
         {
             get => _supplierPhone;

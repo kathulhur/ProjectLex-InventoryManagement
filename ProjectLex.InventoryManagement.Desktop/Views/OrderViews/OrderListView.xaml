@@ -73,7 +73,7 @@
                     AutoGenerateColumns="False">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Header="Firstname"
+                            Header="Order ID"
                             HeaderStyle="{StaticResource MaterialDesignDataGridColumnHeader}"
                             CellStyle="{StaticResource MaterialDesignDataGridCell}"
                             Binding="{Binding OrderID}"

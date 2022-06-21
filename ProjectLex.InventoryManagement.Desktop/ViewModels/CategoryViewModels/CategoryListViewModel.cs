@@ -11,6 +11,8 @@ using Microsoft.Toolkit.Mvvm.Input;
 using ProjectLex.InventoryManagement.Database.Models;
 using System.Windows;
 using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -62,8 +64,10 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (result == MessageBoxResult.Yes)
             {
                 _unitOfWork.CategoryRepository.Delete(categoryViewModel.Category);
+                _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.CATEGORIES, ActionType.DELETE, $"Category deleted; CategoryID:{categoryViewModel.CategoryID};"));
                 _unitOfWork.Save();
                 _categories.Remove(categoryViewModel);
+
                 CategoryListViewHelper.RefreshCollection();
                 MessageBox.Show("Category Removed Successfully");
             }

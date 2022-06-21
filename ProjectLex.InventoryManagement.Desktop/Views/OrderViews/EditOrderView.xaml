@@ -39,7 +39,7 @@
                     Grid.Column="0"
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                     FontWeight="Bold"
-                    Text="Edit Order"/>
+                    Text="Order Form"/>
                 
                 <StackPanel
                     Grid.Column="1" MinWidth="300">

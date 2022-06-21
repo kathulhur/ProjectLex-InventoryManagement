@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -59,6 +61,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (result == MessageBoxResult.Yes)
             {
                 _unitOfWork.SupplierRepository.Delete(supplierViewModel.Supplier);
+                _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.SUPPLIERS, ActionType.DELETE, $"Supplier deleted; SupplierID:{supplierViewModel.SupplierID};"));
                 _unitOfWork.Save();
                 _suppliers.Remove(supplierViewModel);
                 SupplierListViewHelper.RefreshCollection();

@@ -40,7 +40,7 @@
                         Grid.Column="0"
                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                         FontWeight="Bold"
-                        Text="New Staff"/>
+                        Text="Staff Form"/>
 
                     <Grid 
                         Grid.Column="1">

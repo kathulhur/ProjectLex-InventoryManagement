@@ -19,7 +19,8 @@
         <TextBlock
             Grid.Row="0"
             Margin="0 0 0 30"
-            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+            Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+            FontWeight="Bold"
             Text="Move Product"/>
 
         <Grid Grid.Row="1">

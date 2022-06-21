@@ -29,7 +29,7 @@
                     Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                     Height="auto"
                     FontWeight="Bold"
-                    Text="New Customer"/>
+                    Text="Customer Form"/>
         </Grid>
 
 

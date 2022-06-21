@@ -31,7 +31,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                        Text="New Role"
+                        Text="Role Form"
                         FontWeight="Bold"/>
 
                     <Grid Grid.Row="1">

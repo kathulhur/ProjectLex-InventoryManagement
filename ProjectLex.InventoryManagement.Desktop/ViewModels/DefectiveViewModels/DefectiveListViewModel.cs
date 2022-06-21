@@ -2,6 +2,7 @@
 using ProjectLex.InventoryManagement.Database.Models;
 using ProjectLex.InventoryManagement.Desktop.DAL;
 using ProjectLex.InventoryManagement.Desktop.Stores;
+using ProjectLex.InventoryManagement.Desktop.Utilities;
 using ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ProjectLex.InventoryManagement.Desktop.Utilities.Constants;
 
 namespace ProjectLex.InventoryManagement.Desktop.ViewModels
 {
@@ -61,6 +63,7 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
             if (result == MessageBoxResult.Yes)
             {
                 _unitOfWork.DefectiveRepository.Delete(defectiveViewModel.Defective);
+                _unitOfWork.LogRepository.Insert(LogUtil.CreateLog(LogCategory.DEFECTIVES, ActionType.DELETE, $"Defective deleted; DefectiveID:{defectiveViewModel.DefectiveID};"));
                 _unitOfWork.Save();
                 _defectives.Remove(defectiveViewModel);
                 DefectiveListViewHelper.RefreshCollection();

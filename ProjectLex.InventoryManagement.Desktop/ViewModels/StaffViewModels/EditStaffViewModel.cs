@@ -82,8 +82,6 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels
         private string _staffPhone;
 
         [Required(ErrorMessage = "Phone number is Required")]
-        [StringLength(11, ErrorMessage = "Phone number should be 11 characters long")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Phone should only contain numbers")]
         public string StaffPhone
         {
             get => _staffPhone;

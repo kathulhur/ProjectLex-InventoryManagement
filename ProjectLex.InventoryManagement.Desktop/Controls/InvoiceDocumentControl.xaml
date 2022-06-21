@@ -9,8 +9,7 @@
              Width="850"
              MinHeight="1100"
              Padding="50 50 50 50"
-             Background="{StaticResource MaterialDesignLightBackground}"
-             Foreground="{StaticResource MaterialDesignLightForeground}">
+             Background="{StaticResource MaterialDesignLightBackground}">
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -24,7 +23,7 @@
         <Label Grid.Row="0" FontSize="48" FontWeight="DemiBold">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/IMSLogo.png" Width="50" VerticalAlignment="Center"/>
-                <TextBlock Text=" IMS INVOICE" VerticalAlignment="Center"/>
+                <TextBlock Text=" IMS INVOICE" VerticalAlignment="Center" Foreground="Black"/>
             </StackPanel>
         </Label>
         
@@ -47,27 +46,28 @@
                     <TextBlock 
                         Text="{Binding Order.Customer.CustomerFullname}"
                         FontSize="36"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        Foreground="Black"/>
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="0 12 0 0">
                     <StackPanel>
-                        <TextBlock Grid.Column="0" Text="Shipping Address: " FontWeight="bold"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Order.Customer.CustomerAddress}" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Column="0" Text="Shipping Address: " FontWeight="bold" Foreground="Black"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Order.Customer.CustomerAddress}" TextWrapping="Wrap" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="2" Margin="0 12 0 0">
                     <StackPanel>
-                        <TextBlock Grid.Column="0" Text="Email: " FontWeight="Bold"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Order.Customer.CustomerEmail}"/>
+                        <TextBlock Grid.Column="0" Text="Email: " FontWeight="Bold" Foreground="Black"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Order.Customer.CustomerEmail}" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="3" Margin="0 12 0 0">
                     <StackPanel>
-                        <TextBlock Grid.Column="0" Text="Contact Number: " FontWeight="Bold"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Order.Customer.CustomerPhone}"/>
+                        <TextBlock Grid.Column="0" Text="Contact Number: " FontWeight="Bold" Foreground="Black"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Order.Customer.CustomerPhone}" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -81,22 +81,22 @@
 
                 <Grid Grid.Row="0" Margin="0 12 0 0">
                     <StackPanel HorizontalAlignment="Right">
-                        <TextBlock Grid.Column="0" Text="Date Issued:" FontWeight="bold" HorizontalAlignment="Right"/>
-                        <TextBlock Grid.Column="1" Text="{Binding CurrentDateTime}" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="Date Issued:" FontWeight="bold" HorizontalAlignment="Right" Foreground="Black"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentDateTime}" HorizontalAlignment="Right" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="1" Margin="0 12 0 0">
                     <StackPanel>
-                        <TextBlock Grid.Column="0" Text="Date Ordered:" FontWeight="Bold" HorizontalAlignment="Right"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Order.OrderDate}" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="Date Ordered:" FontWeight="Bold" HorizontalAlignment="Right" Foreground="Black"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Order.OrderDate}" HorizontalAlignment="Right" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="2" Margin="0 12 0 0">
                     <StackPanel>
-                        <TextBlock Grid.Column="0" Text="Order Number:" FontWeight="Bold" HorizontalAlignment="Right"/>
-                        <TextBlock Grid.Column="1" Text="{Binding Order.OrderID}" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Column="0" Text="Order Number:" FontWeight="Bold" HorizontalAlignment="Right" Foreground="Black"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Order.OrderID}" HorizontalAlignment="Right" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -107,7 +107,8 @@
         <ListView 
             Grid.Row="4"
             IsHitTestVisible="False"
-            ItemsSource="{Binding OrderDetails}">
+            ItemsSource="{Binding OrderDetails}"
+            Foreground="Black">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -116,7 +117,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <TextBlock Text="{Binding Product.ProductName}"/>
+                                        <TextBlock Text="{Binding Product.ProductName}" Foreground="Black"/>
                                     </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -128,7 +129,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <TextBlock Text="{Binding Product.ProductPrice}"/>
+                                        <TextBlock Text="{Binding Product.ProductPrice}" Foreground="Black"/>
                                     </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -140,7 +141,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <TextBlock Text="{Binding OrderDetailQuantity}"/>
+                                        <TextBlock Text="{Binding OrderDetailQuantity}" Foreground="Black"/>
                                     </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -152,7 +153,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                        <TextBlock Text="{Binding OrderDetailAmount}"/>
+                                        <TextBlock Text="{Binding OrderDetailAmount}" Foreground="Black"/>
                                     </Grid>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -176,11 +177,11 @@
                     <TextBlock
                         Text="₱ "
                         FontSize="32"
-                        FontWeight="DemiBold"/>
+                        FontWeight="DemiBold" Foreground="Black"/>
                     <TextBlock 
                         Text="{Binding Order.OrderTotal}" 
                         FontSize="32"
-                        FontWeight="DemiBold"/>
+                        FontWeight="DemiBold" Foreground="Black"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

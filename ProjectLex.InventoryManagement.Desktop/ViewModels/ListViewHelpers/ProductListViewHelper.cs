@@ -26,7 +26,8 @@ namespace ProjectLex.InventoryManagement.Desktop.ViewModels.ListViewHelpers
         {
             if(obj is ProductViewModel viewModel)
             {
-                return viewModel.ProductName.Contains(Filter, StringComparison.InvariantCultureIgnoreCase);
+                return viewModel.ProductName.Contains(Filter, StringComparison.InvariantCultureIgnoreCase)
+                    || viewModel.ProductSKU.Contains(Filter, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
         }

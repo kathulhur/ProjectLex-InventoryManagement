@@ -25,7 +25,7 @@
                 Grid.Column="0"
                 Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                 Height="auto"
-                Text="Edit Defective"
+                Text="Defective Form"
                 FontWeight="Bold"/>
         </Grid>
 
