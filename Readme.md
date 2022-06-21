@@ -29,23 +29,25 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <!-- <a href="https://github.com/kathulhur/ProjectLex-InventoryManagement">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Inventory Management System</h3>
 
   <p align="center">
-    project_description
+    An inventory management system that has functionality such as creating, reading, updating, and deleting data records.<br>
+    It also contains dashboard that shows an overview of the system, allowing instant view on business insights.<br>
+    Also, employees can have privileges which provides confidentiality and security of data.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/kathulhur/ProjectLex-InventoryManagement"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://github.com/kathulhur/ProjectLex-InventoryManagement">View Demo</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/kathulhur/ProjectLex-InventoryManagement/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/kathulhur/ProjectLex-InventoryManagement/issues">Request Feature</a>
   </p>
 </div>
 
@@ -84,7 +86,6 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -92,14 +93,11 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Windows Presentation Foundation](https://docs.microsoft.com/en-us/dotnet/desktop/wpf/overview/?view=netdesktop-6.0)
+* [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/get-started/overview/first-app?tabs=netcore-cli)
+* [Material Design](http://materialdesigninxaml.net/)
+* [Live Charts](https://lvcharts.net/)
+* [SQL Server Developer](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -112,53 +110,53 @@ This is an example of how you may give instructions on setting up your project l
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+* Ensure that all the <a href="#built-with">frameworks</a> and <a href="#built-with">libraries</a> are properly installed on visual studio and on your machine
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+
+### Database setup
+1. Set the database module as the startup project (Check whether the output type is a class library to prevent potential errors)
+2. Open the Package Manager Console (Make sure that the Database module is selected as the default project)
+3. Perform the following command:
+> Before running the command check whether Microsoft.EntityFrameworkCore.Design and Microsoft.EntityFrameworkCore.Tools are installed to the solution
   ```sh
-  npm install npm@latest -g
+  Add-Migration MigrationName
   ```
 
-### Installation
+  ```sh
+  Update-Database
+  ```
+4. Place the connection string of the database created in the dbconfig.json file located in the database module
+5. Create an Admin role in the Role table, setting all the privileges to true
+6. Add a single record in the Staff table to be used for initial login
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+### Installation
+> You may want to run in Debug mode first
+1. Set the Desktop module as the startup project
+2. Set the configuration from Debug to Release
+3. Build the solution
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+<!-- ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p> -->
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Fix the product coding system (make it informative)
+- [ ] Password Encryption
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/kathulhur/ProjectLex-InventoryManagement/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -194,22 +192,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Your Name - [@kathulhu_dev](https://twitter.com/kathulhu_dev) - josephkarl19@outlook.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-* []()
-* []()
-* []()
+Project Link: [https://github.com/kathulhur/ProjectLex-InventoryManagement](https://github.com/kathulhur/ProjectLex-InventoryManagement)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
 
 
 
@@ -230,7 +219,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- issues -->
 [issues-shield]: https://img.shields.io/github/issues/kathulhur/ProjectLex-InventoryManagement.svg?style=for-the-badge
-[issues-url]: https://github.com/github_username/repo_name/issues
+[issues-url]: https://github.com/kathulhur/ProjectLex-InventoryManagement/issues
 
 <!-- license -->
 [license-shield]: https://img.shields.io/github/license/kathulhur/ProjectLex-InventoryManagement.svg?style=for-the-badge
