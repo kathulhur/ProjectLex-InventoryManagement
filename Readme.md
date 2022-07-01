@@ -192,7 +192,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@kathulhu_dev](https://twitter.com/kathulhu_dev) - josephkarl19@outlook.com
+Joseph - josephkarl19@outlook.com
 
 Project Link: [https://github.com/kathulhur/ProjectLex-InventoryManagement](https://github.com/kathulhur/ProjectLex-InventoryManagement)
 
